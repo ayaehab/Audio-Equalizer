@@ -11,6 +11,7 @@ from matplotlib.figure import Figure
 import sys
 import numpy as np
 from numpy.fft import fft, ifft
+from scipy.fft import fftfreq
 import pandas as pd
 from pyqtgraph import PlotWidget, PlotItem
 import pyqtgraph as pg
@@ -40,7 +41,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         
         self.sliderList = [ self.Slider_1, self.Slider_2, self.Slider_3, self.Slider_4, self.Slider_5,
                               self.Slider_6, self.Slider_7, self.Slider_8, self.Slider_9, self.Slider_10 ]
-        self.bands=[]
+        self.mbands=[]
+        self.fbands = []
         self.gain=[]
         
         
@@ -62,7 +64,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
             # Return evenly spaced numbers over a specified interval
             self.time = np.linspace(0., self.duration, self.length)
-            self.freq = np.linspace(0, self.samplerate / 2, int(self.length / 2))
+            self.freq = fftfreq(self.length, 1 / self.samplerate)
 
             # Plot first channel's signal
             # self.InputSignal.plot(self.time, self.data[:, 0], pen=self.pens[0])
@@ -89,14 +91,15 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.fftArrayNegative = np.flip(self.fftArray[self.length // 2:])
         #get the magnitude of both +ve & -ve
         self.fftArrayAbs = np.abs(self.fftArray)
+        self.fftPhase = np.angle(self.fftArray)
         self.fftMagnitude = self.fftArrayAbs[: self.length // 2] # magnitude of +ve only
         
-        # plt.plot(self.freq , self.fftMagnitude)
+        # plt.plot(self.freq , self.)
         # plt.show()
         
         # return fftArray that will be used later in the inverse forrier transform
         # and fftMagnitude that will be used in plotting ....
-        return self.fftArray , self.fftMagnitude
+        return self.fftArray ,self.fftArrayAbs , self.fftPhase, self.fftMagnitude
     
     
     def get_ifft(self,fftArray):
@@ -111,12 +114,14 @@ class AudioEqualizer(QtWidgets.QMainWindow):
     def slider(self):
         
         self.fMagnitude = self.get_fft()[1]
-        self.valuePerBand=int(len(self.fMagnitude)/10)
+        self.mvaluePerBand = int(len(self.fMagnitude)/10)
+        self.fvaluePerBand = int(len(self.freq)/10)
         #print(self.valuePerBand)
         
         for i in range(10):
-            self.bands.append(self.fMagnitude[i * self.valuePerBand : min(len(self.fMagnitude)+1, (i+1)*self.valuePerBand)])
-     
+            self.mbands.append(self.fMagnitude[i * self.mvaluePerBand : min(len(self.fMagnitude)+1, (i+1)*self.mvaluePerBand)])
+            self.fbands.append(self.freq[i * self.fvaluePerBand : min(len(self.freq)+1, (i+1)*self.fvaluePerBand)])
+            
     def equalizer(self):
         self.newMagnitude = []
         for i in range(10):
