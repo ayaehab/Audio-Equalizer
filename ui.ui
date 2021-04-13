@@ -51,7 +51,7 @@ color: rgb(255, 255, 255);
      </rect>
     </property>
    </widget>
-   <widget class="PlotWidget" name="OutputSignal_2">
+   <widget class="PlotWidget" name="OutputSignal">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -71,7 +71,7 @@ color: rgb(255, 255, 255);
      </rect>
     </property>
    </widget>
-   <widget class="QSlider" name="verticalSlider">
+   <widget class="QSlider" name="Slider_9">
     <property name="geometry">
      <rect>
       <x>1260</x>
@@ -140,7 +140,7 @@ border-radius: 30px;
      <string>Alt+S</string>
     </property>
    </widget>
-   <widget class="QSlider" name="verticalSlider_2">
+   <widget class="QSlider" name="Slider_8">
     <property name="geometry">
      <rect>
       <x>1220</x>
@@ -156,7 +156,7 @@ border-radius: 30px;
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="verticalSlider_4">
+   <widget class="QSlider" name="Slider_6">
     <property name="geometry">
      <rect>
       <x>1140</x>
@@ -172,7 +172,7 @@ border-radius: 30px;
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="verticalSlider_5">
+   <widget class="QSlider" name="Slider_7">
     <property name="geometry">
      <rect>
       <x>1180</x>
@@ -188,7 +188,7 @@ border-radius: 30px;
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="verticalSlider_6">
+   <widget class="QSlider" name="Slider_5">
     <property name="geometry">
      <rect>
       <x>1100</x>
@@ -204,7 +204,7 @@ border-radius: 30px;
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="verticalSlider_7">
+   <widget class="QSlider" name="Slider_4">
     <property name="geometry">
      <rect>
       <x>1060</x>
@@ -220,7 +220,7 @@ border-radius: 30px;
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="verticalSlider_8">
+   <widget class="QSlider" name="Slider_10">
     <property name="geometry">
      <rect>
       <x>1300</x>
@@ -236,7 +236,7 @@ border-radius: 30px;
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="verticalSlider_9">
+   <widget class="QSlider" name="Slider_3">
     <property name="geometry">
      <rect>
       <x>1020</x>
@@ -255,7 +255,7 @@ border-radius: 30px;
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="verticalSlider_10">
+   <widget class="QSlider" name="Slider_2">
     <property name="geometry">
      <rect>
       <x>980</x>
@@ -271,7 +271,7 @@ border-radius: 30px;
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="verticalSlider_11">
+   <widget class="QSlider" name="Slider_1">
     <property name="geometry">
      <rect>
       <x>940</x>
@@ -585,19 +585,6 @@ color: rgb(255, 255, 255);</string>
      <string>0</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_21">
-    <property name="geometry">
-     <rect>
-      <x>1190</x>
-      <y>660</y>
-      <width>16</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>0</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_22">
     <property name="geometry">
      <rect>
@@ -615,19 +602,6 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>1230</x>
-      <y>650</y>
-      <width>16</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>0</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_24">
-    <property name="geometry">
-     <rect>
-      <x>1280</x>
       <y>650</y>
       <width>16</width>
       <height>21</height>
@@ -670,7 +644,7 @@ color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>1362</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -736,7 +710,7 @@ background-color: rgb(80, 80, 80);</string>
  <resources/>
  <connections>
   <connection>
-   <sender>verticalSlider_11</sender>
+   <sender>Slider_1</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_15</receiver>
    <slot>setNum(int)</slot>
@@ -752,7 +726,7 @@ background-color: rgb(80, 80, 80);</string>
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider_10</sender>
+   <sender>Slider_2</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_16</receiver>
    <slot>setNum(int)</slot>
@@ -768,7 +742,7 @@ background-color: rgb(80, 80, 80);</string>
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider_9</sender>
+   <sender>Slider_3</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_17</receiver>
    <slot>setNum(int)</slot>
@@ -784,7 +758,7 @@ background-color: rgb(80, 80, 80);</string>
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider_7</sender>
+   <sender>Slider_4</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_18</receiver>
    <slot>setNum(int)</slot>
@@ -800,7 +774,7 @@ background-color: rgb(80, 80, 80);</string>
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider_6</sender>
+   <sender>Slider_5</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_19</receiver>
    <slot>setNum(int)</slot>
@@ -816,7 +790,7 @@ background-color: rgb(80, 80, 80);</string>
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider_4</sender>
+   <sender>Slider_6</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_20</receiver>
    <slot>setNum(int)</slot>
@@ -832,7 +806,7 @@ background-color: rgb(80, 80, 80);</string>
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider_5</sender>
+   <sender>Slider_7</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_22</receiver>
    <slot>setNum(int)</slot>
@@ -848,7 +822,7 @@ background-color: rgb(80, 80, 80);</string>
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider_2</sender>
+   <sender>Slider_8</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_23</receiver>
    <slot>setNum(int)</slot>
@@ -864,7 +838,7 @@ background-color: rgb(80, 80, 80);</string>
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider</sender>
+   <sender>Slider_9</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_25</receiver>
    <slot>setNum(int)</slot>
@@ -880,7 +854,7 @@ background-color: rgb(80, 80, 80);</string>
    </hints>
   </connection>
   <connection>
-   <sender>verticalSlider_8</sender>
+   <sender>Slider_10</sender>
    <signal>valueChanged(int)</signal>
    <receiver>label_26</receiver>
    <slot>setNum(int)</slot>
