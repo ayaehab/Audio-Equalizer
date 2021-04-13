@@ -6,17 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1357</width>
-    <height>813</height>
+    <width>1362</width>
+    <height>824</height>
    </rect>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Equalizer</string>
+  </property>
+  <property name="accessibleName">
+   <string/>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(12, 12, 12);
 color: rgb(255, 255, 255);
 </string>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="PlotWidget" name="InputSignal">
@@ -25,7 +37,7 @@ color: rgb(255, 255, 255);
       <x>20</x>
       <y>30</y>
       <width>881</width>
-      <height>171</height>
+      <height>161</height>
      </rect>
     </property>
    </widget>
@@ -33,9 +45,9 @@ color: rgb(255, 255, 255);
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>210</y>
+      <y>220</y>
       <width>881</width>
-      <height>171</height>
+      <height>161</height>
      </rect>
     </property>
    </widget>
@@ -43,9 +55,9 @@ color: rgb(255, 255, 255);
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>410</y>
+      <y>420</y>
       <width>881</width>
-      <height>171</height>
+      <height>151</height>
      </rect>
     </property>
    </widget>
@@ -53,9 +65,9 @@ color: rgb(255, 255, 255);
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>590</y>
+      <y>600</y>
       <width>881</width>
-      <height>171</height>
+      <height>161</height>
      </rect>
     </property>
    </widget>
@@ -63,10 +75,13 @@ color: rgb(255, 255, 255);
     <property name="geometry">
      <rect>
       <x>1260</x>
-      <y>70</y>
+      <y>60</y>
       <width>22</width>
-      <height>571</height>
+      <height>551</height>
      </rect>
+    </property>
+    <property name="maximum">
+     <number>20</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -94,6 +109,9 @@ border-radius: 30px;</string>
     <property name="text">
      <string>Play</string>
     </property>
+    <property name="shortcut">
+     <string>Alt+P</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="enabled">
@@ -118,15 +136,21 @@ border-radius: 30px;
     <property name="text">
      <string>Stop</string>
     </property>
+    <property name="shortcut">
+     <string>Alt+S</string>
+    </property>
    </widget>
    <widget class="QSlider" name="verticalSlider_2">
     <property name="geometry">
      <rect>
       <x>1220</x>
-      <y>70</y>
+      <y>60</y>
       <width>22</width>
-      <height>571</height>
+      <height>551</height>
      </rect>
+    </property>
+    <property name="maximum">
+     <number>20</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -136,10 +160,13 @@ border-radius: 30px;
     <property name="geometry">
      <rect>
       <x>1140</x>
-      <y>70</y>
+      <y>60</y>
       <width>22</width>
-      <height>571</height>
+      <height>551</height>
      </rect>
+    </property>
+    <property name="maximum">
+     <number>20</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -149,10 +176,13 @@ border-radius: 30px;
     <property name="geometry">
      <rect>
       <x>1180</x>
-      <y>70</y>
+      <y>60</y>
       <width>22</width>
-      <height>571</height>
+      <height>551</height>
      </rect>
+    </property>
+    <property name="maximum">
+     <number>20</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -162,10 +192,13 @@ border-radius: 30px;
     <property name="geometry">
      <rect>
       <x>1100</x>
-      <y>70</y>
+      <y>60</y>
       <width>22</width>
-      <height>571</height>
+      <height>551</height>
      </rect>
+    </property>
+    <property name="maximum">
+     <number>20</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -175,10 +208,13 @@ border-radius: 30px;
     <property name="geometry">
      <rect>
       <x>1060</x>
-      <y>70</y>
+      <y>60</y>
       <width>22</width>
-      <height>571</height>
+      <height>551</height>
      </rect>
+    </property>
+    <property name="maximum">
+     <number>20</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -188,10 +224,13 @@ border-radius: 30px;
     <property name="geometry">
      <rect>
       <x>1300</x>
-      <y>70</y>
+      <y>60</y>
       <width>22</width>
-      <height>571</height>
+      <height>551</height>
      </rect>
+    </property>
+    <property name="maximum">
+     <number>20</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -201,13 +240,16 @@ border-radius: 30px;
     <property name="geometry">
      <rect>
       <x>1020</x>
-      <y>70</y>
+      <y>60</y>
       <width>22</width>
-      <height>571</height>
+      <height>551</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 86, 158, 255), stop:1 rgba(255, 255, 255, 255));</string>
+    </property>
+    <property name="maximum">
+     <number>20</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -217,10 +259,13 @@ border-radius: 30px;
     <property name="geometry">
      <rect>
       <x>980</x>
-      <y>70</y>
+      <y>60</y>
       <width>22</width>
-      <height>571</height>
+      <height>551</height>
      </rect>
+    </property>
+    <property name="maximum">
+     <number>20</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -230,10 +275,13 @@ border-radius: 30px;
     <property name="geometry">
      <rect>
       <x>940</x>
-      <y>70</y>
+      <y>60</y>
       <width>22</width>
-      <height>571</height>
+      <height>551</height>
      </rect>
+    </property>
+    <property name="maximum">
+     <number>20</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -271,17 +319,369 @@ border-radius: 30px;
      <string>Output</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>200</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Input spectrogram</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>580</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Output Spectrogram</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>620</y>
+      <width>31</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>60 Hz</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>620</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>170 Hz</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>1020</x>
+      <y>620</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>310 Hz</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>1060</x>
+      <y>620</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>600 Hz</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>1100</x>
+      <y>620</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>1 K H z</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>1140</x>
+      <y>620</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>3 KHz</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>1180</x>
+      <y>620</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>6 KHz</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_12">
+    <property name="geometry">
+     <rect>
+      <x>1220</x>
+      <y>620</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>12 KHz</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_13">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>620</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>14 KHz</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_14">
+    <property name="geometry">
+     <rect>
+      <x>1300</x>
+      <y>620</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>16 KHz</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_15">
+    <property name="geometry">
+     <rect>
+      <x>945</x>
+      <y>650</y>
+      <width>21</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_16">
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>650</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_17">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>650</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_18">
+    <property name="geometry">
+     <rect>
+      <x>1070</x>
+      <y>650</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_19">
+    <property name="geometry">
+     <rect>
+      <x>1110</x>
+      <y>650</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_20">
+    <property name="geometry">
+     <rect>
+      <x>1150</x>
+      <y>650</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_21">
+    <property name="geometry">
+     <rect>
+      <x>1190</x>
+      <y>660</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_22">
+    <property name="geometry">
+     <rect>
+      <x>1190</x>
+      <y>650</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_23">
+    <property name="geometry">
+     <rect>
+      <x>1230</x>
+      <y>650</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_24">
+    <property name="geometry">
+     <rect>
+      <x>1280</x>
+      <y>650</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_25">
+    <property name="geometry">
+     <rect>
+      <x>1270</x>
+      <y>650</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_26">
+    <property name="geometry">
+     <rect>
+      <x>1310</x>
+      <y>650</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1357</width>
-     <height>26</height>
+     <width>1362</width>
+     <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(0, 0, 0);
+alternate-background-color: rgb(74, 74, 74);</string>
+   </property>
    <widget class="QMenu" name="menufile">
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(80, 80, 80);</string>
+    </property>
     <property name="title">
      <string>File</string>
     </property>
@@ -334,5 +734,166 @@ border-radius: 30px;
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>verticalSlider_11</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_15</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>951</x>
+     <y>572</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>950</x>
+     <y>680</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_10</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_16</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>993</x>
+     <y>567</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>992</x>
+     <y>685</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_9</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_17</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1039</x>
+     <y>565</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1034</x>
+     <y>691</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_7</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_18</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1063</x>
+     <y>547</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1075</x>
+     <y>680</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_6</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_19</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1112</x>
+     <y>552</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1115</x>
+     <y>680</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_4</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_20</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1148</x>
+     <y>527</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1152</x>
+     <y>673</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_5</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_22</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1189</x>
+     <y>595</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1199</x>
+     <y>676</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_23</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1231</x>
+     <y>552</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1237</x>
+     <y>681</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_25</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1268</x>
+     <y>569</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1278</x>
+     <y>682</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>verticalSlider_8</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_26</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1312</x>
+     <y>517</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1318</x>
+     <y>685</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
