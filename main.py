@@ -20,12 +20,12 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QFileDialog, QGraphicsScene, QMessageBox
 import matplotlib
 import queue
+import shutil
 import matplotlib.ticker as ticker
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas,  NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
-
+from pdf import GeneratePDF
 matplotlib.use('Qt5Agg')
-
 
 
 class AudioEqualizer(QtWidgets.QMainWindow):
@@ -35,24 +35,12 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.ui = uic.loadUi('ui.ui', self)
 
         self.action_open.triggered.connect(lambda: self.browse_file())
+        self.actionSave_as_PDF.triggered.connect(lambda: self.create_my_pdf())
         self.action_new_win.triggered.connect(self.make_new_window)
         self.Play_Button.clicked.connect(lambda: self.play())
         self.Stop_Button.clicked.connect(lambda: self.stop())
         self.pens = [pg.mkPen('r'), pg.mkPen('b'), pg.mkPen('g')]
-        # Ch1 input, Ch2 output
-        # Signals Menu
-
-        #Channel selection isn't necessary #######################
-
-        # self.InputSignal.triggered.connect(
-        #     lambda checked: (self.select_channel(1)))
-        # self.InputSpectro.triggered.connect(
-        #     lambda checked: (self.select_channel(2)))
-        # self.OutputSignal_2.triggered.connect(
-        #     lambda checked: (self.select_channel(3)))
-        # self.OutputSpectro.triggered.connect(
-        #     lambda checked: (self.select_channel(4)))
-
+        
         self.sliderList = [self.Slider_1, self.Slider_2, self.Slider_3, self.Slider_4, self.Slider_5,
                            self.Slider_6, self.Slider_7, self.Slider_8, self.Slider_9, self.Slider_10]
 
@@ -113,7 +101,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         viewer.setLimits(xMin=0, xMax=t[-1], yMin=0, yMax=f[-1])
         # Add labels to the axis
         viewer.setLabel('bottom', "Time", units='s')
-        # Include the units automatically scales the axis and adjusts the SI prefix (in this case kHz)
+        # Include the units automatimy_pdfy scales the axis and adjusts the SI prefix (in this case kHz)
         viewer.setLabel('left', "Frequency", units='Hz')
 
         ################# Coloring Spectrogram ############
@@ -131,7 +119,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 
 # Open (.wav ) file, read it using Scipy Lib, and plot it in inputSignal Viewer
-
 
     def browse_file(self):
         self.selected_file = QtGui.QFileDialog.getOpenFileName(
@@ -162,10 +149,43 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                 xMin=0, xMax=500000, yMin=-200000, yMax=200000)
             # Plot the spectrogram for the input in InputSpectro Viewer
             self.plot_spectrogram(self.data[:, 0], self.InputSpectro)
+            self.plot_spectrogram(self.data[:, 1], self.OutputSignal)
+            self.plot_spectrogram(self.data[:, 1], self.OutputSpectro)
 
         else:
             QMessageBox.warning(self.centralWidget,
                                 'you must select .wav file')
+
+    # Generating the PDF
+
+    # this funcition for the button, when pressed 4 images exported, pdf generated, then the pictures get deleted
+
+    def create_my_pdf(self):
+        if self.InputSignal.scene():
+            #export all items in all viewers as images 
+            exporter1 = pg.exporters.ImageExporter(self.InputSignal.scene())
+            exporter1.export('input_signal.png')
+
+            exporter3 = pg.exporters.ImageExporter(self.OutputSignal.scene())
+            exporter3.export('output_signal.png')
+
+            exporter2 = pg.exporters.ImageExporter(self.InputSpectro.scene())
+            exporter2.export('input_spectro.png')
+
+            exporter4 = pg.exporters.ImageExporter(self.OutputSpectro.scene())
+            exporter4.export('output_spectro.png')
+
+            my_pdf = GeneratePDF()
+            my_pdf.create_pdf()
+            my_pdf.save_pdf()
+
+            # delete created images after generating PDF file ##### NOT YET ######
+
+            # if os.path.exists("Audio Equalizer.pdf"):
+            #     os.remove("input_signal.png")
+            #     os.remove("output_signal.png")
+            #     os.remove("input_spectro.png")
+            #     os.remove("output_spectro.png")
 
     def get_extention(self, s):
         for i in range(1, len(s)):
@@ -196,6 +216,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 
 #*******************************************END OF Fourrier**************************************#
+
 
     def equalizer(self):
         self.fMagnitude = self.get_fft()[1]
@@ -228,31 +249,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.inverse = np.fft.irfft(finalSignal)
         self.OutputSignal.setYRange(min(self.inverse), max(self.inverse))
         self.OutputSignal.plot(self.inverse, pen=pg.mkPen('y'))
-
-    # def select_channel(self, channel):
-    #     if channel == 1:
-    #         self.InputSignal.setChecked(True)
-    #         self.InputSpectro.setChecked(False)
-    #         self.OutputSignal_2.setChecked(False)
-    #         self.OutputSpectro.setChecked(False)
-
-    #     elif channel == 2:
-    #         self.InputSignal.setChecked(False)
-    #         self.InputSpectro.setChecked(True)
-    #         self.OutputSignal_2.setChecked(False)
-    #         self.OutputSpectro.setChecked(False)
-
-    #     elif channel == 3:
-    #         self.InputSignal.setChecked(False)
-    #         self.InputSpectro.setChecked(False)
-    #         self.OutputSignal_2.setChecked(True)
-    #         self.OutputSpectro.setChecked(False)
-
-    #     elif channel == 4:
-    #         self.InputSignal.setChecked(False)
-    #         self.InputSpectro.setChecked(False)
-    #         self.OutputSignal_2.setChecked(False)
-    #         self.OutputSpectro.setChecked(True)
 
     def play(self):
         sd.play(self.data, self.samplerate)
