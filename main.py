@@ -41,12 +41,13 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.action_new_win.triggered.connect(self.make_new_window)
         self.actionSave_as_PDF.triggered.connect(lambda: self.create_my_pdf())
         self.action_clear.triggered.connect(lambda: self.clear_all())
-        
+        '''
         self.right_button.clicked.connect(lambda: self.Scroll_right())
         self.left_button.clicked.connect(lambda: self.Scroll_left())
+        '''
         self.up_button.clicked.connect(lambda: self.Scroll_up())
         self.down_button.clicked.connect(lambda: self.Scroll_down())
-
+        
         self.zoom_in.clicked.connect(lambda: self.zoomin())
         self.zoom_out.clicked.connect(lambda: self.zoomout())
         
@@ -294,7 +295,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
    
     #scrolling function connected to scroll buttons based on which channel is controlled
-    def Scroll_right(self):
+    '''
+   def Scroll_right(self):
         
         if self.Channel1.isChecked():
             
@@ -322,7 +324,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self.range = self.OutputSignal.getViewBox().viewRange()
             if self.range[0][0] > min(self.x2) :
                 self.OutputSignal.getViewBox().translateBy(x=-1, y=0)
-
+    '''
 
     def Scroll_up(self):
         
