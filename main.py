@@ -34,7 +34,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.ui = uic.loadUi('ui.ui', self)
+        self.ui = uic.loadUi('GUI.ui', self)
 
         #Connecting
         self.action_open.triggered.connect(lambda: self.browse_file())
