@@ -24,9 +24,10 @@ import matplotlib.ticker as ticker
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas,  NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 from pdf import GeneratePDF
-import img_rc  # for gui
+import img_rc #for gui
 
 matplotlib.use('Qt5Agg')
+
 
 
 class AudioEqualizer(QtWidgets.QMainWindow):
@@ -35,37 +36,38 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         super().__init__()
         self.ui = uic.loadUi('ui.ui', self)
 
+        #Connecting
         self.action_open.triggered.connect(lambda: self.browse_file())
         self.action_new_win.triggered.connect(self.make_new_window)
         self.actionSave_as_PDF.triggered.connect(lambda: self.create_my_pdf())
+        self.action_clear.triggered.connect(lambda: self.clear_all())
+        
+        self.right_button.clicked.connect(lambda: self.Scroll_right())
+        self.left_button.clicked.connect(lambda: self.Scroll_left())
+        self.up_button.clicked.connect(lambda: self.Scroll_up())
+        self.down_button.clicked.connect(lambda: self.Scroll_down())
+
+        self.zoom_in.clicked.connect(lambda: self.zoomin())
+        self.zoom_out.clicked.connect(lambda: self.zoomout())
+        
         self.Play_Button.clicked.connect(lambda: self.play())
         self.Stop_Button.clicked.connect(lambda: self.stop())
         self.pens = [pg.mkPen('r'), pg.mkPen('b'), pg.mkPen('g')]
-
+        
         self.sliderList = [self.Slider_1, self.Slider_2, self.Slider_3, self.Slider_4, self.Slider_5,
                            self.Slider_6, self.Slider_7, self.Slider_8, self.Slider_9, self.Slider_10]
 
-        self.sliderList[0].valueChanged.connect(lambda: self.equalizer())
-        self.sliderList[1].valueChanged.connect(lambda: self.equalizer())
-        self.sliderList[2].valueChanged.connect(lambda: self.equalizer())
-        self.sliderList[3].valueChanged.connect(lambda: self.equalizer())
-        self.sliderList[4].valueChanged.connect(lambda: self.equalizer())
-        self.sliderList[5].valueChanged.connect(lambda: self.equalizer())
-        self.sliderList[6].valueChanged.connect(lambda: self.equalizer())
-        self.sliderList[7].valueChanged.connect(lambda: self.equalizer())
-        self.sliderList[8].valueChanged.connect(lambda: self.equalizer())
-        self.sliderList[9].valueChanged.connect(lambda: self.equalizer())
+        for i in range(10):
+            self.sliderList[i].valueChanged.connect(lambda: self.equalizer())
 
         self.mbands = []
         self.fbands = []
-        self.gain = [self.sliderList[0].value(), self.sliderList[1].value(), self.sliderList[2].value(),
-                     self.sliderList[3].value(), self.sliderList[4].value(
-        ), self.sliderList[5].value(),
-            self.sliderList[6].value(), self.sliderList[7].value(), self.sliderList[8].value(), self.sliderList[9].value()]
+        self.gain = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
     def make_new_window(self):
         self.new_win = AudioEqualizer()
         self.new_win.show()
+
 
     def plot_spectrogram(self, data_col, viewer):
         # im not sure how to compute fs, default value for this task will be 10e3
@@ -133,7 +135,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         if self.file_ext == 'wav':
             # Read selected wav file
             self.samplerate, self.data = wavfile.read(path)
-            np.array(self.data)
+
             self.length = self.data.shape[0]  # number of samples
             # The duration is equal to the number of frames divided by the framerate (frames per second)
             self.duration = (self.length / self.samplerate)
@@ -143,24 +145,14 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
             self.freq = fftfreq(self.length, 1 / self.samplerate)
 
-            if np.ndim(self.data) == 2:
-                # Plot first channel's signal
-                self.InputSignal.plot(
-                    self.time, self.data[:, 0], pen=self.pens[0])
-                # # Plot second channel's signal on the first one with different color
-                self.InputSignal.plot(
-                    self.time, self.data[:, 1], pen=self.pens[1])
-                # Plot the spectrogram for the input in InputSpectro Viewer
-                self.plot_spectrogram(self.data[:, 0], self.InputSpectro)
-            elif np.ndim(self.data) == 1:
-                self.InputSignal.plot(self.time, self.data, pen=pg.mkPen('r'))
-                self.plot_spectrogram(self.data, self.InputSpectro)
-            else:
-                QMessageBox.warning(self.centralWidget,
-                                    "Your .wav file cannot be plotted")
-
+            # Plot first channel's signal
+            self.InputSignal.plot(self.time, self.data[:, 0], pen=self.pens[0])
+            # # Plot second channel's signal on the first one with different color
+            self.InputSignal.plot(self.time, self.data[:, 1], pen=self.pens[1])
             self.InputSignal.setLimits(
                 xMin=0, xMax=500000, yMin=-200000, yMax=200000)
+            # Plot the spectrogram for the input in InputSpectro Viewer
+            self.plot_spectrogram(self.data[:, 0], self.InputSpectro)
 
         else:
             QMessageBox.warning(self.centralWidget,
@@ -172,7 +164,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
     def create_my_pdf(self):
         if self.InputSignal.scene():
-            # export all items in all viewers as images
+            #export all items in all viewers as images 
             exporter1 = pg.exporters.ImageExporter(self.InputSignal.scene())
             exporter1.export('input_signal.png')
 
@@ -227,9 +219,15 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 #*******************************************END OF Fourrier**************************************#
 
+
+
+#*******************************************Equalizer**************************************#
     def equalizer(self):
+        self.OutputSignal.clear()
+
+        self.OutputSpectro.clear()
+
         self.fMagnitude = self.get_fft()[1]
-        self.fPhase = self.get_fft()[2]
 
         self.mvaluePerBand = int(len(self.fMagnitude)/10)
 
@@ -246,6 +244,11 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self.fbands.append(
                 self.freq[i * self.fvaluePerBand: min(len(self.freq)+1, (i+1)*self.fvaluePerBand)])
 
+        for i in range(10):
+            self.gain[i] = self.sliderList[i].value()
+
+        print(self.gain)
+
         for index in range(10):
             # we changed it to np.array so we can multiply the value by value not multipling the list that will generate repetation of value not multplication
             Magnified_Magnitued = self.gain[index] * (self.mbands[index])
@@ -253,18 +256,102 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         for band in self.newMagnitude:
             for magnitude in band:
-                self.outputSignal.append(magnitude)
-
-        finalSignal = np.multiply(self.fPhase, self.outputSignal)
+                self.outputSignal.append(magnitude)  
+        #get_fft()[2] == fftPhase
+        finalSignal = np.multiply(self.get_fft()[2], self.outputSignal) 
         self.inverse = np.fft.irfft(finalSignal)
         self.OutputSignal.setYRange(min(self.inverse), max(self.inverse))
         self.OutputSignal.plot(self.inverse, pen=pg.mkPen('y'))
+        self.plot_spectrogram(self.inverse, self.OutputSpectro)
+
+#*******************************************End of Equalizer**************************************#        
 
     def play(self):
         sd.play(self.data, self.samplerate)
 
     def stop(self):
         sd.stop()
+        
+        
+#***********************************************toolbar**********************************************#
+
+    # Zoomin function connected to Zoomin button based on which channel is controlled
+    def zoomin(self):
+        if self.Channel1.isChecked():
+            self.InputSignal.plotItem.getViewBox().scaleBy((0.5, 0.5))
+
+        if self.Channel2.isChecked():
+            self.OutputSignal.plotItem.getViewBox().scaleBy((0.5, 0.5))
+
+
+    # Zoomout function connected to zoomout button based on which channel is controlled
+    def zoomout(self):
+        if self.Channel1.isChecked():
+            self.InputSignal.plotItem.getViewBox().scaleBy((1.5, 1.5))
+
+        if self.Channel2.isChecked():
+            self.OutputSignal.plotItem.getViewBox().scaleBy((1.5, 1.5))
+
+   
+    #scrolling function connected to scroll buttons based on which channel is controlled
+    def Scroll_right(self):
+        
+        if self.Channel1.isChecked():
+            
+            self.range = self.InputSignal.getViewBox().viewRange()
+            if self.range[0][1] < max(self.time) :
+                self.InputSignal.getViewBox().translateBy(x=+1, y=0)
+
+        if self.Channel2.isChecked():
+            
+            self.range = self.OutputSignal.getViewBox().viewRange()
+            if self.range[0][1] < max(self.x2) :
+                self.OutputSignal.getViewBox().translateBy(x=+1, y=0)
+
+
+    def Scroll_left(self):
+        
+        if self.Channel1.isChecked():
+            
+            self.range = self.InputSignal.getViewBox().viewRange()
+            if self.range[0][0] > min(self.time) :
+                self.InputSignal.getViewBox().translateBy(x=-1, y=0)
+
+        if self.Channel2.isChecked():
+            
+            self.range = self.OutputSignal.getViewBox().viewRange()
+            if self.range[0][0] > min(self.x2) :
+                self.OutputSignal.getViewBox().translateBy(x=-1, y=0)
+
+
+    def Scroll_up(self):
+        
+        if self.Channel1.isChecked():
+          
+            self.range = self.InputSignal.getViewBox().viewRange()
+            if self.range[1][1] < max(self.data) :
+                self.InputSignal.getViewBox().translateBy(x=0, y=+0.2)
+
+        if self.Channel2.isChecked():
+            
+            self.range = self.OutputSignal.getViewBox().viewRange()
+            if self.range[1][1] < max(self.inverse) :
+                self.OutputSignal.getViewBox().translateBy(x=0, y=+0.2)
+
+
+    def Scroll_down(self):
+        
+        if self.Channel1.isChecked():
+            
+            self.range = self.InputSignal.getViewBox().viewRange()
+            if self.range[1][0] > min(self.data) :
+                self.InputSignal.getViewBox().translateBy(x=0, y=-0.2)
+
+        if self.Channel2.isChecked():
+            
+            self.range = self.OutputSignal.getViewBox().viewRange()
+            if self.range[1][0] > min(self.inverse) :
+                self.OutputSignal.getViewBox().translateBy(x=0, y=-0.2)
 
 
 def main():
