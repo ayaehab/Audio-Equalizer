@@ -61,12 +61,12 @@ color: rgb(255, 255, 255);
       <height>0</height>
      </size>
     </property>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>5</x>
        <y>10</y>
-       <width>75</width>
+       <width>388</width>
        <height>791</height>
       </rect>
      </property>
@@ -101,7 +101,7 @@ color: rgb(255, 255, 255);
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>81</x>
@@ -129,6 +129,181 @@ color: rgb(255, 255, 255);
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="geometry">
+          <rect>
+           <x>-70</x>
+           <y>130</y>
+           <width>1357</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> QGroupBox {
+    background-color: white;
+}</string>
+         </property>
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QPushButton" name="up_button">
+              <property name="styleSheet">
+               <string notr="true">QPushButton { background-color: white; }</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../Task1/Signal_Viewer/img.qrc">
+                <normaloff>:/img/uparrw-Copy.png</normaloff>:/img/uparrw-Copy.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="shortcut">
+               <string>Up</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="down_button">
+              <property name="styleSheet">
+               <string notr="true">QPushButton { background-color: white; }</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../Task1/Signal_Viewer/img.qrc">
+                <normaloff>:/img/dwnarrw.png</normaloff>:/img/dwnarrw.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="shortcut">
+               <string>Down</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="left_button">
+              <property name="styleSheet">
+               <string notr="true">QPushButton { background-color: white; }</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../Task1/Signal_Viewer/img.qrc">
+                <normaloff>:/img/larrw.png</normaloff>:/img/larrw.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="shortcut">
+               <string>Left</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="right_button">
+              <property name="styleSheet">
+               <string notr="true">QPushButton { background-color: white; }</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../Task1/Signal_Viewer/img.qrc">
+                <normaloff>:/img/Rarrw.png</normaloff>:/img/Rarrw.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="shortcut">
+               <string>Right</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="zoom_out">
+              <property name="styleSheet">
+               <string notr="true">QPushButton { background-color: white; }</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../Task1/Signal_Viewer/img.qrc">
+                <normaloff>:/img/zoomout.JPG</normaloff>:/img/zoomout.JPG</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="shortcut">
+               <string>Ctrl+O</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="zoom_in">
+              <property name="styleSheet">
+               <string notr="true">QPushButton { background-color: white; }</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../Task1/Signal_Viewer/img.qrc">
+                <normaloff>:/img/zoomin.JPG</normaloff>:/img/zoomin.JPG</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="shortcut">
+               <string>Ctrl+I</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>798</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
       <item row="1" column="0">
@@ -165,13 +340,13 @@ color: rgb(255, 255, 255);
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>1207</x>
        <y>710</y>
-       <width>346</width>
-       <height>20</height>
+       <width>416</width>
+       <height>23</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -181,6 +356,7 @@ color: rgb(255, 255, 255);
          <font>
           <family>MS Shell Dlg 2</family>
           <pointsize>6</pointsize>
+          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -281,6 +457,7 @@ color: rgb(255, 255, 255);</string>
          <font>
           <family>MS Shell Dlg 2</family>
           <pointsize>6</pointsize>
+          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -299,6 +476,7 @@ color: rgb(255, 255, 255);</string>
          <font>
           <family>MS Shell Dlg 2</family>
           <pointsize>10</pointsize>
+          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -317,6 +495,7 @@ color: rgb(255, 255, 255);</string>
          <font>
           <family>MS Shell Dlg 2</family>
           <pointsize>10</pointsize>
+          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -331,7 +510,7 @@ color: rgb(255, 255, 255);</string>
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>1209</x>
@@ -427,12 +606,12 @@ color: rgb(255, 255, 255);</string>
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>1210</x>
        <y>10</y>
-       <width>332</width>
+       <width>343</width>
        <height>691</height>
       </rect>
      </property>
@@ -643,13 +822,13 @@ color: rgb(255, 255, 255);</string>
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>1290</x>
        <y>760</y>
        <width>201</width>
-       <height>32</height>
+       <height>37</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -719,7 +898,7 @@ border-radius: 30px;
      <x>0</x>
      <y>0</y>
      <width>1610</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -762,8 +941,16 @@ background-color: rgb(80, 80, 80);</string>
     <addaction name="actionPalette_4"/>
     <addaction name="actionPalette_5"/>
    </widget>
+   <widget class="QMenu" name="menuChannels">
+    <property name="title">
+     <string>Channels</string>
+    </property>
+    <addaction name="Channel1"/>
+    <addaction name="Channel2"/>
+   </widget>
    <addaction name="menufile"/>
    <addaction name="menuColor_Palette"/>
+   <addaction name="menuChannels"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_new_win">
@@ -852,15 +1039,33 @@ background-color: rgb(80, 80, 80);</string>
     <string>Ctrl+Shift+S</string>
    </property>
   </action>
+  <action name="Channel1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Channel 1</string>
+   </property>
+  </action>
+  <action name="Channel2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Channel 2</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
    <class>PlotWidget</class>
    <extends>QGraphicsView</extends>
-   <header location="global">pyqtgraph</header>
+   <header>pyqtgraph</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../Task1/Signal_Viewer/img.qrc"/>
+ </resources>
  <connections/>
 </ui>

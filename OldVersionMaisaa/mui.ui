@@ -815,7 +815,7 @@ color: rgb(255, 255, 255);</string>
      <x>0</x>
      <y>0</y>
      <width>1446</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -934,6 +934,9 @@ background-color: rgb(80, 80, 80);</string>
    </property>
   </action>
   <action name="Channel1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Channel1</string>
    </property>
@@ -942,6 +945,9 @@ background-color: rgb(80, 80, 80);</string>
    </property>
   </action>
   <action name="Channel2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Channel2</string>
    </property>

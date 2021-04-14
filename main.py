@@ -24,6 +24,7 @@ import matplotlib.ticker as ticker
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas,  NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 from pdf import GeneratePDF
+import img_rc #for gui
 
 matplotlib.use('Qt5Agg')
 
