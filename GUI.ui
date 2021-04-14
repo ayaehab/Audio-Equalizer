@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1610</width>
+    <width>1390</width>
     <height>875</height>
    </rect>
   </property>
@@ -39,7 +39,7 @@ color: rgb(255, 255, 255);
      <rect>
       <x>9</x>
       <y>9</y>
-      <width>1571</width>
+      <width>1361</width>
       <height>821</height>
      </rect>
     </property>
@@ -64,10 +64,10 @@ color: rgb(255, 255, 255);
     <widget class="QGroupBox" name="groupBox">
      <property name="geometry">
       <rect>
-       <x>370</x>
-       <y>740</y>
-       <width>301</width>
-       <height>61</height>
+       <x>994</x>
+       <y>760</y>
+       <width>281</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -253,74 +253,6 @@ color: rgb(255, 255, 255);
       </property>
      </widget>
     </widget>
-    <widget class="QPushButton" name="Stop_Button">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>1394</x>
-       <y>761</y>
-       <width>43</width>
-       <height>30</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 86, 158, 255), stop:1 rgba(255, 255, 255, 255));
-color: rgb(0, 0, 0);
-font: 63 14pt &quot;Yu Gothic UI Semibold&quot;;
-border: 2px solid #555;
-border-radius: 30px;
-</string>
-     </property>
-     <property name="text">
-      <string>Stop</string>
-     </property>
-     <property name="shortcut">
-      <string>Alt+S</string>
-     </property>
-     <property name="flat">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Play_Button">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>1291</x>
-       <y>761</y>
-       <width>40</width>
-       <height>30</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 86, 158, 255), stop:1 rgba(255, 255, 255, 255));
-color: rgb(0, 0, 0);
-font: 63 14pt &quot;Yu Gothic UI Semibold&quot;;
-border: 2px solid #555;
-border-radius: 30px;</string>
-     </property>
-     <property name="text">
-      <string>Play</string>
-     </property>
-     <property name="shortcut">
-      <string>Alt+P</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="InputLabel">
      <property name="geometry">
       <rect>
@@ -449,670 +381,586 @@ border-radius: 30px;</string>
       </brush>
      </property>
     </widget>
-    <widget class="QSlider" name="Slider_1">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>1211</x>
-       <y>11</y>
-       <width>22</width>
-       <height>84</height>
+       <x>940</x>
+       <y>690</y>
+       <width>411</width>
+       <height>20</height>
       </rect>
      </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>5</number>
-     </property>
-     <property name="singleStep">
-      <number>1</number>
-     </property>
-     <property name="value">
-      <number>0</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="Gain1Label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Gain2Label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Gain3Label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Gain4Label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Gain5Label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Gain6Label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Gain7Label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Gain8Label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Gain9Label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Gain10Label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="GainMinLabel">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="GainMaxLabel">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
-    <widget class="QSlider" name="Slider_3">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>1269</x>
-       <y>11</y>
-       <width>22</width>
-       <height>84</height>
+       <x>934</x>
+       <y>670</y>
+       <width>411</width>
+       <height>17</height>
       </rect>
      </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 86, 158, 255), stop:1 rgba(255, 255, 255, 255));</string>
-     </property>
-     <property name="maximum">
-      <number>5</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="Slider_2">
-     <property name="geometry">
-      <rect>
-       <x>1240</x>
-       <y>11</y>
-       <width>22</width>
-       <height>84</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>5</number>
-     </property>
-     <property name="sliderPosition">
-      <number>0</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="Slider_5">
-     <property name="geometry">
-      <rect>
-       <x>1327</x>
-       <y>11</y>
-       <width>22</width>
-       <height>84</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>5</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="Slider_7">
-     <property name="geometry">
-      <rect>
-       <x>1384</x>
-       <y>11</y>
-       <width>22</width>
-       <height>84</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>5</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="Slider_6">
-     <property name="geometry">
-      <rect>
-       <x>1356</x>
-       <y>11</y>
-       <width>22</width>
-       <height>84</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>5</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="Slider_4">
-     <property name="geometry">
-      <rect>
-       <x>1298</x>
-       <y>11</y>
-       <width>22</width>
-       <height>84</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>5</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="Slider_9">
-     <property name="geometry">
-      <rect>
-       <x>1442</x>
-       <y>11</y>
-       <width>22</width>
-       <height>84</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>5</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="Slider_10">
-     <property name="geometry">
-      <rect>
-       <x>1471</x>
-       <y>11</y>
-       <width>22</width>
-       <height>84</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>5</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="Slider_8">
-     <property name="geometry">
-      <rect>
-       <x>1413</x>
-       <y>11</y>
-       <width>22</width>
-       <height>84</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>5</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="Slider_11">
-     <property name="geometry">
-      <rect>
-       <x>1500</x>
-       <y>11</y>
-       <width>22</width>
-       <height>84</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>5</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-    <widget class="QSlider" name="Slider_12">
-     <property name="geometry">
-      <rect>
-       <x>1529</x>
-       <y>11</y>
-       <width>22</width>
-       <height>84</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximum">
-      <number>5</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-    <widget class="QLabel" name="GainMinLabel">
-     <property name="geometry">
-      <rect>
-       <x>1440</x>
-       <y>730</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="GainMaxLabel">
-     <property name="geometry">
-      <rect>
-       <x>1468</x>
-       <y>730</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Gain1Label">
-     <property name="geometry">
-      <rect>
-       <x>1152</x>
-       <y>730</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Gain3Label">
-     <property name="geometry">
-      <rect>
-       <x>1210</x>
-       <y>730</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Gain4Label">
-     <property name="geometry">
-      <rect>
-       <x>1238</x>
-       <y>730</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Gain2Label">
-     <property name="geometry">
-      <rect>
-       <x>1181</x>
-       <y>730</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Gain7Label">
-     <property name="geometry">
-      <rect>
-       <x>1325</x>
-       <y>730</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Gain6Label">
-     <property name="geometry">
-      <rect>
-       <x>1296</x>
-       <y>730</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Gain5Label">
-     <property name="geometry">
-      <rect>
-       <x>1267</x>
-       <y>730</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Gain10Label">
-     <property name="geometry">
-      <rect>
-       <x>1411</x>
-       <y>730</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Gain9Label">
-     <property name="geometry">
-      <rect>
-       <x>1382</x>
-       <y>730</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Gain8Label">
-     <property name="geometry">
-      <rect>
-       <x>1353</x>
-       <y>730</y>
-       <width>16</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Slider6Label">
-     <property name="geometry">
-      <rect>
-       <x>1320</x>
-       <y>710</y>
-       <width>21</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
-     </property>
-     <property name="text">
-      <string>3 KHz</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Slider8Label">
-     <property name="geometry">
-      <rect>
-       <x>1390</x>
-       <y>710</y>
-       <width>25</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
-     </property>
-     <property name="text">
-      <string>12 KHz</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Slider5Label">
-     <property name="geometry">
-      <rect>
-       <x>1285</x>
-       <y>710</y>
-       <width>23</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
-     </property>
-     <property name="text">
-      <string>1 K Hz</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Slider9Label">
-     <property name="geometry">
-      <rect>
-       <x>1425</x>
-       <y>710</y>
-       <width>25</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
-     </property>
-     <property name="text">
-      <string>14 KHz</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="SliderMinLabel">
-     <property name="geometry">
-      <rect>
-       <x>1495</x>
-       <y>710</y>
-       <width>21</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>MS Shell Dlg 2</family>
-       <pointsize>10</pointsize>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
-     </property>
-     <property name="text">
-      <string>min</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Slider3Label">
-     <property name="geometry">
-      <rect>
-       <x>1215</x>
-       <y>710</y>
-       <width>24</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>310 Hz</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Slider1Label">
-     <property name="geometry">
-      <rect>
-       <x>1145</x>
-       <y>710</y>
-       <width>20</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>MS Shell Dlg 2</family>
-       <pointsize>6</pointsize>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="Slider1Label">
+        <property name="font">
+         <font>
+          <family>MS Shell Dlg 2</family>
+          <pointsize>6</pointsize>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
 font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
-     </property>
-     <property name="text">
-      <string>60 Hz</string>
-     </property>
+        </property>
+        <property name="text">
+         <string>60 Hz</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Slider2Label">
+        <property name="styleSheet">
+         <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>170 Hz</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Slider3Label">
+        <property name="styleSheet">
+         <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>310 Hz</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Slider4Label">
+        <property name="styleSheet">
+         <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>600 Hz</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Slider5Label">
+        <property name="styleSheet">
+         <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>1 K Hz</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Slider6Label">
+        <property name="styleSheet">
+         <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>3 KHz</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Slider7Label">
+        <property name="styleSheet">
+         <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>6 KHz</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Slider8Label">
+        <property name="styleSheet">
+         <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>12 KHz</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Slider9Label">
+        <property name="styleSheet">
+         <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>14 KHz</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Slider10Label">
+        <property name="font">
+         <font>
+          <family>MS Shell Dlg 2</family>
+          <pointsize>6</pointsize>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>16 KHz</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="SliderMinLabel">
+        <property name="font">
+         <font>
+          <family>MS Shell Dlg 2</family>
+          <pointsize>10</pointsize>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>min</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="SliderMaxLabel">
+        <property name="font">
+         <font>
+          <family>MS Shell Dlg 2</family>
+          <pointsize>10</pointsize>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>max</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
-    <widget class="QLabel" name="SliderMaxLabel">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>1530</x>
-       <y>710</y>
-       <width>25</width>
-       <height>16</height>
+       <x>934</x>
+       <y>10</y>
+       <width>411</width>
+       <height>651</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <family>MS Shell Dlg 2</family>
-       <pointsize>10</pointsize>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
-     </property>
-     <property name="text">
-      <string>max</string>
-     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QSlider" name="Slider_1">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="singleStep">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="Slider_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="sliderPosition">
+         <number>0</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="Slider_3">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 86, 158, 255), stop:1 rgba(255, 255, 255, 255));</string>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="Slider_4">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="Slider_5">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="Slider_6">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="Slider_7">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="Slider_8">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="Slider_9">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="Slider_10">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="Slider_11">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="Slider_12">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
-    <widget class="QLabel" name="Slider7Label">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>1355</x>
-       <y>710</y>
-       <width>21</width>
-       <height>16</height>
+       <x>1004</x>
+       <y>720</y>
+       <width>261</width>
+       <height>32</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
-     </property>
-     <property name="text">
-      <string>6 KHz</string>
-     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QPushButton" name="Play_Button">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 86, 158, 255), stop:1 rgba(255, 255, 255, 255));
+color: rgb(0, 0, 0);
+font: 63 14pt &quot;Yu Gothic UI Semibold&quot;;
+border: 2px solid #555;
+border-radius: 30px;</string>
+        </property>
+        <property name="text">
+         <string>Play</string>
+        </property>
+        <property name="shortcut">
+         <string>Alt+P</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="Stop_Button">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 86, 158, 255), stop:1 rgba(255, 255, 255, 255));
+color: rgb(0, 0, 0);
+font: 63 14pt &quot;Yu Gothic UI Semibold&quot;;
+border: 2px solid #555;
+border-radius: 30px;
+</string>
+        </property>
+        <property name="text">
+         <string>Stop</string>
+        </property>
+        <property name="shortcut">
+         <string>Alt+S</string>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
-    <widget class="QLabel" name="Slider10Label">
-     <property name="geometry">
-      <rect>
-       <x>1460</x>
-       <y>710</y>
-       <width>25</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>MS Shell Dlg 2</family>
-       <pointsize>6</pointsize>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
-     </property>
-     <property name="text">
-      <string>16 KHz</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Slider4Label">
-     <property name="geometry">
-      <rect>
-       <x>1250</x>
-       <y>710</y>
-       <width>24</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
-     </property>
-     <property name="text">
-      <string>600 Hz</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="Slider2Label">
-     <property name="geometry">
-      <rect>
-       <x>1180</x>
-       <y>710</y>
-       <width>24</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
-     </property>
-     <property name="text">
-      <string>170 Hz</string>
-     </property>
-    </widget>
-    <zorder>layoutWidget</zorder>
-    <zorder>layoutWidget</zorder>
-    <zorder>layoutWidget</zorder>
-    <zorder>layoutWidget</zorder>
-    <zorder>layoutWidget</zorder>
-    <zorder>layoutWidget</zorder>
+    <zorder>Stop_Button</zorder>
+    <zorder>Play_Button</zorder>
+    <zorder>InputLabel</zorder>
+    <zorder>OutputLabel</zorder>
+    <zorder>InputSpecLabel</zorder>
+    <zorder>OutputSpecLabel</zorder>
+    <zorder>InputSignal</zorder>
+    <zorder>OutputSpectro</zorder>
+    <zorder>OutputSignal</zorder>
+    <zorder>InputSpectro</zorder>
+    <zorder>Slider_1</zorder>
+    <zorder>Slider_3</zorder>
+    <zorder>Slider_2</zorder>
+    <zorder>Slider_5</zorder>
+    <zorder>Slider_7</zorder>
+    <zorder>Slider_6</zorder>
+    <zorder>Slider_4</zorder>
+    <zorder>Slider_9</zorder>
+    <zorder>Slider_10</zorder>
+    <zorder>Slider_8</zorder>
+    <zorder>Slider_11</zorder>
+    <zorder>Slider_12</zorder>
+    <zorder>GainMinLabel</zorder>
+    <zorder>GainMaxLabel</zorder>
+    <zorder>Gain1Label</zorder>
+    <zorder>Gain3Label</zorder>
+    <zorder>Gain4Label</zorder>
+    <zorder>Gain2Label</zorder>
+    <zorder>Gain7Label</zorder>
+    <zorder>Gain6Label</zorder>
+    <zorder>Gain5Label</zorder>
+    <zorder>Gain10Label</zorder>
+    <zorder>Gain9Label</zorder>
+    <zorder>Gain8Label</zorder>
     <zorder>Slider6Label</zorder>
     <zorder>Slider8Label</zorder>
     <zorder>Slider5Label</zorder>
@@ -1133,7 +981,7 @@ font: 6pt &quot;MS Shell Dlg 2&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1610</width>
+     <width>1390</width>
      <height>22</height>
     </rect>
    </property>
