@@ -1,34 +1,31 @@
+import sounddevice as sd
+from librosa import display
+import librosa
+import scipy.io
+from scipy.io import wavfile
+import pyqtgraph.exporters
+from reportlab.pdfgen import canvas
+import matplotlib.pyplot as plt
+from scipy import signal
+import os
+import pyqtgraph as pg
+from pyqtgraph import PlotWidget, PlotItem
+import pandas as pd
+from scipy.fft import fftfreq
+from numpy.fft import fft, ifft
+import numpy as np
+import sys
 from PyQt5 import QtCore, QtWidgets, QtGui, uic
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QFileDialog, QGraphicsScene, QMessageBox
-
+import matplotlib
 import queue
 import matplotlib.ticker as ticker
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas, FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas,  NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 
-
-import sys
-import numpy as np
-from numpy.fft import fft, ifft
-from scipy.fft import fftfreq
-import pandas as pd
-from pyqtgraph import PlotWidget, PlotItem
-import pyqtgraph as pg
-import os
-from scipy import signal
-import matplotlib.pyplot as plt
-from reportlab.pdfgen import canvas
-import pyqtgraph.exporters
-from scipy.io import wavfile
-import scipy.io
-import librosa
-from librosa import display
-import sounddevice as sd
-
-
-import matplotlib
 matplotlib.use('Qt5Agg')
+
 
 
 class AudioEqualizer(QtWidgets.QMainWindow):
@@ -37,19 +34,24 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         super().__init__()
         self.ui = uic.loadUi('ui.ui', self)
 
-        self.actionOpen_2.triggered.connect(lambda: self.open_file())
-        self.actionOpen.triggered.connect(self.new_window)
-
+        self.action_open.triggered.connect(lambda: self.browse_file())
+        self.action_new_win.triggered.connect(self.make_new_window)
         self.Play_Button.clicked.connect(lambda: self.play())
-
         self.Stop_Button.clicked.connect(lambda: self.stop())
-
+        self.pens = [pg.mkPen('r'), pg.mkPen('b'), pg.mkPen('g')]
+        # Ch1 input, Ch2 output
         # Signals Menu
 
-        self.Channel1.triggered.connect(
-            lambda checked: (self.select_channel(1)))
-        self.Channel2.triggered.connect(
-            lambda checked: (self.select_channel(2)))
+        #Channel selection isn't necessary #######################
+
+        # self.InputSignal.triggered.connect(
+        #     lambda checked: (self.select_channel(1)))
+        # self.InputSpectro.triggered.connect(
+        #     lambda checked: (self.select_channel(2)))
+        # self.OutputSignal_2.triggered.connect(
+        #     lambda checked: (self.select_channel(3)))
+        # self.OutputSpectro.triggered.connect(
+        #     lambda checked: (self.select_channel(4)))
 
         self.sliderList = [self.Slider_1, self.Slider_2, self.Slider_3, self.Slider_4, self.Slider_5,
                            self.Slider_6, self.Slider_7, self.Slider_8, self.Slider_9, self.Slider_10]
@@ -72,39 +74,94 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         ), self.sliderList[5].value(),
             self.sliderList[6].value(), self.sliderList[7].value(), self.sliderList[8].value(), self.sliderList[9].value()]
 
-
-    def new_window(self):
+    def make_new_window(self):
         self.new_win = AudioEqualizer()
         self.new_win.show()
-    
-    # Open (.wav ) file, read it using Scipy Lib, and plot it in inputSignal Viewer
-    def open_file(self):
-        self.selected_file = QtGui.QFileDialog.getOpenFileName(
-            self, 'Select .wav file ', os.getenv('HOME'))
 
-        self.file_ext = self.get_extention(self.selected_file[0])
+    def plot_spectrogram(self, data_col, viewer):
+        # im not sure how to compute fs, default value for this task will be 10e3
+        fs = 10e3
+        # make sure the data given in array form
+        data = np.array(data_col)
+
+        # f : Array of sample frequencies; t : Array of segment times; Sxx : Spectrogram of x. The last axis of Sxx corresponds to the segment times.
+        f, t, Sxx = signal.spectrogram(data, fs)
+
+        # A plot area (ViewBox + axes) for displaying the image
+        plot_area = viewer.plot()
+        # Item for displaying image data
+        img = pg.ImageItem()
+        viewer.addItem(img)
+        # Add a histogram with which to control the gradient of the image
+        hist = pg.HistogramLUTItem()
+        # Link the histogram to the image
+        hist.setImageItem(img)
+        # If you don't add the histogram to the window, it stays invisible, but I find it useful.
+        viewer.addItem(plot_area)
+
+        # Show the window
+        viewer.show()
+        # Fit the min and max levels of the histogram to the data available
+        hist.setLevels(np.min(Sxx), np.max(Sxx))
+
+        # Sxx contains the amplitude for each pixel
+        img.setImage(Sxx)
+        # Scale the X and Y Axis to time and frequency (standard is pixels)
+        img.scale(t[-1]/np.size(Sxx, axis=1),
+                  f[-1]/np.size(Sxx, axis=0))
+        # Limit panning/zooming to the spectrogram
+        viewer.setLimits(xMin=0, xMax=t[-1], yMin=0, yMax=f[-1])
+        # Add labels to the axis
+        viewer.setLabel('bottom', "Time", units='s')
+        # Include the units automatically scales the axis and adjusts the SI prefix (in this case kHz)
+        viewer.setLabel('left', "Frequency", units='Hz')
+
+        ################# Coloring Spectrogram ############
+
+        # You can adjust it and then save it using hist.gradient.saveState()
+        hist.gradient.restoreState(
+            {'mode': 'rgb',
+                'ticks': [(0.5, (0, 182, 188, 255)),
+                          (1.0, (246, 111, 0, 255)),
+                          (0.0, (75, 0, 113, 255))]})
+        hist.gradient.showTicks(False)
+        hist.shape
+        hist.layout.setContentsMargins(0, 0, 0, 0)
+        hist.vb.setMouseEnabled(x=False, y=False)
+
+
+# Open (.wav ) file, read it using Scipy Lib, and plot it in inputSignal Viewer
+
+
+    def browse_file(self):
+        self.selected_file = QtGui.QFileDialog.getOpenFileName(
+            self, 'Select .wav file ', './', "Raw Data(*.wav)",  os.getenv('HOME'))
+
+        path = str(self.selected_file[0])
+        print(path)
+        self.file_ext = self.get_extention(path)
         # check the file extension is (.Wav)
         if self.file_ext == 'wav':
             # Read selected wav file
-            self.samplerate, self.data = wavfile.read(
-                str(self.selected_file[0]))
+            self.samplerate, self.data = wavfile.read(path)
 
             self.length = self.data.shape[0]  # number of samples
             # The duration is equal to the number of frames divided by the framerate (frames per second)
-            self.duration = self.length / self.samplerate
+            self.duration = (self.length / self.samplerate)
 
             # Return evenly spaced numbers over a specified interval
             self.time = np.linspace(0., self.duration, self.length)
 
-            self.InputSignal.plot(self.time, self.data, pen=pg.mkPen('r'))
             self.freq = fftfreq(self.length, 1 / self.samplerate)
 
             # Plot first channel's signal
             self.InputSignal.plot(self.time, self.data[:, 0], pen=self.pens[0])
-            # # Plot second channel's signal
+            # # Plot second channel's signal on the first one with different color
             self.InputSignal.plot(self.time, self.data[:, 1], pen=self.pens[1])
-            self.InputSignal.setLimits(xMin=0, xMax=500000, yMin=-200000, yMax=200000)
-
+            self.InputSignal.setLimits(
+                xMin=0, xMax=500000, yMin=-200000, yMax=200000)
+            # Plot the spectrogram for the input in InputSpectro Viewer
+            self.plot_spectrogram(self.data[:, 0], self.InputSpectro)
 
         else:
             QMessageBox.warning(self.centralWidget,
@@ -172,26 +229,36 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.OutputSignal.setYRange(min(self.inverse), max(self.inverse))
         self.OutputSignal.plot(self.inverse, pen=pg.mkPen('y'))
 
-    def select_channel(self, channel):
-        if channel == 1:
-            self.Channel1.setChecked(True)
-            self.Channel2.setChecked(False)
+    # def select_channel(self, channel):
+    #     if channel == 1:
+    #         self.InputSignal.setChecked(True)
+    #         self.InputSpectro.setChecked(False)
+    #         self.OutputSignal_2.setChecked(False)
+    #         self.OutputSpectro.setChecked(False)
 
-        elif channel == 2:
-            self.Channel1.setChecked(False)
-            self.Channel2.setChecked(True)
+    #     elif channel == 2:
+    #         self.InputSignal.setChecked(False)
+    #         self.InputSpectro.setChecked(True)
+    #         self.OutputSignal_2.setChecked(False)
+    #         self.OutputSpectro.setChecked(False)
+
+    #     elif channel == 3:
+    #         self.InputSignal.setChecked(False)
+    #         self.InputSpectro.setChecked(False)
+    #         self.OutputSignal_2.setChecked(True)
+    #         self.OutputSpectro.setChecked(False)
+
+    #     elif channel == 4:
+    #         self.InputSignal.setChecked(False)
+    #         self.InputSpectro.setChecked(False)
+    #         self.OutputSignal_2.setChecked(False)
+    #         self.OutputSpectro.setChecked(True)
 
     def play(self):
-        if self.Channel1.isChecked():
-            sd.play(self.data, self.samplerate)
-        if self.Channel2.isChecked():
-            sd.play(self.inverse)
+        sd.play(self.data, self.samplerate)
 
     def stop(self):
-        if self.Channel1.isChecked():
-            sd.stop()
-        if self.Channel2.isChecked():
-            sd.stop()
+        sd.stop()
 
 
 def main():
