@@ -199,6 +199,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
     def equalizer(self):
         self.fMagnitude = self.get_fft()[1]
+        self.fPhase = self.get_fft()[2]
 
         self.mvaluePerBand = int(len(self.fMagnitude)/10)
 
@@ -224,7 +225,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             for magnitude in band:
                 self.outputSignal.append(magnitude)
 
-        finalSignal = np.multiply(self.fftPhase, self.outputSignal)
+        finalSignal = np.multiply(self.fPhase, self.outputSignal)
         self.inverse = np.fft.irfft(finalSignal)
         self.OutputSignal.setYRange(min(self.inverse), max(self.inverse))
         self.OutputSignal.plot(self.inverse, pen=pg.mkPen('y'))
