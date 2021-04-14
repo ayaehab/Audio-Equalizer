@@ -136,7 +136,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         if self.file_ext == 'wav':
             # Read selected wav file
             self.samplerate, self.data = wavfile.read(path)
-
+            np.array(self.data)
             self.length = self.data.shape[0]  # number of samples
             # The duration is equal to the number of frames divided by the framerate (frames per second)
             self.duration = (self.length / self.samplerate)
@@ -146,14 +146,24 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
             self.freq = fftfreq(self.length, 1 / self.samplerate)
 
-            # Plot first channel's signal
-            self.InputSignal.plot(self.time, self.data[:, 0], pen=self.pens[0])
-            # # Plot second channel's signal on the first one with different color
-            self.InputSignal.plot(self.time, self.data[:, 1], pen=self.pens[1])
+            if np.ndim(self.data) == 2:
+                # Plot first channel's signal
+                self.InputSignal.plot(
+                    self.time, self.data[:, 0], pen=self.pens[0])
+                # # Plot second channel's signal on the first one with different color
+                self.InputSignal.plot(
+                    self.time, self.data[:, 1], pen=self.pens[1])
+                # Plot the spectrogram for the input in InputSpectro Viewer
+                self.plot_spectrogram(self.data[:, 0], self.InputSpectro)
+            elif np.ndim(self.data) == 1:
+                self.InputSignal.plot(self.time, self.data, pen=pg.mkPen('r'))
+                self.plot_spectrogram(self.data, self.InputSpectro)
+            else:
+                QMessageBox.warning(self.centralWidget,
+                                    "Your .wav file cannot be plotted")
+
             self.InputSignal.setLimits(
                 xMin=0, xMax=500000, yMin=-200000, yMax=200000)
-            # Plot the spectrogram for the input in InputSpectro Viewer
-            self.plot_spectrogram(self.data[:, 0], self.InputSpectro)
 
         else:
             QMessageBox.warning(self.centralWidget,
