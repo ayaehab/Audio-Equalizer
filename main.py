@@ -36,15 +36,14 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         super().__init__()
         self.ui = uic.loadUi('GUI.ui', self)
 
-        #Connecting
+        #Connecting Buttons
         self.action_open.triggered.connect(lambda: self.browse_file())
         self.action_new_win.triggered.connect(self.make_new_window)
         self.actionSave_as_PDF.triggered.connect(lambda: self.create_my_pdf())
         self.action_clear.triggered.connect(lambda: self.clear_all())
-        '''
+       
         self.right_button.clicked.connect(lambda: self.Scroll_right())
         self.left_button.clicked.connect(lambda: self.Scroll_left())
-        '''
         self.up_button.clicked.connect(lambda: self.Scroll_up())
         self.down_button.clicked.connect(lambda: self.Scroll_down())
         
@@ -228,11 +227,12 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         return self.fftArray, self.fftArrayAbs, self.fftPhase, self.fftMagnitude
 
 
-#*******************************************END OF Fourrier**************************************#
+#*****************************************END OF Fourrier*************************************#
 
 
 
-#*******************************************Equalizer**************************************#
+#*********************************************Equalizer***************************************#
+
     def equalizer(self):
         self.OutputSignal.clear()
 
@@ -284,7 +284,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         sd.stop()
         
         
-#***********************************************toolbar**********************************************#
+#**********************************************toolbar********************************************#
 
     # Zoomin function connected to Zoomin button based on which channel is controlled
     def zoomin(self):
@@ -305,7 +305,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
    
     #scrolling function connected to scroll buttons based on which channel is controlled
-    '''
+   
    def Scroll_right(self):
         
         if self.Channel1.isChecked():
@@ -332,9 +332,9 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         if self.Channel2.isChecked():
             
             self.range = self.OutputSignal.getViewBox().viewRange()
-            if self.range[0][0] > min(self.x2) :
+            if self.range[0][0] > min(self.time) :
                 self.OutputSignal.getViewBox().translateBy(x=-1, y=0)
-    '''
+   
 
     def Scroll_up(self):
         
