@@ -221,7 +221,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self, 'Select .wav file ', './', "Raw Data(*.wav)",  os.getenv('HOME'))
 
         path = str(self.selected_file[0])
-        print(path)
         self.file_ext = self.get_extention(path)
         # check the file extension is (.Wav)
         if self.file_ext == 'wav':
@@ -353,7 +352,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.newMagnitude = []
 
         self.outputSignal = []
-        # print(self.valuePerBand)
 
         for i in range(10):
             self.mbands.append(
@@ -364,7 +362,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         for i in range(10):
             self.gain[i] = self.sliderList[i].value()
 
-        print(self.gain)
 
         for index in range(10):
             # we changed it to np.array so we can multiply the value by value not multipling the list that will generate repetation of value not multplication
@@ -395,7 +392,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         sd.stop()
 
     def spec_range(self, data_col):
-        print(self.Slider_12.value(), self.Slider_11.value())
         if self.Slider_12.value() > self.Slider_11.value():
             # im not sure how to compute fs, default value for this task will be 10e3
             fs = self.samplerate
@@ -410,7 +406,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 #**********************************************toolbar********************************************#
 
-    # Zoomin function connected to Zoomin button based on which channel is controlled
+
 
     def zoomin(self):
 
@@ -426,7 +422,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         if self.OSpectroCh.isChecked():
             self.OutputSpectro.plotItem.getViewBox().scaleBy((0.5, 0.5))
 
-    # Zoomout function connected to zoomout button based on which channel is controlled
 
     def zoomout(self):
         if self.InputCh.isChecked():
@@ -441,7 +436,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         if self.OSpectroCh.isChecked():
             self.OutputSpectro.plotItem.getViewBox().scaleBy((1.5, 1.5))
 
-    # scrolling function connected to scroll buttons based on which channel is controlled
 
     def Scroll_right(self):
 
@@ -455,16 +449,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             if self.range[0][1] < max(self.time):
                 self.OutputSignal.getViewBox().translateBy(x=+0.2, y=0)
 
-        # if self.ISpectroCh.isChecked():
-        #     self.range = self.InputSpectro.getViewBox().viewRange()
-        #     if self.range[0][1] < max(self.x2):
-        #         self.InputSpectro.getViewBox().translateBy(x=+0.2, y=0)
-
-        # if self.OSpectroCh.isChecked():
-        #     self.range = self.OutputSpectro.getViewBox().viewRange()
-        #     if self.range[0][1] < max(self.time):
-        #         self.OutputSpectro.getViewBox().translateBy(x=+0.2, y=0)
-
     def Scroll_left(self):
 
         if self.InputCh.isChecked():
@@ -472,20 +456,10 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             if self.range[0][0] > min(self.time):
                 self.InputSignal.getViewBox().translateBy(x=-0.2, y=0)
 
-        # if self.ISpectroCh.isChecked():
-        #     self.range = self.InputSpectro.getViewBox().viewRange()
-        #     if self.range[0][0] > min(self.time):
-        #         self.InputSpectro.getViewBox().translateBy(x=-0.2, y=0)
-
         if self.OutputCh.isChecked():
             self.range = self.OutputSignal.getViewBox().viewRange()
             if self.range[0][0] > min(self.time):
                 self.OutputSignal.getViewBox().translateBy(x=-0.2, y=0)
-
-        # if self.OSpectroCh.isChecked():
-            # self.range = self.OutputSpectro.getViewBox().viewRange()
-            # if self.range[0][0] > min(self.time):
-            #     self.OutputSpectro.getViewBox().translateBy(x=-0.2, y=0)
 
     def Scroll_up(self):
 
@@ -494,20 +468,10 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             if self.range[1][1] < max(self.data):
                 self.InputSignal.getViewBox().translateBy(x=0, y=+0.2)
 
-        # if self.ISpectroCh.isChecked():
-        #     self.range = self.InputSpectro.getViewBox().viewRange()
-        #     if self.range[1][1] < max(self.inverse):
-        #         self.InputSpectro.getViewBox().translateBy(x=0, y=+0.2)
-
         if self.OutputCh.isChecked():
             self.range = self.OutputSignal.getViewBox().viewRange()
             if self.range[1][1] < max(self.data):
                 self.OutputSignal.getViewBox().translateBy(x=0, y=+0.2)
-
-        # if self.OSpectroCh.isChecked():
-        #     self.range = self.OutputSpectro.getViewBox().viewRange()
-        #     if self.range[1][1] < max(self.data):
-        #         self.OutputSpectro.getViewBox().translateBy(x=0, y=+0.2)
 
     def Scroll_down(self):
 
@@ -530,6 +494,12 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self.range = self.OutputSpectro.getViewBox().viewRange()
             if self.range[1][0] > min(self.data):
                 self.OutputSpectro.getViewBox().translateBy(x=0, y=-0.2)
+
+    def clear_all(self): 
+        self.InputSignal.clear()
+        self.InputSpectro.clear()
+        self.OutputSignal.clear()
+        self.OutputSpectro.clear()
 
 
 def main():
