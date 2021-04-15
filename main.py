@@ -39,15 +39,17 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.action_open.triggered.connect(lambda: self.browse_file())
         self.action_new_win.triggered.connect(self.make_new_window)
         self.actionSave_as_PDF.triggered.connect(lambda: self.create_my_pdf())
-        
+
         self.actionPalette_1.triggered.connect(lambda: self.palette_btn1())
         self.actionPalette_2.triggered.connect(lambda: self.palette_btn2())
         self.actionPalette_3.triggered.connect(lambda: self.palette_btn3())
         self.actionPalette_4.triggered.connect(lambda: self.palette_btn4())
         self.actionPalette_5.triggered.connect(lambda: self.palette_btn5())
-        self.Channel1.triggered.connect(lambda: self.select_signal(1))
-        self.Channel2.triggered.connect(lambda: self.select_signal(2))
-        
+        self.InputCh.triggered.connect(lambda: self.select_channel(1))
+        self.ISpectroCh.triggered.connect(lambda: self.select_channel(2))
+        self.OutputCh.triggered.connect(lambda: self.select_channel(3))
+        self.OSpectroCh.triggered.connect(lambda: self.select_channel(4))
+
         self.action_clear.triggered.connect(lambda: self.clear_all())
 
         self.right_button.clicked.connect(lambda: self.Scroll_right())
@@ -61,7 +63,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.Play_Button.clicked.connect(lambda: self.play())
         self.Stop_Button.clicked.connect(lambda: self.stop())
         self.pens = [pg.mkPen('r'), pg.mkPen('b'), pg.mkPen('g')]
-        
+
         self.default_color = {'ticks': [(0.5, (0, 182, 188, 255)),
                                         (1.0, (246, 111, 0, 255)),
                                         (0.0, (75, 0, 113, 255))]}
@@ -83,7 +85,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
     def make_new_window(self):
         self.new_win = AudioEqualizer()
         self.new_win.show()
-
 
     def plot_spectrogram(self, data_col, viewer, color):
         # im not sure how to compute fs, default value for this task will be 10e3
@@ -133,15 +134,14 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         hist.layout.setContentsMargins(0, 0, 0, 0)
         hist.vb.setMouseEnabled(x=False, y=False)
 
-
     def palette_btn1(self):  # RGB Grey White Color Palette
         color = {'ticks': [(0.5, (255, 0, 0, 255)),
                            (1.0, (0, 0, 255, 255)),
                            (0.0, (0, 0, 0, 255))]}
-        if self.Channel1.isChecked():
+        if self.ISpectroCh.isChecked():
             self.plot_spectrogram(
                 self.data, self.InputSpectro, color)
-        if self.Channel2.isChecked():
+        if self.OSpectroCh.isChecked():
             self.plot_spectrogram(
                 self.inverse, self.OutputSpectro, color)
 
@@ -149,10 +149,10 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         color = {'ticks': [(0.5, (234, 214, 28, 255)),
                            (1.0, (215, 199, 151, 255)),
                            (0.0, (0, 0, 0, 255))]}
-        if self.Channel1.isChecked():
+        if self.ISpectroCh.isChecked():
             self.plot_spectrogram(
                 self.data, self.InputSpectro, color)
-        if self.Channel2.isChecked():
+        if self.OSpectroCh.isChecked():
             self.plot_spectrogram(
                 self.inverse, self.OutputSpectro, color)
 
@@ -160,10 +160,10 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         color = {'ticks': [(0.5, (102, 204, 255, 255)),
                            (1.0, (255, 102, 204, 255)),
                            (0.0, (0, 0, 0, 255))]}
-        if self.Channel1.isChecked():
+        if self.ISpectroCh.isChecked():
             self.plot_spectrogram(
                 self.data, self.InputSpectro, color)
-        if self.Channel2.isChecked():
+        if self.OSpectroCh.isChecked():
             self.plot_spectrogram(
                 self.inverse, self.OutputSpectro, color)
 
@@ -171,10 +171,10 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         color = {'ticks': [(0.5, (0, 149, 182, 255)),
                            (1.0, (198, 195, 134, 255)),
                            (0.0, (0, 0, 0, 255))]}
-        if self.Channel1.isChecked():
+        if self.ISpectroCh.isChecked():
             self.plot_spectrogram(
                 self.data, self.InputSpectro, color)
-        if self.Channel2.isChecked():
+        if self.OSpectroCh.isChecked():
             self.plot_spectrogram(
                 self.inverse, self.OutputSpectro, color)
 
@@ -182,28 +182,39 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         color = {'ticks': [(0.5, (242, 226, 205, 255)),
                            (1.0, (166, 158, 176, 255)),
                            (0.0, (0, 0, 0, 255))]}
-        if self.Channel1.isChecked():
+        if self.ISpectroCh.isChecked():
             self.plot_spectrogram(
                 self.data, self.InputSpectro, color)
-        if self.Channel2.isChecked():
+        if self.OSpectroCh.isChecked():
             self.plot_spectrogram(
                 self.inverse, self.OutputSpectro, color)
 
-    def select_signal(self, signal):
+    def select_channel(self, signal):
         if signal == 1:
-            if self.Channel1.isChecked():
-                self.Channel1.setChecked(True)
+            if self.InputCh.isChecked():
+                self.InputCh.setChecked(True)
             else:
-                self.Channel1.setChecked(False)
+                self.InputCh.setChecked(False)
 
         elif signal == 2:
-            if self.Channel2.isChecked():
-                self.Channel2.setChecked(True)
+            if self.ISpectroCh.isChecked():
+                self.ISpectroCh.setChecked(True)
             else:
-                self.Channel2.setChecked(False)
+                self.ISpectroCh.setChecked(False)
+
+        elif signal == 3:
+            if self.OutputCh.isChecked():
+                self.OutputCh.setChecked(True)
+            else:
+                self.OutputCh.setChecked(False)
+
+        elif signal == 4:
+            if self.OSpectroCh.isChecked():
+                self.OSpectroCh.setChecked(True)
+            else:
+                self.OSpectroCh.setChecked(False)
 
 # Open (.wav ) file, read it using Scipy Lib, and plot it in inputSignal Viewer
-
 
     def browse_file(self):
         self.selected_file = QtGui.QFileDialog.getOpenFileName(
@@ -238,11 +249,13 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                 self.OutputSignal.plot(
                     self.time, self.data[:, 1], pen=self.pens[1])
                 # Plot the spectrogram for the input in InputSpectro Viewer
-                self.plot_spectrogram(self.data[:, 0], self.InputSpectro, self.default_color)
+                self.plot_spectrogram(
+                    self.data[:, 0], self.InputSpectro, self.default_color)
             elif np.ndim(self.data) == 1:
                 self.InputSignal.plot(self.time, self.data, pen=pg.mkPen('r'))
                 self.OutputSignal.plot(self.time, self.data, pen=pg.mkPen('y'))
-                self.plot_spectrogram(self.data, self.InputSpectro, self.default_color)
+                self.plot_spectrogram(
+                    self.data, self.InputSpectro, self.default_color)
             else:
                 QMessageBox.warning(self.centralWidget,
                                     "Your .wav file cannot be plotted")
@@ -325,6 +338,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 #*********************************************Equalizer***************************************#
 
+
     def equalizer(self):
         self.OutputSignal.clear()
 
@@ -366,11 +380,13 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.inverse = np.fft.irfft(finalSignal, len(self.fMagnitude))
         self.OutputSignal.setYRange(np.min(self.inverse), np.max(self.inverse))
         self.OutputSignal.plot(self.time, self.inverse, pen=pg.mkPen('y'))
-        self.plot_spectrogram(self.inverse, self.OutputSpectro, self.default_color)
+        self.plot_spectrogram(
+            self.inverse, self.OutputSpectro, self.default_color)
         self.OutputSignal.setYRange(min(self.inverse), max(self.inverse))
 
 
 #*******************************************End of Equalizer**************************************#
+
 
     def play(self):
         sd.play(self.data, self.samplerate)
@@ -396,80 +412,124 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
     # Zoomin function connected to Zoomin button based on which channel is controlled
 
-
     def zoomin(self):
-        if self.Channel1.isChecked():
+
+        if self.InputCh.isChecked():
             self.InputSignal.plotItem.getViewBox().scaleBy((0.5, 0.5))
 
-        if self.Channel2.isChecked():
+        if self.ISpectroCh.isChecked():
+            self.InputSpectro.plotItem.getViewBox().scaleBy((0.5, 0.5))
+
+        if self.OutputCh.isChecked():
             self.OutputSignal.plotItem.getViewBox().scaleBy((0.5, 0.5))
+
+        if self.OSpectroCh.isChecked():
+            self.OutputSpectro.plotItem.getViewBox().scaleBy((0.5, 0.5))
 
     # Zoomout function connected to zoomout button based on which channel is controlled
 
     def zoomout(self):
-        if self.Channel1.isChecked():
+        if self.InputCh.isChecked():
             self.InputSignal.plotItem.getViewBox().scaleBy((1.5, 1.5))
 
-        if self.Channel2.isChecked():
+        if self.ISpectroCh.isChecked():
+            self.InputSpectro.plotItem.getViewBox().scaleBy((1.5, 1.5))
+
+        if self.OutputCh.isChecked():
             self.OutputSignal.plotItem.getViewBox().scaleBy((1.5, 1.5))
+
+        if self.OSpectroCh.isChecked():
+            self.OutputSpectro.plotItem.getViewBox().scaleBy((1.5, 1.5))
 
     # scrolling function connected to scroll buttons based on which channel is controlled
 
     def Scroll_right(self):
 
-        if self.Channel1.isChecked():
-
+        if self.InputCh.isChecked():
             self.range = self.InputSignal.getViewBox().viewRange()
             if self.range[0][1] < max(self.time):
                 self.InputSignal.getViewBox().translateBy(x=+0.2, y=0)
 
-        if self.Channel2.isChecked():
-
+        if self.OutputCh.isChecked():
             self.range = self.OutputSignal.getViewBox().viewRange()
-            if self.range[0][1] < max(self.x2):
+            if self.range[0][1] < max(self.time):
                 self.OutputSignal.getViewBox().translateBy(x=+0.2, y=0)
+
+        # if self.ISpectroCh.isChecked():
+        #     self.range = self.InputSpectro.getViewBox().viewRange()
+        #     if self.range[0][1] < max(self.x2):
+        #         self.InputSpectro.getViewBox().translateBy(x=+0.2, y=0)
+
+        # if self.OSpectroCh.isChecked():
+        #     self.range = self.OutputSpectro.getViewBox().viewRange()
+        #     if self.range[0][1] < max(self.time):
+        #         self.OutputSpectro.getViewBox().translateBy(x=+0.2, y=0)
 
     def Scroll_left(self):
 
-        if self.Channel1.isChecked():
-
+        if self.InputCh.isChecked():
             self.range = self.InputSignal.getViewBox().viewRange()
             if self.range[0][0] > min(self.time):
                 self.InputSignal.getViewBox().translateBy(x=-0.2, y=0)
 
-        if self.Channel2.isChecked():
+        # if self.ISpectroCh.isChecked():
+        #     self.range = self.InputSpectro.getViewBox().viewRange()
+        #     if self.range[0][0] > min(self.time):
+        #         self.InputSpectro.getViewBox().translateBy(x=-0.2, y=0)
 
+        if self.OutputCh.isChecked():
             self.range = self.OutputSignal.getViewBox().viewRange()
             if self.range[0][0] > min(self.time):
                 self.OutputSignal.getViewBox().translateBy(x=-0.2, y=0)
 
+        # if self.OSpectroCh.isChecked():
+            # self.range = self.OutputSpectro.getViewBox().viewRange()
+            # if self.range[0][0] > min(self.time):
+            #     self.OutputSpectro.getViewBox().translateBy(x=-0.2, y=0)
+
     def Scroll_up(self):
 
-        if self.Channel1.isChecked():
-
+        if self.InputCh.isChecked():
             self.range = self.InputSignal.getViewBox().viewRange()
             if self.range[1][1] < max(self.data):
                 self.InputSignal.getViewBox().translateBy(x=0, y=+0.2)
 
-        if self.Channel2.isChecked():
+        # if self.ISpectroCh.isChecked():
+        #     self.range = self.InputSpectro.getViewBox().viewRange()
+        #     if self.range[1][1] < max(self.inverse):
+        #         self.InputSpectro.getViewBox().translateBy(x=0, y=+0.2)
 
+        if self.OutputCh.isChecked():
             self.range = self.OutputSignal.getViewBox().viewRange()
-            if self.range[1][1] < max(self.inverse):
+            if self.range[1][1] < max(self.data):
                 self.OutputSignal.getViewBox().translateBy(x=0, y=+0.2)
+
+        # if self.OSpectroCh.isChecked():
+        #     self.range = self.OutputSpectro.getViewBox().viewRange()
+        #     if self.range[1][1] < max(self.data):
+        #         self.OutputSpectro.getViewBox().translateBy(x=0, y=+0.2)
 
     def Scroll_down(self):
 
-        if self.Channel1.isChecked():
-
+        if self.InputCh.isChecked():
             self.range = self.InputSignal.getViewBox().viewRange()
             if self.range[1][0] > min(self.data):
                 self.InputSignal.getViewBox().translateBy(x=0, y=-0.2)
 
-        if self.Channel2.isChecked():
-
-            self.range = self.OutputSignal.getViewBox().viewRange()
+        if self.ISpectroCh.isChecked():
+            self.range = self.InputSpectro.getViewBox().viewRange()
             if self.range[1][0] > min(self.inverse):
+                self.InputSpectro.getViewBox().translateBy(x=0, y=-0.2)
+
+        if self.OutputCh.isChecked():
+            self.range = self.OutputSignal.getViewBox().viewRange()
+            if self.range[1][0] > min(self.data):
                 self.OutputSignal.getViewBox().translateBy(x=0, y=-0.2)
+
+        if self.OSpectroCh.isChecked():
+            self.range = self.OutputSpectro.getViewBox().viewRange()
+            if self.range[1][0] > min(self.data):
+                self.OutputSpectro.getViewBox().translateBy(x=0, y=-0.2)
 
 
 def main():
