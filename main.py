@@ -56,6 +56,9 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         
         self.sliderList = [self.Slider_1, self.Slider_2, self.Slider_3, self.Slider_4, self.Slider_5,
                            self.Slider_6, self.Slider_7, self.Slider_8, self.Slider_9, self.Slider_10]
+        
+        self.Slider_11.valueChanged.connect(lambda: self.spec_range(np.array(self.inverse))) #MinSlider
+        self.Slider_12.valueChanged.connect(lambda: self.spec_range(np.array(self.inverse))) #MaxSlider
 
         for i in range(10):
             self.sliderList[i].valueChanged.connect(lambda: self.equalizer())
@@ -168,6 +171,21 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
             self.InputSignal.setLimits(
                 xMin=0, xMax=500000, yMin=-200000, yMax=200000)
+            
+            arr= np.arange(1, (self.samplerate/2)+1 , 1)
+            self.array= arr[::-1]
+            logal = 20* (np.log10(self.array/(self.samplerate/2))*(-1))
+                
+            self.Slider_11.setMinimum(int(logal[0]))
+            self.Slider_11.setMaximum(int(logal[-1]))
+            self.Slider_12.setMinimum(int(logal[0]))
+            self.Slider_12.setMaximum(int(logal[-1]))
+
+            self.Slider_12.setValue(int(logal[-1]))
+            self.Slider_11.setValue(int(logal[0]))
+
+            self.Slider_11.setSingleStep(int(logal[-1]/10))
+            self.Slider_12.setSingleStep(int(logal[-1]/10))
 
         else:
             QMessageBox.warning(self.centralWidget,
@@ -289,6 +307,20 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
     def stop(self):
         sd.stop()
+        
+        
+
+    def spec_range(self, data_col):
+        print(self.Slider_12.value(), self.Slider_11.value())
+        if self.Slider_12.value() > self.Slider_11.value():
+             # im not sure how to compute fs, default value for this task will be 10e3
+            fs = self.samplerate
+            # make sure the data given in array form
+            # f : Array of sample frequencies; t : Array of segment times; Sxx : Spectrogram of x. The last axis of Sxx corresponds to the segment times.
+            plt.specgram(data_col,Fs=fs, vmin=self.Slider_11.value(), vmax=self.Slider_12.value())
+            # A plot area (ViewBox + axes) for displaying the image
+            plt.colorbar()
+            plt.show()       
         
         
 #**********************************************toolbar********************************************#
