@@ -287,7 +287,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self.Slider_12.setMinimum(int(logal[0]))
             self.Slider_12.setMaximum(int(logal[-1]))
 
-            self.Slider_12.setValue(int(logal[0]))
+            self.Slider_12.setValue(int(logal[-1]))
             self.Slider_11.setValue(int(logal[0]))
 
             self.Slider_11.setSingleStep(int(logal[-1]/10))
@@ -353,7 +353,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 #*********************************************Equalizer***************************************#
 
-
     def equalizer(self):
         self.OutputSignal.clear()
 
@@ -390,7 +389,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         #get_fft()[2] == fftPhase
         finalSignal = np.multiply(self.get_fft()[2], self.outputSignal)
         self.inverse = np.fft.irfft(finalSignal, len(self.fMagnitude))
-        print("ana 7sbt el self.inverse tmam", self.inverse)
+
         self.OutputSignal.setYRange(np.min(self.inverse), np.max(self.inverse))
         self.OutputSignal.plot(self.time, self.inverse, pen=pg.mkPen('y'))
         self.plot_spectrogram(
@@ -400,28 +399,25 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 #*******************************************End of Equalizer**************************************#
 
-
     def play(self):
         sd.play(self.data, self.samplerate)
 
     def stop(self):
         sd.stop()
 
-
     def spec_range(self, data_col):
-        if self.Slider_12.value() > self.Slider_11.value():            
+        if self.Slider_12.value() > self.Slider_11.value():
             fs = self.samplerate
+            plt.specgram(data_col, Fs=fs, vmin=self.Slider_11.value(),
+                         vmax=self.Slider_12.value())
+            # A plot area (ViewBox + axes) for displaying the image
+            plt.colorbar()
+            plt.show()
+
+            '''Another method to plot Min,Max using matplotlib lib
             self.OutputSpectro.clear()
             self.plot_spectrogram(
-                data_col, self.OutputSpectro, self.default_color, fs=fs)
-            print("ana wslt hna", self.inverse)
-            '''Another method to plot Min,Max using matplotlib lib''' 
-            # plt.specgram(data_col, Fs=fs, vmin=self.Slider_11.value(),
-            #              vmax=self.Slider_12.value())
-            # # A plot area (ViewBox + axes) for displaying the image
-            # plt.colorbar()
-            # plt.show()
-
+                data_col, self.OutputSpectro, self.default_color, fs=fs) '''
 
 #**********************************************toolbar********************************************#
 
