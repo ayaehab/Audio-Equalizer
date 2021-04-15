@@ -148,14 +148,19 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             if np.ndim(self.data) == 2:
                 # Plot first channel's signal
                 self.InputSignal.plot(
-                    self.time, self.data[:, 0], pen=self.pens[0])
+                    self.time, self.data[:, 0], pen=self.pens[0]) 
+                self.OutputSignal.plot(
+                    self.time, self.data[:, 0], pen=self.pens[0])                
                 # # Plot second channel's signal on the first one with different color
                 self.InputSignal.plot(
+                    self.time, self.data[:, 1], pen=self.pens[1])
+                self.OutputSignal.plot(
                     self.time, self.data[:, 1], pen=self.pens[1])
                 # Plot the spectrogram for the input in InputSpectro Viewer
                 self.plot_spectrogram(self.data[:, 0], self.InputSpectro)
             elif np.ndim(self.data) == 1:
                 self.InputSignal.plot(self.time, self.data, pen=pg.mkPen('r'))
+                self.OutputSignal.plot(self.time, self.data, pen=pg.mkPen('y'))                
                 self.plot_spectrogram(self.data, self.InputSpectro)
             else:
                 QMessageBox.warning(self.centralWidget,
@@ -262,7 +267,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         for index in range(10):
             # we changed it to np.array so we can multiply the value by value not multipling the list that will generate repetation of value not multplication
-            Magnified_Magnitued = self.gain[index] * (self.mbands[index])
+            Magnified_Magnitued = np.multiply(self.gain[index], (self.mbands[index]))
             self.newMagnitude.append(Magnified_Magnitued)
 
         for band in self.newMagnitude:
@@ -270,10 +275,12 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                 self.outputSignal.append(magnitude)  
         #get_fft()[2] == fftPhase
         finalSignal = np.multiply(self.get_fft()[2], self.outputSignal) 
-        self.inverse = np.fft.irfft(finalSignal)
+        self.inverse = np.fft.irfft(finalSignal, len(self.fMagnitude))
         self.OutputSignal.setYRange(min(self.inverse), max(self.inverse))
         self.OutputSignal.plot(self.inverse, pen=pg.mkPen('y'))
         self.plot_spectrogram(self.inverse, self.OutputSpectro)
+        self.OutputSignal.setYRange(min(self.inverse),max(self.inverse))
+
 
 #*******************************************End of Equalizer**************************************#        
 
