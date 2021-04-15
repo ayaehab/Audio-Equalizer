@@ -1,5 +1,5 @@
 from reportlab.pdfgen import canvas
-
+import os
 class GeneratePDF():
 
     def __init__(self):
@@ -27,7 +27,7 @@ class GeneratePDF():
 
         #  Adjusting sub-title
 
-        self.pdf.setFont('Courier-Bold', 14)
+        self.pdf.setFont('Courier-Bold', 12)
         # self.pdf.drawString(315, 795, 'Signal')
         
 
@@ -85,7 +85,7 @@ class GeneratePDF():
     # Generating the PDF
 
     def create_pdf(self):
-        self.sigName('Input Signal', 'I-Spectrogram', 'Output Signal', 'O-Spectrogram')
+        self.sigName('Input Signal', 'I-Spectrogram', 'Output Signal', 'O-Spectrogram') #reduce font size 
         self.sigImage(self.input_signal, self.output_signal)
         self.spectroImage(self.input_spectro, self.output_spectro)
         # self.drawMyRuler()
@@ -93,10 +93,15 @@ class GeneratePDF():
 
     def save_pdf(self):
         self.pdf.save()
+        
+        # delete created images after generating PDF file 
+        if os.path.exists("Audio Equalizer.pdf"):
+            os.remove("input_signal.png")
+            os.remove("output_signal.png")
+            os.remove("input_spectro.png")
+            os.remove("output_spectro.png")
 
 
+# To run the code:
 # test = GeneratePDF()
 # test.create_pdf()
-
-# if os.path.exists("image.png"):
-#     os.remove("image.png")  # one file at a time

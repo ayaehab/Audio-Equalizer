@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1378</width>
-    <height>849</height>
+    <width>1382</width>
+    <height>878</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -94,7 +94,7 @@ color: rgb(255, 255, 255);
        <string/>
       </property>
       <property name="icon">
-       <iconset>
+       <iconset resource="../../Task1/Signal_Viewer/img.qrc">
         <normaloff>:/img/Rarrw.png</normaloff>:/img/Rarrw.png</iconset>
       </property>
       <property name="iconSize">
@@ -123,7 +123,7 @@ color: rgb(255, 255, 255);
        <string/>
       </property>
       <property name="icon">
-       <iconset>
+       <iconset resource="../../Task1/Signal_Viewer/img.qrc">
         <normaloff>:/img/larrw.png</normaloff>:/img/larrw.png</iconset>
       </property>
       <property name="iconSize">
@@ -152,7 +152,7 @@ color: rgb(255, 255, 255);
        <string/>
       </property>
       <property name="icon">
-       <iconset>
+       <iconset resource="../../Task1/Signal_Viewer/img.qrc">
         <normaloff>:/img/uparrw-Copy.png</normaloff>:/img/uparrw-Copy.png</iconset>
       </property>
       <property name="iconSize">
@@ -181,7 +181,7 @@ color: rgb(255, 255, 255);
        <string/>
       </property>
       <property name="icon">
-       <iconset>
+       <iconset resource="../../Task1/Signal_Viewer/img.qrc">
         <normaloff>:/img/dwnarrw.png</normaloff>:/img/dwnarrw.png</iconset>
       </property>
       <property name="iconSize">
@@ -210,7 +210,7 @@ color: rgb(255, 255, 255);
        <string/>
       </property>
       <property name="icon">
-       <iconset>
+       <iconset resource="../../Task1/Signal_Viewer/img.qrc">
         <normaloff>:/img/zoomout.JPG</normaloff>:/img/zoomout.JPG</iconset>
       </property>
       <property name="iconSize">
@@ -239,7 +239,7 @@ color: rgb(255, 255, 255);
        <string/>
       </property>
       <property name="icon">
-       <iconset>
+       <iconset resource="../../Task1/Signal_Viewer/img.qrc">
         <normaloff>:/img/zoomin.JPG</normaloff>:/img/zoomin.JPG</iconset>
       </property>
       <property name="iconSize">
@@ -394,7 +394,7 @@ color: rgb(255, 255, 255);
       <item>
        <widget class="QLabel" name="Gain1Label">
         <property name="text">
-         <string/>
+         <string>0</string>
         </property>
        </widget>
       </item>
@@ -493,7 +493,6 @@ color: rgb(255, 255, 255);
          <font>
           <family>MS Shell Dlg 2</family>
           <pointsize>6</pointsize>
-          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -594,7 +593,6 @@ color: rgb(255, 255, 255);</string>
          <font>
           <family>MS Shell Dlg 2</family>
           <pointsize>6</pointsize>
-          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -613,7 +611,6 @@ color: rgb(255, 255, 255);</string>
          <font>
           <family>MS Shell Dlg 2</family>
           <pointsize>10</pointsize>
-          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -632,7 +629,6 @@ color: rgb(255, 255, 255);</string>
          <font>
           <family>MS Shell Dlg 2</family>
           <pointsize>10</pointsize>
-          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -672,7 +668,7 @@ color: rgb(255, 255, 255);</string>
          <number>1</number>
         </property>
         <property name="value">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -691,10 +687,10 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="sliderPosition">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -716,7 +712,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -735,7 +731,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -754,7 +750,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -773,7 +769,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -792,7 +788,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -811,7 +807,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -830,7 +826,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -849,7 +845,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -978,8 +974,8 @@ border-radius: 30px;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1378</width>
-     <height>26</height>
+     <width>1382</width>
+     <height>22</height>
     </rect>
    </property>
    <property name="styleSheet">
