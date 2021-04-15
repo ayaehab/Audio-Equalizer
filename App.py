@@ -263,6 +263,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                     self.time, self.data[:, 1], pen=self.pens[1])
                 self.OutputSignal.plot(
                     self.time, self.data[:, 1], pen=self.pens[1])
+                self.InputSignal.setYRange(10, -10)
+                self.OutputSignal.setYRange(10, -10)
                 # Plot the spectrogram for the input in InputSpectro Viewer
                 self.plot_spectrogram(
                     self.data[:, 0], self.InputSpectro, self.default_color)
@@ -270,6 +272,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                 self.InputSignal.plot(self.time, self.data, pen=pg.mkPen('r'))
                 self.OutputSignal.plot(self.time, self.data, pen=pg.mkPen('y'))
                 self.InputSignal.setYRange(10, -10)
+                self.OutputSignal.setYRange(10, -10)
                 self.plot_spectrogram(
                     self.data, self.InputSpectro, self.default_color)
             else:
@@ -277,6 +280,9 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                                     "Your .wav file cannot be plotted")
 
             self.InputSignal.setLimits(
+                xMin=0, xMax=500000, yMin=-200000, yMax=200000)
+
+            self.OutputSignal.setLimits(
                 xMin=0, xMax=500000, yMin=-200000, yMax=200000)
 
             arr = np.arange(1, (self.samplerate/2)+1, 1)
@@ -389,17 +395,19 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                 self.outputSignal.append(magnitude)
         #get_fft()[2] == fftPhase
         finalSignal = np.multiply(self.get_fft()[2], self.outputSignal)
+        #### To use Mag instead of phase: ###
+        # Replace self.get_fft()[2] with self.outputSignal, and remove finalSignal
+        #self.inverse = np.fft.irfft(self.outputSignal, len(self.fMagnitude))
         self.inverse = np.fft.irfft(finalSignal, len(self.fMagnitude))
 
-        self.OutputSignal.setYRange(np.min(self.inverse), np.max(self.inverse))
+        # self.OutputSignal.setYRange(np.min(self.inverse), np.max(self.inverse))
+
         self.OutputSignal.plot(self.time, self.inverse, pen=pg.mkPen('y'))
         self.plot_spectrogram(
             self.inverse, self.OutputSpectro, self.default_color)
-        self.OutputSignal.setYRange(min(self.inverse), max(self.inverse))
-
+        self.OutputSignal.setYRange(-10, 10)
 
 #*******************************************End of Equalizer**************************************#
-
 
     def spec_range(self, data_col):
         if self.Slider_12.value() > self.Slider_11.value():
@@ -433,14 +441,12 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         elif self.OutputCh.isChecked():
             sd.stop()
 
-
     def clear_all(self):
         self.InputSignal.clear()
         self.InputSpectro.clear()
         self.OutputSignal.clear()
         self.OutputSpectro.clear()
-        
-    
+
     def zoomin(self):
 
         if self.InputCh.isChecked():
