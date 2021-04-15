@@ -669,7 +669,7 @@ color: rgb(255, 255, 255);</string>
          <number>1</number>
         </property>
         <property name="value">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -688,10 +688,10 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="sliderPosition">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -713,7 +713,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -732,7 +732,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -751,7 +751,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -770,7 +770,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -789,7 +789,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -808,7 +808,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -827,7 +827,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -846,7 +846,7 @@ color: rgb(255, 255, 255);</string>
          <number>5</number>
         </property>
         <property name="value">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -864,6 +864,9 @@ color: rgb(255, 255, 255);</string>
         <property name="maximum">
          <number>5</number>
         </property>
+        <property name="value">
+         <number>0</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -878,6 +881,9 @@ color: rgb(255, 255, 255);</string>
          </sizepolicy>
         </property>
         <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="value">
          <number>5</number>
         </property>
         <property name="orientation">

@@ -79,7 +79,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         self.sliderList = [self.Slider_1, self.Slider_2, self.Slider_3, self.Slider_4, self.Slider_5,
                            self.Slider_6, self.Slider_7, self.Slider_8, self.Slider_9, self.Slider_10]
-        # self.inverse = np.empty(shape=[0, 1])
+        self.inverse = np.empty(shape=[0, 1])
         self.Slider_11.valueChanged.connect(
             lambda: self.spec_range(self.inverse))  # MinSlider
         self.Slider_12.valueChanged.connect(
@@ -287,7 +287,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self.Slider_12.setMinimum(int(logal[0]))
             self.Slider_12.setMaximum(int(logal[-1]))
 
-            self.Slider_12.setValue(int(logal[-1]))
+            self.Slider_12.setValue(int(logal[0]))
             self.Slider_11.setValue(int(logal[0]))
 
             self.Slider_11.setSingleStep(int(logal[-1]/10))
