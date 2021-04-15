@@ -399,11 +399,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 #*******************************************End of Equalizer**************************************#
 
-    def play(self):
-        sd.play(self.data, self.samplerate)
-
-    def stop(self):
-        sd.stop()
 
     def spec_range(self, data_col):
         if self.Slider_12.value() > self.Slider_11.value():
@@ -421,6 +416,30 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 #**********************************************toolbar********************************************#
 
+    def play(self):
+
+        if self.InputCh.isChecked():
+            sd.play(self.data, self.samplerate)
+
+        elif self.OutputCh.isChecked():
+            sd.play(self.inverse)
+
+    def stop(self):
+
+        if self.InputCh.isChecked():
+            sd.stop()
+
+        elif self.OutputCh.isChecked():
+            sd.stop()
+
+
+    def clear_all(self):
+        self.InputSignal.clear()
+        self.InputSpectro.clear()
+        self.OutputSignal.clear()
+        self.OutputSpectro.clear()
+        
+    
     def zoomin(self):
 
         if self.InputCh.isChecked():
