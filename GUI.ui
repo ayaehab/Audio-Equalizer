@@ -1005,7 +1005,6 @@ background-color: rgb(80, 80, 80);</string>
     </property>
     <addaction name="action_new_win"/>
     <addaction name="action_open"/>
-    <addaction name="action_save"/>
     <addaction name="action_clear"/>
     <addaction name="actionSave_as_PDF"/>
    </widget>
@@ -1181,5 +1180,198 @@ background-color: rgb(80, 80, 80);</string>
  <resources>
   <include location="../../Task1/Signal_Viewer/img.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>Slider_1</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Gain1Label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>961</x>
+     <y>622</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>957</x>
+     <y>734</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Slider_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Gain2Label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>995</x>
+     <y>579</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>993</x>
+     <y>732</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Slider_3</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Gain3Label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1023</x>
+     <y>651</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1021</x>
+     <y>734</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Slider_4</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Gain4Label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1061</x>
+     <y>651</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1056</x>
+     <y>728</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Slider_5</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Gain5Label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1098</x>
+     <y>657</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1088</x>
+     <y>727</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Slider_6</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Gain6Label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1131</x>
+     <y>647</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1125</x>
+     <y>732</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Slider_7</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Gain7Label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1165</x>
+     <y>648</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1163</x>
+     <y>728</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Slider_8</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Gain8Label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1204</x>
+     <y>647</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1194</x>
+     <y>733</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Slider_9</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Gain9Label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1241</x>
+     <y>651</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1235</x>
+     <y>730</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Slider_10</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Gain10Label</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1273</x>
+     <y>642</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1262</x>
+     <y>735</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Slider_11</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>GainMinLabel</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1307</x>
+     <y>652</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1300</x>
+     <y>729</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Slider_12</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>GainMaxLabel</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1340</x>
+     <y>644</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1333</x>
+     <y>733</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

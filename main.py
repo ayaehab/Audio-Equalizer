@@ -16,7 +16,7 @@ from numpy.fft import fft, ifft
 import numpy as np
 import sys
 from PyQt5 import QtCore, QtWidgets, QtGui, uic
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import pyqtSlot, QSettings
 from PyQt5.QtWidgets import QFileDialog, QGraphicsScene, QMessageBox
 import matplotlib
 import queue
@@ -35,22 +35,31 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         super().__init__()
         self.ui = uic.loadUi('GUI.ui', self)
 
+        self.settings = QSettings("Audio Equalizer", 'App')
+        # last_file_opened = self.settings.value("last_file", self.selected_file[0]).toString()
+        # self.settings.setValue("last_file", QtCore.QVariant(QtCore.QString('file_name')))
+        try:
+            # Saving the last position and size of the application
+            self.resize(self.settings.value('window size'))
+            self.move(self.settings.value('window position'))
+        except:
+            pass
         # Connecting Buttons
         self.action_open.triggered.connect(lambda: self.browse_file())
         self.action_new_win.triggered.connect(self.make_new_window)
         self.actionSave_as_PDF.triggered.connect(lambda: self.create_my_pdf())
+        self.action_clear.triggered.connect(lambda: self.clear_all())
 
         self.actionPalette_1.triggered.connect(lambda: self.palette_btn1())
         self.actionPalette_2.triggered.connect(lambda: self.palette_btn2())
         self.actionPalette_3.triggered.connect(lambda: self.palette_btn3())
         self.actionPalette_4.triggered.connect(lambda: self.palette_btn4())
         self.actionPalette_5.triggered.connect(lambda: self.palette_btn5())
+
         self.InputCh.triggered.connect(lambda: self.select_channel(1))
         self.ISpectroCh.triggered.connect(lambda: self.select_channel(2))
         self.OutputCh.triggered.connect(lambda: self.select_channel(3))
         self.OSpectroCh.triggered.connect(lambda: self.select_channel(4))
-
-        self.action_clear.triggered.connect(lambda: self.clear_all())
 
         self.right_button.clicked.connect(lambda: self.Scroll_right())
         self.left_button.clicked.connect(lambda: self.Scroll_left())
@@ -62,18 +71,19 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         self.Play_Button.clicked.connect(lambda: self.play())
         self.Stop_Button.clicked.connect(lambda: self.stop())
-        self.pens = [pg.mkPen('r'), pg.mkPen('b'), pg.mkPen('g')]
 
+        self.pens = [pg.mkPen('r'), pg.mkPen('b'), pg.mkPen('g')]
         self.default_color = {'ticks': [(0.5, (0, 182, 188, 255)),
                                         (1.0, (246, 111, 0, 255)),
                                         (0.0, (75, 0, 113, 255))]}
+
         self.sliderList = [self.Slider_1, self.Slider_2, self.Slider_3, self.Slider_4, self.Slider_5,
                            self.Slider_6, self.Slider_7, self.Slider_8, self.Slider_9, self.Slider_10]
-
+        # self.inverse = np.empty(shape=[0, 1])
         self.Slider_11.valueChanged.connect(
-            lambda: self.spec_range(np.array(self.inverse)))  # MinSlider
+            lambda: self.spec_range(self.inverse))  # MinSlider
         self.Slider_12.valueChanged.connect(
-            lambda: self.spec_range(np.array(self.inverse)))  # MaxSlider
+            lambda: self.spec_range(self.inverse))  # MaxSlider
 
         for i in range(10):
             self.sliderList[i].valueChanged.connect(lambda: self.equalizer())
@@ -82,11 +92,15 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.fbands = []
         self.gain = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
+    def closeEvent(self, event):
+        self.settings.setValue('window size', self.size())
+        self.settings.setValue('window position', self.pos())
+
     def make_new_window(self):
         self.new_win = AudioEqualizer()
         self.new_win.show()
 
-    def plot_spectrogram(self, data_col, viewer, color):
+    def plot_spectrogram(self, data_col, viewer, color, fs=10e3):
         # im not sure how to compute fs, default value for this task will be 10e3
         fs = 10e3
         # make sure the data given in array form
@@ -221,6 +235,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self, 'Select .wav file ', './', "Raw Data(*.wav)",  os.getenv('HOME'))
 
         path = str(self.selected_file[0])
+        # self.settings.setValue(
+        #     "last_file", QtCore.QVariant(QtCore.QString('file_name')))
         self.file_ext = self.get_extention(path)
         # check the file extension is (.Wav)
         if self.file_ext == 'wav':
@@ -362,7 +378,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         for i in range(10):
             self.gain[i] = self.sliderList[i].value()
 
-
         for index in range(10):
             # we changed it to np.array so we can multiply the value by value not multipling the list that will generate repetation of value not multplication
             Magnified_Magnitued = np.multiply(
@@ -375,6 +390,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         #get_fft()[2] == fftPhase
         finalSignal = np.multiply(self.get_fft()[2], self.outputSignal)
         self.inverse = np.fft.irfft(finalSignal, len(self.fMagnitude))
+        print("ana 7sbt el self.inverse tmam", self.inverse)
         self.OutputSignal.setYRange(np.min(self.inverse), np.max(self.inverse))
         self.OutputSignal.plot(self.time, self.inverse, pen=pg.mkPen('y'))
         self.plot_spectrogram(
@@ -391,22 +407,23 @@ class AudioEqualizer(QtWidgets.QMainWindow):
     def stop(self):
         sd.stop()
 
+
     def spec_range(self, data_col):
-        if self.Slider_12.value() > self.Slider_11.value():
-            # im not sure how to compute fs, default value for this task will be 10e3
+        if self.Slider_12.value() > self.Slider_11.value():            
             fs = self.samplerate
-            # make sure the data given in array form
-            # f : Array of sample frequencies; t : Array of segment times; Sxx : Spectrogram of x. The last axis of Sxx corresponds to the segment times.
-            plt.specgram(data_col, Fs=fs, vmin=self.Slider_11.value(),
-                         vmax=self.Slider_12.value())
-            # A plot area (ViewBox + axes) for displaying the image
-            plt.colorbar()
-            plt.show()
+            self.OutputSpectro.clear()
+            self.plot_spectrogram(
+                data_col, self.OutputSpectro, self.default_color, fs=fs)
+            print("ana wslt hna", self.inverse)
+            '''Another method to plot Min,Max using matplotlib lib''' 
+            # plt.specgram(data_col, Fs=fs, vmin=self.Slider_11.value(),
+            #              vmax=self.Slider_12.value())
+            # # A plot area (ViewBox + axes) for displaying the image
+            # plt.colorbar()
+            # plt.show()
 
 
 #**********************************************toolbar********************************************#
-
-
 
     def zoomin(self):
 
@@ -422,7 +439,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         if self.OSpectroCh.isChecked():
             self.OutputSpectro.plotItem.getViewBox().scaleBy((0.5, 0.5))
 
-
     def zoomout(self):
         if self.InputCh.isChecked():
             self.InputSignal.plotItem.getViewBox().scaleBy((1.5, 1.5))
@@ -435,7 +451,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         if self.OSpectroCh.isChecked():
             self.OutputSpectro.plotItem.getViewBox().scaleBy((1.5, 1.5))
-
 
     def Scroll_right(self):
 
@@ -495,7 +510,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             if self.range[1][0] > min(self.data):
                 self.OutputSpectro.getViewBox().translateBy(x=0, y=-0.2)
 
-    def clear_all(self): 
+    def clear_all(self):
         self.InputSignal.clear()
         self.InputSpectro.clear()
         self.OutputSignal.clear()
@@ -504,6 +519,9 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
+    app.setOrganizationName("CUFE")
+    app.setOrganizationDomain("CUFEDomain")
+    app.setApplicationName("Audio Equalizer")
     application = AudioEqualizer()
     application.show()
     app.exec_()
