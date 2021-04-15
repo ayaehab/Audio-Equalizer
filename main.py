@@ -295,7 +295,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         finalSignal = np.multiply(self.get_fft()[2], self.outputSignal) 
         self.inverse = np.fft.irfft(finalSignal, len(self.fMagnitude))
         self.OutputSignal.setYRange(min(self.inverse), max(self.inverse))
-        self.OutputSignal.plot(self.inverse, pen=pg.mkPen('y'))
+        self.OutputSignal.plot(self.time, self.inverse, pen=pg.mkPen('y'))
         self.plot_spectrogram(self.inverse, self.OutputSpectro)
         self.OutputSignal.setYRange(min(self.inverse),max(self.inverse))
 
