@@ -306,19 +306,19 @@ class AudioEqualizer(QtWidgets.QMainWindow):
    
     #scrolling function connected to scroll buttons based on which channel is controlled
    
-   def Scroll_right(self):
+    def Scroll_right(self):
         
         if self.Channel1.isChecked():
             
             self.range = self.InputSignal.getViewBox().viewRange()
             if self.range[0][1] < max(self.time) :
-                self.InputSignal.getViewBox().translateBy(x=+1, y=0)
+                self.InputSignal.getViewBox().translateBy(x=+0.2, y=0)
 
         if self.Channel2.isChecked():
             
             self.range = self.OutputSignal.getViewBox().viewRange()
             if self.range[0][1] < max(self.x2) :
-                self.OutputSignal.getViewBox().translateBy(x=+1, y=0)
+                self.OutputSignal.getViewBox().translateBy(x=+0.2, y=0)
 
 
     def Scroll_left(self):
@@ -327,13 +327,13 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             
             self.range = self.InputSignal.getViewBox().viewRange()
             if self.range[0][0] > min(self.time) :
-                self.InputSignal.getViewBox().translateBy(x=-1, y=0)
+                self.InputSignal.getViewBox().translateBy(x=-0.2, y=0)
 
         if self.Channel2.isChecked():
             
             self.range = self.OutputSignal.getViewBox().viewRange()
             if self.range[0][0] > min(self.time) :
-                self.OutputSignal.getViewBox().translateBy(x=-1, y=0)
+                self.OutputSignal.getViewBox().translateBy(x=-0.2, y=0)
    
 
     def Scroll_up(self):
