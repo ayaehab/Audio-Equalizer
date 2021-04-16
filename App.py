@@ -73,9 +73,9 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.Stop_Button.clicked.connect(lambda: self.stop())
 
         self.pens = [pg.mkPen('r'), pg.mkPen('b'), pg.mkPen('g')]
-        self.default_color = {'ticks': [(0.5, (0,0,0,255)),
-                                        (1.0, (255,255,0,255)),
-                                        (0.0, (0,255,255,255)),
+        self.default_color = {'ticks': [(0.5, (0, 0, 0, 255)),
+                                        (1.0, (255, 255, 0, 255)),
+                                        (0.0, (0, 255, 255, 255)),
                                         (0.25, (0, 0, 255, 255)),
                                         (0.75, (255, 0, 0, 255))]}
 
@@ -294,12 +294,12 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
             self.OutputSignal.setLimits(
                 xMin=0, xMax=500000, yMin=-200000, yMax=200000)
-            
+
             arr = np.arange(1, (self.samplerate/2)+1, 1)
             self.array = arr[::-1]
-            
+
             logal = 20 * (np.log10(self.array/(self.samplerate/2))*(-1))
-            
+
             self.Slider_11.setMinimum(int(logal[0]))
             self.Slider_11.setMaximum(int(logal[-1]))
             self.Slider_12.setMinimum(int(logal[0]))
@@ -368,12 +368,15 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 #*********************************************Equalizer***************************************#
 
+
     def equalizer(self):
         self.OutputSignal.clear()
 
         self.OutputSpectro.clear()
 
         self.fMagnitude = self.get_fft()[1]
+
+        print(len(self.fMagnitude))
 
         self.mvaluePerBand = int(len(self.fMagnitude)/10)
 
@@ -385,28 +388,34 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         for i in range(10):
             self.mbands.append(
-                self.fMagnitude[i * self.mvaluePerBand: min(len(self.fMagnitude)+1, (i+1)*self.mvaluePerBand)])
+                self.fMagnitude[int(i * len(self.fMagnitude) / 10):int((i+1) * len(self.fMagnitude) / 10)])
             self.fbands.append(
-                self.freq[i * self.fvaluePerBand: min(len(self.freq)+1, (i+1)*self.fvaluePerBand)])
-
+                self.freq[int(i * len(self.freq) / 10 ):int( (i+1) * len(self.freq) / 10)])
+                      
         for i in range(10):
             self.gain[i] = self.sliderList[i].value()
 
         for index in range(10):
             # we changed it to np.array so we can multiply the value by value not multipling the list that will generate repetation of value not multplication
+            
             Magnified_Magnitued = np.multiply(
                 self.gain[index], (self.mbands[index]))
             self.newMagnitude.append(Magnified_Magnitued)
 
         for band in self.newMagnitude:
             for magnitude in band:
-                self.outputSignal.append(magnitude)
-        #get_fft()[2] == fftPhase
-        finalSignal = np.multiply(self.get_fft()[2], self.outputSignal)
+                self.outputSignal.append(magnitude) 
+
+        #print(len(self.outputSignal))
+        # get_fft()[2] == fftPhase
+        finalSignal = np.multiply(np.exp(1j * self.get_fft()[2]), self.outputSignal)
         #### To use Mag instead of phase: ###
         # Replace self.get_fft()[2] with self.outputSignal, and remove finalSignal
-        #self.inverse = np.fft.irfft(self.outputSignal, len(self.fMagnitude))
+        # self.inverse = np.fft.irfft(self.outputSignal, len(self.fMagnitude))
+
         self.inverse = np.fft.irfft(finalSignal, len(self.fMagnitude))
+
+        print(len(self.inverse))
 
         # self.OutputSignal.setYRange(np.min(self.inverse), np.max(self.inverse))
 
