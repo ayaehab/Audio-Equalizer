@@ -111,10 +111,10 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         # f : Array of sample frequencies; t : Array of segment times; Sxx : Spectrogram of x. The last axis of Sxx corresponds to the segment times.
         f, t, Sxx = signal.spectrogram(data, fs)
-        print("dim of f::: ", np.ndim(f), "shpae of f::: ", f.shape, "length shape of f::: ", len(f.shape) )
-        print("dim of t::: ", np.ndim(t), "shpae of t::: ", t.shape, "length shape of t::: ", len(t.shape) )
-        print("dim of Sxx::: ", np.ndim(Sxx), "shpae of Sxx::: ", Sxx.shape, "length shape of Sxx::: ", len(Sxx.shape) )
-        print("1st f: ", f[0], "1st t: ", t[0], "1st Sxx: ", Sxx[0, 0], "try val of sxx: ", Sxx[0][0])
+        # print("dim of f::: ", np.ndim(f), "shpae of f::: ", f.shape, "length shape of f::: ", len(f.shape) )
+        # print("dim of t::: ", np.ndim(t), "shpae of t::: ", t.shape, "length shape of t::: ", len(t.shape) )
+        # print("dim of Sxx::: ", np.ndim(Sxx), "shpae of Sxx::: ", Sxx.shape, "length shape of Sxx::: ", len(Sxx.shape) )
+        # print("1st f: ", f[0], "1st t: ", t[0], "1st Sxx: ", Sxx[0, 0], "try val of sxx: ", Sxx[0][0])
 
         # A plot area (ViewBox + axes) for displaying the image
         plot_area = viewer.plot()
@@ -273,6 +273,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                     self.time, self.data[:, 1], pen=self.pens[1])
                 self.InputSignal.setYRange(10, -10)
                 self.OutputSignal.setYRange(10, -10)
+                self.InputSignal.setXRange(0, 5)
+                self.OutputSignal.setXRange(0, 5)
                 # Plot the spectrogram for the input in InputSpectro Viewer
                 self.plot_spectrogram(
                     self.data[:, 0], self.InputSpectro, self.default_color)
@@ -292,18 +294,16 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
             self.OutputSignal.setLimits(
                 xMin=0, xMax=500000, yMin=-200000, yMax=200000)
-
+            
             arr = np.arange(1, (self.samplerate/2)+1, 1)
             self.array = arr[::-1]
+            
             logal = 20 * (np.log10(self.array/(self.samplerate/2))*(-1))
-
+            
             self.Slider_11.setMinimum(int(logal[0]))
             self.Slider_11.setMaximum(int(logal[-1]))
             self.Slider_12.setMinimum(int(logal[0]))
             self.Slider_12.setMaximum(int(logal[-1]))
-
-            self.Slider_12.setValue(int(logal[-1]))
-            self.Slider_11.setValue(int(logal[0]))
 
             self.Slider_11.setSingleStep(int(logal[-1]/10))
             self.Slider_12.setSingleStep(int(logal[-1]/10))
@@ -413,15 +413,14 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.OutputSignal.plot(self.time, self.inverse, pen=pg.mkPen('y'))
         self.plot_spectrogram(
             self.inverse, self.OutputSpectro, self.default_color)
-        self.OutputSignal.setYRange(-10, 10)
+        # self.OutputSignal.setYRange(-10, 10)
 
 #*******************************************End of Equalizer**************************************#
 
     def spec_range(self, data_col):
         if self.Slider_12.value() > self.Slider_11.value():
             fs = self.samplerate
-            plt.specgram(data_col, Fs=fs, vmin=self.Slider_11.value(),
-                         vmax=self.Slider_12.value())
+            plt.specgram(data_col, Fs=fs, vmin=self.Slider_11.value(), vmax= self.Slider_12.value() )
             plt.colorbar()
             plt.show()
 
