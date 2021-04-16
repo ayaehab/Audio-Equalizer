@@ -73,9 +73,11 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.Stop_Button.clicked.connect(lambda: self.stop())
 
         self.pens = [pg.mkPen('r'), pg.mkPen('b'), pg.mkPen('g')]
-        self.default_color = {'ticks': [(0.5, (0, 182, 188, 255)),
-                                        (1.0, (246, 111, 0, 255)),
-                                        (0.0, (75, 0, 113, 255))]}
+        self.default_color = {'ticks': [(0.5, (0,0,0,255)),
+                                        (1.0, (255,255,0,255)),
+                                        (0.0, (0,255,255,255)),
+                                        (0.25, (0, 0, 255, 255)),
+                                        (0.75, (255, 0, 0, 255))]}
 
         self.sliderList = [self.Slider_1, self.Slider_2, self.Slider_3, self.Slider_4, self.Slider_5,
                            self.Slider_6, self.Slider_7, self.Slider_8, self.Slider_9, self.Slider_10]
@@ -102,12 +104,17 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
     def plot_spectrogram(self, data_col, viewer, color, fs=10e3):
         # im not sure how to compute fs, default value for this task will be 10e3
-        fs = 10e3
+        fs = self.samplerate
         # make sure the data given in array form
         data = np.array(data_col)
+        # print("dim of data::: ", np.ndim(data), "shpae of data::: ", data.shape, "length shape of data::: ", len(data.shape) )
 
         # f : Array of sample frequencies; t : Array of segment times; Sxx : Spectrogram of x. The last axis of Sxx corresponds to the segment times.
         f, t, Sxx = signal.spectrogram(data, fs)
+        print("dim of f::: ", np.ndim(f), "shpae of f::: ", f.shape, "length shape of f::: ", len(f.shape) )
+        print("dim of t::: ", np.ndim(t), "shpae of t::: ", t.shape, "length shape of t::: ", len(t.shape) )
+        print("dim of Sxx::: ", np.ndim(Sxx), "shpae of Sxx::: ", Sxx.shape, "length shape of Sxx::: ", len(Sxx.shape) )
+        print("1st f: ", f[0], "1st t: ", t[0], "1st Sxx: ", Sxx[0, 0], "try val of sxx: ", Sxx[0][0])
 
         # A plot area (ViewBox + axes) for displaying the image
         plot_area = viewer.plot()
@@ -137,6 +144,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         viewer.setLabel('bottom', "Time", units='s')
         # Include the units automatimy_pdfy scales the axis and adjusts the SI prefix (in this case kHz)
         viewer.setLabel('left', "Frequency", units='Hz')
+        # viewer.setLabel('left', "Amplitude", units='Hz')
 
         ################# Coloring Spectrogram ############
 
@@ -294,7 +302,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self.Slider_12.setMinimum(int(logal[0]))
             self.Slider_12.setMaximum(int(logal[-1]))
 
-            self.Slider_12.setValue(int(logal[0]))
+            self.Slider_12.setValue(int(logal[-1]))
             self.Slider_11.setValue(int(logal[0]))
 
             self.Slider_11.setSingleStep(int(logal[-1]/10))
@@ -414,7 +422,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             fs = self.samplerate
             plt.specgram(data_col, Fs=fs, vmin=self.Slider_11.value(),
                          vmax=self.Slider_12.value())
-            # A plot area (ViewBox + axes) for displaying the image
             plt.colorbar()
             plt.show()
 
