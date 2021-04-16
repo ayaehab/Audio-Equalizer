@@ -457,10 +457,16 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             sd.stop()
 
     def clear_all(self):
+        self.default()
         self.InputSignal.clear()
         self.InputSpectro.clear()
         self.OutputSignal.clear()
         self.OutputSpectro.clear()
+        
+        
+    def default (self):
+        for i in range(10):
+            self.sliderList[i].setProperty("value", 1)
 
     def zoomin(self):
 
@@ -547,11 +553,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             if self.range[1][0] > min(self.data):
                 self.OutputSpectro.getViewBox().translateBy(x=0, y=-0.2)
 
-    def clear_all(self):
-        self.InputSignal.clear()
-        self.InputSpectro.clear()
-        self.OutputSignal.clear()
-        self.OutputSpectro.clear()
+
+        
 
 
 def main():
