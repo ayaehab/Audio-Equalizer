@@ -89,6 +89,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         for i in range(10):
             self.sliderList[i].valueChanged.connect(lambda: self.equalizer())
+        
 
         self.mbands = []
         self.fbands = []

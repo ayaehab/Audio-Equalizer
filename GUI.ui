@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1382</width>
-    <height>878</height>
+    <width>1379</width>
+    <height>886</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -259,7 +259,7 @@ color: rgb(255, 255, 255);
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>30</width>
+       <width>41</width>
        <height>20</height>
       </rect>
      </property>
@@ -272,7 +272,7 @@ color: rgb(255, 255, 255);
       <rect>
        <x>10</x>
        <y>400</y>
-       <width>40</width>
+       <width>61</width>
        <height>16</height>
       </rect>
      </property>
@@ -285,7 +285,7 @@ color: rgb(255, 255, 255);
       <rect>
        <x>10</x>
        <y>201</y>
-       <width>111</width>
+       <width>131</width>
        <height>21</height>
       </rect>
      </property>
@@ -298,7 +298,7 @@ color: rgb(255, 255, 255);
       <rect>
        <x>10</x>
        <y>611</y>
-       <width>121</width>
+       <width>151</width>
        <height>21</height>
       </rect>
      </property>
@@ -494,6 +494,7 @@ color: rgb(255, 255, 255);
          <font>
           <family>MS Shell Dlg 2</family>
           <pointsize>6</pointsize>
+          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -594,6 +595,7 @@ color: rgb(255, 255, 255);</string>
          <font>
           <family>MS Shell Dlg 2</family>
           <pointsize>6</pointsize>
+          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -612,6 +614,7 @@ color: rgb(255, 255, 255);</string>
          <font>
           <family>MS Shell Dlg 2</family>
           <pointsize>10</pointsize>
+          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -630,6 +633,7 @@ color: rgb(255, 255, 255);</string>
          <font>
           <family>MS Shell Dlg 2</family>
           <pointsize>10</pointsize>
+          <weight>50</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -981,8 +985,8 @@ border-radius: 30px;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1382</width>
-     <height>22</height>
+     <width>1379</width>
+     <height>26</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1060,7 +1064,7 @@ background-color: rgb(80, 80, 80);</string>
     <string>Open</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+O</string>
+    <string>Alt+O</string>
    </property>
   </action>
   <action name="action_save">
