@@ -1017,6 +1017,7 @@ background-color: rgb(80, 80, 80);</string>
     <addaction name="action_open"/>
     <addaction name="action_clear"/>
     <addaction name="actionSave_as_PDF"/>
+    <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuColor_Palette">
     <property name="styleSheet">
@@ -1176,6 +1177,14 @@ background-color: rgb(80, 80, 80);</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+4</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
    </property>
   </action>
  </widget>

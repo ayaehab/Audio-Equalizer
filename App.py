@@ -49,6 +49,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.action_new_win.triggered.connect(self.make_new_window)
         self.actionSave_as_PDF.triggered.connect(lambda: self.create_my_pdf())
         self.action_clear.triggered.connect(lambda: self.clear_all())
+        self.actionClose.triggered.connect(lambda: self.close())
+        
 
         self.actionPalette_1.triggered.connect(lambda: self.palette_btn1())
         self.actionPalette_2.triggered.connect(lambda: self.palette_btn2())
