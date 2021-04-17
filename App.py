@@ -78,7 +78,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                                         (0.0, (0, 255, 255, 255)),
                                         (0.25, (0, 0, 255, 255)),
                                         (0.75, (255, 0, 0, 255))]}
-
+        
         self.sliderList = [self.Slider_1, self.Slider_2, self.Slider_3, self.Slider_4, self.Slider_5,
                            self.Slider_6, self.Slider_7, self.Slider_8, self.Slider_9, self.Slider_10]
         self.inverse = np.empty(shape=[0, 1])
@@ -112,40 +112,36 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         # f : Array of sample frequencies; t : Array of segment times; Sxx : Spectrogram of x. The last axis of Sxx corresponds to the segment times.
         f, t, Sxx = signal.spectrogram(data, fs)
-        # print("dim of f::: ", np.ndim(f), "shpae of f::: ", f.shape, "length shape of f::: ", len(f.shape) )
-        # print("dim of t::: ", np.ndim(t), "shpae of t::: ", t.shape, "length shape of t::: ", len(t.shape) )
-        # print("dim of Sxx::: ", np.ndim(Sxx), "shpae of Sxx::: ", Sxx.shape, "length shape of Sxx::: ", len(Sxx.shape) )
-        # print("1st f: ", f[0], "1st t: ", t[0], "1st Sxx: ", Sxx[0, 0], "try val of sxx: ", Sxx[0][0])
-
         # A plot area (ViewBox + axes) for displaying the image
         plot_area = viewer.plot()
         # Item for displaying image data
         img = pg.ImageItem()
         viewer.addItem(img)
+        
         # Add a histogram with which to control the gradient of the image
         hist = pg.HistogramLUTItem()
         # Link the histogram to the image
         hist.setImageItem(img)
         # If you don't add the histogram to the window, it stays invisible, but I find it useful.
         viewer.addItem(plot_area)
-
         # Show the window
         viewer.show()
         # Fit the min and max levels of the histogram to the data available
         hist.setLevels(np.min(Sxx), np.max(Sxx))
-
         # Sxx contains the amplitude for each pixel
-        img.setImage(Sxx)
+        #Most image data is stored in row-major order (row, column) and will need to be transposed before calling setImage():
+        img.setImage(Sxx.T)
         # Scale the X and Y Axis to time and frequency (standard is pixels)
         img.scale(t[-1]/np.size(Sxx, axis=1),
                   f[-1]/np.size(Sxx, axis=0))
         # Limit panning/zooming to the spectrogram
         viewer.setLimits(xMin=0, xMax=t[-1], yMin=0, yMax=f[-1])
+        #Range is limited to see the immediate changes easier
+        viewer.setYRange(0,1000)
         # Add labels to the axis
         viewer.setLabel('bottom', "Time", units='s')
         # Include the units automatimy_pdfy scales the axis and adjusts the SI prefix (in this case kHz)
         viewer.setLabel('left', "Frequency", units='Hz')
-        # viewer.setLabel('left', "Amplitude", units='Hz')
 
         ################# Coloring Spectrogram ############
 
@@ -156,7 +152,18 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         hist.shape
         hist.layout.setContentsMargins(0, 0, 0, 0)
         hist.vb.setMouseEnabled(x=False, y=False)
+        ''' Another method to color the image by using *bipolar colormap*
+        
+        pos = np.array([0., 1., 0.5, 0.25, 0.75])
+        color = np.array([[0,255,255,255], [255,255,0,255], [0,0,0,255], (0, 0, 255, 255), (255, 0, 0, 255)], dtype=np.ubyte)
+        cmap = pg.ColorMap(pos, color)
+        lut = cmap.getLookupTable(0.0, 1.0, 256)
 
+        img.setLookupTable(lut)
+        img.setLevels(np.min(Sxx), np.max(Sxx))
+        
+        '''
+        
     def palette_btn1(self):  # RGB Grey White Color Palette
         color = {'ticks': [(0.5, (255, 0, 0, 255)),
                            (1.0, (0, 0, 255, 255)),
