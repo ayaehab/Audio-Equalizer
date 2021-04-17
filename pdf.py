@@ -1,11 +1,13 @@
 from reportlab.pdfgen import canvas
 import os
+
+
 class GeneratePDF():
 
-    def __init__(self):
+    def __init__(self, filename):
         super().__init__()
     # Content for PDF
-        self.fileName = "Audio Equalizer.pdf"
+        self.fileName = filename
         self.documentTitle = 'Equalizer'
         self.title = 'Equalizer'
 
@@ -29,7 +31,6 @@ class GeneratePDF():
 
         self.pdf.setFont('Courier-Bold', 12)
         # self.pdf.drawString(315, 795, 'Signal')
-        
 
         #  Draw all lines for the table
         self.pdf.line(10, 780, 570, 780)
@@ -38,10 +39,10 @@ class GeneratePDF():
         self.pdf.line(10, 180, 570, 180)
 
         self.pdf.line(110, 20, 110, 800)
-        
 
     # ###################################
     ##############################
+
     def drawMyRuler(self):
         self.pdf.drawString(100, 810, 'x100')
         self.pdf.drawString(200, 810, 'x200')
@@ -60,7 +61,7 @@ class GeneratePDF():
     ######################
 
 # Plotting the signals names
-    def sigName(self, signal1, signal2, signal3 ,signal4):
+    def sigName(self, signal1, signal2, signal3, signal4):
         self.pdf.drawString(2, 700, signal1)
         self.pdf.drawString(2, 500, signal2)
         self.pdf.drawString(2, 300, signal3)
@@ -74,8 +75,8 @@ class GeneratePDF():
                                  height=170, preserveAspectRatio=False, showBoundary=True)
 
 
-
 # Sending all signals spectroimages to their positions in the table
+
     def spectroImage(self, img1, img2):
         self.pdf.drawInlineImage(img1, 120, 395, width=410,
                                  height=170,  preserveAspectRatio=False, showBoundary=True)
@@ -85,7 +86,8 @@ class GeneratePDF():
     # Generating the PDF
 
     def create_pdf(self):
-        self.sigName('Input Signal', 'I-Spectrogram', 'Output Signal', 'O-Spectrogram') #reduce font size 
+        self.sigName('Input Signal', 'I-Spectrogram',
+                     'Output Signal', 'O-Spectrogram')  # reduce font size
         self.sigImage(self.input_signal, self.output_signal)
         self.spectroImage(self.input_spectro, self.output_spectro)
         # self.drawMyRuler()
@@ -93,9 +95,9 @@ class GeneratePDF():
 
     def save_pdf(self):
         self.pdf.save()
-        
-        # delete created images after generating PDF file 
-        if os.path.exists("Audio Equalizer.pdf"):
+
+        # delete created images after generating PDF file
+        if os.path.exists(self.fileName):
             os.remove("input_signal.png")
             os.remove("output_signal.png")
             os.remove("input_spectro.png")

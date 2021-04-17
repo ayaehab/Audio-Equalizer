@@ -325,6 +325,15 @@ class AudioEqualizer(QtWidgets.QMainWindow):
     # this funcition for the button, when pressed 4 images exported, pdf generated, then the pictures get deleted
 
     def create_my_pdf(self):
+        
+        file_name, _ = QFileDialog.getSaveFileName(self, 'Export PDF', None, 'PDF files (.pdf);;All Files()')
+        if file_name != '':
+            
+            #add ".pdf" to the name
+            if QtCore.QFileInfo(file_name).suffix() == "" :
+                file_name += '.pdf'
+        
+
         if self.InputSignal.scene():
             # export all items in all viewers as images
             exporter1 = pg.exporters.ImageExporter(self.InputSignal.scene())
@@ -339,7 +348,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             exporter4 = pg.exporters.ImageExporter(self.OutputSpectro.scene())
             exporter4.export('output_spectro.png')
 
-            my_pdf = GeneratePDF()
+            my_pdf = GeneratePDF(file_name)
             my_pdf.create_pdf()
             my_pdf.save_pdf()
 
@@ -437,9 +446,15 @@ class AudioEqualizer(QtWidgets.QMainWindow):
     def spec_range(self, data_col):
         if self.Slider_12.value() > self.Slider_11.value():
             fs = self.samplerate
-            plt.specgram(data_col, Fs=fs, vmin=self.Slider_11.value(), vmax= self.Slider_12.value() )
-            plt.colorbar()
-            plt.show()
+            self.OutputSpectro.clear()
+            self.plot_spectrogram(
+            data_col, self.OutputSpectro, self.default_color, fs=fs)
+            # plt.specgram(data_col, Fs=fs, vmin=self.Slider_11.value(), vmax= self.Slider_12.value() )
+            # plt.colorbar()
+            # plt.show()
+        else:
+            
+            self.OutputSpectro.clear()
 
             '''Another method to plot Min,Max using matplotlib lib
             self.OutputSpectro.clear()
