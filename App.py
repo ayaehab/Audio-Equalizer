@@ -46,6 +46,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.actionSave_as_PDF.triggered.connect(lambda: self.create_my_pdf())
         self.action_clear.triggered.connect(lambda: self.clear_all())
         self.actionClose.triggered.connect(lambda: self.close())
+        self.show_ISpectroCh.clicked.connect(lambda : self.hide())
+
 
         self.actionPalette_1.triggered.connect(lambda: self.color_palette(0))
         self.actionPalette_2.triggered.connect(lambda: self.color_palette(1))
@@ -210,6 +212,13 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                 self.OSpectroCh.setChecked(True)
             else:
                 self.OSpectroCh.setChecked(False)
+                
+    def hide(self ) :
+
+        if (self.show_ISpectroCh.isChecked()) :
+            self.InputSpectro.hide()
+        else :
+            self.InputSpectro.show()
 
 # Open (.wav ) file, read it using Scipy Lib, and plot it in inputSignal Viewer
     def browse_file(self):
