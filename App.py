@@ -305,19 +305,15 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         # fft returns an array contains all +ve values then all -ve values
         # it has some real and some complex values
         self.fftArray = fft(self.data)
-        # separate the +ve from the -ve
-        self.fftArrayPositive = self.fftArray[:self.length // 2]
-        self.fftArrayNegative = np.flip(self.fftArray[self.length // 2:])
         # get the magnitude of both +ve & -ve
         self.fftArrayAbs = np.abs(self.fftArray)
+        # get the phase
         self.fftPhase = np.angle(self.fftArray)
         # magnitude of +ve only
         self.fftMagnitude = self.fftArrayAbs[: self.length // 2]
-
-
-        # return fftArray that will be used later in the inverse forrier transform
-        # and fftMagnitude that will be used in plotting ....
-        return self.fftArray, self.fftArrayAbs, self.fftPhase, self.fftMagnitude
+        
+        # return the magnitude and phase
+        return self.fftArrayAbs, self.fftPhase
 
 
 #*****************************************END OF Fourrier*************************************#
@@ -330,7 +326,9 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         self.OutputSpectro.clear()
 
-        self.fMagnitude = self.get_fft()[1]
+        self.fMagnitude = self.get_fft()[0]
+        
+        self.fPhase = self.get_fft()[1]
 
         self.mvaluePerBand = int(len(self.fMagnitude)/10)
 
@@ -360,9 +358,9 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             for magnitude in band:
                 self.outputSignal.append(magnitude)
 
-        # get_fft()[2] == fftPhase
+        # self.fPhase == fftPhase
         finalSignal = np.multiply(
-            np.exp(1j * self.get_fft()[2]), self.outputSignal)
+            np.exp(1j * self.fPhase), self.outputSignal)
         self.inverse = np.fft.irfft(finalSignal, len(self.fMagnitude))
 
 
@@ -371,7 +369,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self.inverse, self.OutputSpectro, self.default_color)
         ######## To use Mag instead of phase: #######
         
-        # Replace self.get_fft()[2] with self.outputSignal, and remove finalSignal
+        # Replace self.fPhase with self.outputSignal, and remove finalSignal
         
         # self.inverse = np.fft.irfft(self.outputSignal, len(self.fMagnitude))
 
