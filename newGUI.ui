@@ -813,7 +813,7 @@ border-radius: 30px;</string>
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>31</width>
+       <width>34</width>
        <height>641</height>
       </rect>
      </property>
@@ -824,7 +824,7 @@ border-radius: 30px;</string>
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../input_img.jpg</pixmap>
+         <pixmap resource="img.qrc">:/img/input_img.JPG</pixmap>
         </property>
        </widget>
       </item>
@@ -834,7 +834,7 @@ border-radius: 30px;</string>
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>../output_img.jpg</pixmap>
+         <pixmap resource="img.qrc">:/img/output_img.JPG</pixmap>
         </property>
        </widget>
       </item>
