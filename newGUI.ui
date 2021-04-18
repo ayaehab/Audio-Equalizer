@@ -457,7 +457,7 @@ color: rgb(255, 255, 255);
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="img.qrc">
           <normaloff>:/img/zoomin.JPG</normaloff>:/img/zoomin.JPG</iconset>
         </property>
         <property name="iconSize">
@@ -480,7 +480,7 @@ color: rgb(255, 255, 255);
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="img.qrc">
           <normaloff>:/img/zoomout.JPG</normaloff>:/img/zoomout.JPG</iconset>
         </property>
         <property name="iconSize">
@@ -495,29 +495,6 @@ color: rgb(255, 255, 255);
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="right_button">
-        <property name="styleSheet">
-         <string notr="true">QPushButton { background-color: white; }</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>:/img/Rarrw.png</normaloff>:/img/Rarrw.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>25</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="shortcut">
-         <string>Right</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="up_button">
         <property name="styleSheet">
          <string notr="true">QPushButton { background-color: white; }</string>
@@ -526,7 +503,7 @@ color: rgb(255, 255, 255);
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="img.qrc">
           <normaloff>:/img/uparrw-Copy.png</normaloff>:/img/uparrw-Copy.png</iconset>
         </property>
         <property name="iconSize">
@@ -549,7 +526,7 @@ color: rgb(255, 255, 255);
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="img.qrc">
           <normaloff>:/img/dwnarrw.png</normaloff>:/img/dwnarrw.png</iconset>
         </property>
         <property name="iconSize">
@@ -572,7 +549,7 @@ color: rgb(255, 255, 255);
          <string/>
         </property>
         <property name="icon">
-         <iconset>
+         <iconset resource="img.qrc">
           <normaloff>:/img/larrw.png</normaloff>:/img/larrw.png</iconset>
         </property>
         <property name="iconSize">
@@ -583,6 +560,29 @@ color: rgb(255, 255, 255);
         </property>
         <property name="shortcut">
          <string>Left</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="right_button">
+        <property name="styleSheet">
+         <string notr="true">QPushButton { background-color: white; }</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="img.qrc">
+          <normaloff>:/img/Rarrw.png</normaloff>:/img/Rarrw.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="shortcut">
+         <string>Right</string>
         </property>
        </widget>
       </item>
@@ -738,23 +738,6 @@ color: rgb(255, 255, 255);
      </property>
      <property name="shortcut">
       <string>Ctrl+H</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>870</x>
-       <y>730</y>
-       <width>55</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">label = QLabel()
-label.setStyle(myStyle(-45, QPoint(0, 100)))</string>
-     </property>
-     <property name="text">
-      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="Stop_Button">
@@ -1079,7 +1062,9 @@ background-color: rgb(80, 80, 80);</string>
    </slots>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="img.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>Slider_2</sender>
