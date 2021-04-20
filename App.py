@@ -245,21 +245,23 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self.freq = fftfreq(self.length)
 
             if np.ndim(self.data) == 1:
-                self.InputSignal.plot(self.time, self.data, pen=pg.mkPen('r'))
-                self.OutputSignal.plot(self.time, self.data, pen=pg.mkPen('y'))
                 self.InputSignal.setYRange(10, -10)
+                self.OutputSignal.setYRange(10, -10)
+                
+                self.InputSignal.setLimits(
+                    xMin=0, xMax=500000, yMin=-200000, yMax=200000)
+
+                self.OutputSignal.setLimits(
+                    xMin=0, xMax=500000, yMin=-200000, yMax=200000)
+
                 self.plot_spectrogram(
                     self.data, self.InputSpectro, self.default_color)
 
+                self.InputSignal.plot(self.time, self.data, pen=pg.mkPen('r'))
+                self.OutputSignal.plot(self.time, self.data, pen=pg.mkPen('y'))
             # Our application does not support multi-channel wav files. only mono audio files (1channel)
             elif np.ndim(self.data) != 1:
                 x = self.warning_msg.exec_()
-
-            self.InputSignal.setLimits(
-                xMin=0, xMax=500000, yMin=-200000, yMax=200000)
-
-            self.OutputSignal.setLimits(
-                xMin=0, xMax=500000, yMin=-200000, yMax=200000)
 
             
             self.Slider_11.setMinimum(0)
