@@ -396,6 +396,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         for i in range(10):
             self.gain[i] = self.sliders_list[i].value()
+        self.gain = np.array(self.gain)
+        print("self.gain[]: ", self.gain)
 
         for i in range(10):
             self.bands.append(self.new_fftArray[int(i * bandWidth):int((i+1) * bandWidth)])
@@ -413,7 +415,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         self.newMagnitude = np.abs(self.outputSignal)
 
-        self.newPhase = np.angle(self.new_fftArray)
+        self.newPhase = np.angle(self.outputSignal)
 
         # for i in range(10):
         #     self.mbands.append(
@@ -436,9 +438,13 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.inversed_data = np.fft.irfft(finalSignal)
 
         self.OutputSignal.plot(self.inversed_data, pen=pg.mkPen('y'))
-
-        self.plot_spectrogram(
-            self.inversed_data, self.OutputSpectro, self.colors_list[1])
+        #check if all slider values = 1, plot the original data
+        if np.all(self.gain == 1):
+            self.plot_spectrogram(
+            self.data, self.OutputSpectro, self.colors_list[1])
+        else:
+            self.plot_spectrogram(
+                self.inversed_data, self.OutputSpectro, self.colors_list[1])
         ######## To use Mag instead of phase: #######
 
         # Replace self.fPhase with self.outputSignal, and remove finalSignal
