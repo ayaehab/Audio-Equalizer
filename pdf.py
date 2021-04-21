@@ -12,10 +12,10 @@ class GeneratePDF():
         self.title = 'Equalizer'
 
         # Signals imgs used in generating PDF
-        self.input_signal = 'input_signal.png'
-        self.input_spectro = 'input_spectro.png'
-        self.output_signal = 'output_signal.png'
-        self.output_spectro = 'output_spectro.png'
+        self.input_signal = 'InputSignal.png'
+        self.input_spectro = 'InputSpectro.png'
+        self.output_signal = 'OutputSignal.png'
+        self.output_spectro = 'OutputSpectro.png'
 
         #  Create document with content given
 
@@ -94,15 +94,17 @@ class GeneratePDF():
         self.save_pdf()
 
     def save_pdf(self):
-        self.pdf.save()
+        try:
+            self.pdf.save()
+        except:
+            pass
 
         # delete created images after generating PDF file
         if os.path.exists(self.fileName):
-            os.remove("input_signal.png")
-            os.remove("output_signal.png")
-            os.remove("input_spectro.png")
-            os.remove("output_spectro.png")
-
+            os.remove("InputSignal.png")
+            os.remove("InputSpectro.png")
+            os.remove("OutputSignal.png")
+            os.remove("OutputSpectro.png")
 
 # To run the code:
 # test = GeneratePDF()

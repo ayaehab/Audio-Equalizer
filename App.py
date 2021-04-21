@@ -12,6 +12,7 @@ import sys
 from PyQt5 import QtCore, QtWidgets, QtGui, uic
 from PyQt5.QtCore import pyqtSlot, QSettings
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
+
 import matplotlib
 import matplotlib.ticker as ticker
 from pdf import GeneratePDF
@@ -24,7 +25,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.ui = uic.loadUi('newGUI.ui', self)
+        self.ui = uic.loadUi('AudioEqualizer.ui', self)
 
         self.settings = QSettings("Audio Equalizer", 'App')
 
@@ -46,8 +47,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.actionSave_as_PDF.triggered.connect(lambda: self.create_my_pdf())
         self.action_clear.triggered.connect(lambda: self.clear_all())
         self.actionClose.triggered.connect(lambda: self.close())
-        self.show_ISpectroCh.clicked.connect(lambda : self.hide())
-
+        self.show_ISpectroCh.clicked.connect(lambda: self.hide())
 
         self.actionPalette_1.triggered.connect(lambda: self.color_palette(0))
         self.actionPalette_2.triggered.connect(lambda: self.color_palette(1))
@@ -55,15 +55,19 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.actionPalette_4.triggered.connect(lambda: self.color_palette(3))
         self.actionPalette_5.triggered.connect(lambda: self.color_palette(4))
 
-        self.InputCh.triggered.connect(lambda: self.select_channel(1))
-        self.ISpectroCh.triggered.connect(lambda: self.select_channel(2))
-        self.OutputCh.triggered.connect(lambda: self.select_channel(3))
-        self.OSpectroCh.triggered.connect(lambda: self.select_channel(4))
+        self.InputCh.triggered.connect(
+            lambda: self.select_channel(self.InputCh))
+        self.ISpectroCh.triggered.connect(
+            lambda: self.select_channel(self.ISpectroCh))
+        self.OutputCh.triggered.connect(
+            lambda: self.select_channel(self.OutputCh))
+        self.OSpectroCh.triggered.connect(
+            lambda: self.select_channel(self.OSpectroCh))
 
-        self.right_button.clicked.connect(lambda: self.Scroll_right())
-        self.left_button.clicked.connect(lambda: self.Scroll_left())
-        self.up_button.clicked.connect(lambda: self.Scroll_up())
-        self.down_button.clicked.connect(lambda: self.Scroll_down())
+        self.right_button.clicked.connect(lambda: self.scroll_right())
+        self.left_button.clicked.connect(lambda: self.scroll_left())
+        self.up_button.clicked.connect(lambda: self.scroll_up())
+        self.down_button.clicked.connect(lambda: self.scroll_down())
 
         self.zoom_in.clicked.connect(lambda: self.zoomin())
         self.zoom_out.clicked.connect(lambda: self.zoomout())
@@ -71,60 +75,137 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.Play_Button.clicked.connect(lambda: self.play())
         self.Stop_Button.clicked.connect(lambda: self.stop())
 
+        self.Slider_11.valueChanged.connect(
+            lambda: self.spectrogram_range())  # MinSlider
+        self.Slider_12.valueChanged.connect(
+            lambda: self.spectrogram_range())  # MaxSlider
+
         self.pens = [pg.mkPen('r'), pg.mkPen('b'), pg.mkPen('g')]
 
-        self.colors_list = [[(0.5, (255, 0, 0, 255)),
-                             (1.0, (0, 0,255, 255)),
-                             (0.0, (0, 0, 0, 255))], [(0.5, (0, 182, 188, 255)),
-                                                      (1.0, (246, 111, 0, 255)),
-                                                      (0.0, (75, 0, 113, 255))],  [(0.5, (234, 214, 28, 255)),
-                                                                                   (1.0, (215, 199,151, 255)),
-                                                                                   (0.0, (0, 0, 0, 255))], [(0.5, (102, 204, 255, 255)),
-                                                                                                            (1.0, (255, 102,204, 255)),
-                                                                                                            (0.0, (0, 0, 0, 255))], [(0.5, (0, 149, 182, 255)),
-                                                                                                                                     (1.0, (198, 195, 134, 255)),
-                                                                                                                                     (0.0, (0, 0, 0, 255))], [(0.5, (242, 226, 205, 255)),
-                                                                                                                                                              (1.0, (166, 158, 176, 255)),
-                                                                                                                                                              (0.0, (0, 0, 0, 255))]]
+        # default intensity values
+        self.min_slider_intensity = 0.5
+        self.max_slider_intensity = 1.0
 
-        self.default_color = self.colors_list[1]
+        # Color palettes LUT
+        self.colors_list = [[(self.min_slider_intensity, (255, 0, 0, 255)),
+                             (self.max_slider_intensity, (0, 0, 255, 255)),
+                             (0.0, (0, 0, 0, 255))],
 
-        self.sliderList = [self.Slider_1, self.Slider_2, self.Slider_3, self.Slider_4, self.Slider_5,
-                           self.Slider_6, self.Slider_7, self.Slider_8, self.Slider_9, self.Slider_10]
-        
-        self.Slider_11.valueChanged.connect(
-            lambda: self.spectrogram_range_limiter(self.inverse))  # MinSlider
-        self.Slider_12.valueChanged.connect(
-            lambda: self.spectrogram_range_limiter(self.inverse))  # MaxSlider
+                            [(self.min_slider_intensity, (0, 182, 188, 255)),
+                             (self.max_slider_intensity, (246, 111, 0, 255)),
+                             (0.0, (75, 0, 113, 255))],
+
+                            [(self.min_slider_intensity, (234, 214, 28, 255)),
+                             (self.max_slider_intensity, (215, 199, 151, 255)),
+                             (0.0, (0, 0, 0, 255))],
+
+                            [(self.min_slider_intensity, (102, 204, 255, 255)),
+                             (self.max_slider_intensity, (255, 102, 204, 255)),
+                             (0.0, (0, 0, 0, 255))],
+
+                            [(self.min_slider_intensity, (0, 149, 182, 255)),
+                             (self.max_slider_intensity, (198, 195, 134, 255)),
+                             (0.0, (0, 0, 0, 255))],
+
+                            [(self.min_slider_intensity, (242, 226, 205, 255)),
+                             (self.max_slider_intensity, (166, 158, 176, 255)),
+                             (0.0, (0, 0, 0, 255))]]
+
+        self.sliders_list = [self.Slider_1, self.Slider_2, self.Slider_3, self.Slider_4, self.Slider_5,
+                             self.Slider_6, self.Slider_7, self.Slider_8, self.Slider_9, self.Slider_10]
+
+        self.plotWidgets_list = [
+            self.InputSignal, self.OutputSignal, self.InputSpectro, self.OutputSpectro]
+        self.channels_list = [self.InputCh,
+                              self.OutputCh, self.ISpectroCh, self.OSpectroCh]
 
         for i in range(10):
-            self.sliderList[i].valueChanged.connect(lambda: self.equalizer())
-
+            self.sliders_list[i].valueChanged.connect(lambda: self.equalizer())
         self.mbands = []
         self.fbands = []
         self.gain = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
-    #Related to QSettings 
+    # Related to QSettings
+
     def closeEvent(self, event):
         self.settings.setValue('window size', self.size())
         self.settings.setValue('window position', self.pos())
 
-    #Creating new window by calling the main class 
+    # Creating new window by calling the main class
+
     def make_new_window(self):
         self.new_win = AudioEqualizer()
         self.new_win.show()
 
-    #plotting spectrogram into input and output spectrogram channels
+    # Open (.wav ) file, read it using Scipy Lib, and plot it in inputSignal Viewer
+
+    def browse_file(self):
+        self.selected_file = QtGui.QFileDialog.getOpenFileName(
+            self, 'Select .wav file ', './', "Raw Data(*.wav)",  os.getenv('HOME'))
+
+        path = str(self.selected_file[0])
+
+        # get file extension
+        self.file_ext = self.get_extention(path)
+        # check the file extension is (.Wav)
+        if self.file_ext == 'wav':
+            # Read selected wav file
+            self.samplerate, self.data = wavfile.read(path)
+
+            self.length = self.data.shape[0]  # number of samples
+            # The duration is equal to the number of frames divided by the framerate (frames per second)
+            self.duration = (self.length / self.samplerate)
+
+            # Return evenly spaced numbers over a specified interval
+            self.time = np.linspace(0., self.duration, self.length)
+
+            # self.freq --> The Discrete Fourier Transform sample frequencies.
+            self.freq = fftfreq(self.length)
+
+            if np.ndim(self.data) == 1:
+                self.InputSignal.setYRange(10, -10)
+                self.OutputSignal.setYRange(10, -10)
+
+                self.InputSignal.setLimits(
+                    xMin=0, xMax=500000, yMin=-200000, yMax=200000)
+
+                self.OutputSignal.setLimits(
+                    xMin=0, xMax=500000, yMin=-200000, yMax=200000)
+
+                self.plot_spectrogram(
+                    self.data, self.InputSpectro, self.colors_list[1])
+
+                self.InputSignal.plot(self.time, self.data, pen=pg.mkPen('r'))
+                self.OutputSignal.plot(self.time, self.data, pen=pg.mkPen('y'))
+            # Our application does not support multi-channel wav files. only mono audio files (1channel)
+            elif np.ndim(self.data) != 1:
+                x = self.warning_msg.exec_()
+
+            self.Slider_11.setMinimum(0)
+            self.Slider_11.setMaximum(100)
+            self.Slider_12.setMinimum(0)
+            self.Slider_12.setMaximum(100)
+
+        else:
+            QMessageBox.warning(self.centralWidget,
+                                'you must select .wav file')
+
+    # plotting spectrogram into input and output spectrogram channels
+
     def plot_spectrogram(self, data_col, viewer, color, fs=44100):
-        
+
         fs = self.samplerate
         # make sure the data given in array form
         data = np.array(data_col)
 
         # f : Array of sample frequencies; t : Array of segment times; Sxx : Spectrogram of x. The last axis of Sxx corresponds to the segment times.
         self.f, self.t, self.Sxx = signal.spectrogram(data, fs)
+
+        # Interpret image data as row-major instead of col-major
+        pyqtgraph.setConfigOptions(imageAxisOrder='row-major')
         # A plot area (ViewBox + axes) for displaying the image
         plot_area = viewer.plot()
+
         # Item for displaying image data
         img = pg.ImageItem()
         viewer.addItem(img)
@@ -139,8 +220,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         # Fit the min and max levels of the histogram to the data available
         hist.setLevels(np.min(self.Sxx), np.max(self.Sxx))
         # Sxx contains the amplitude for each pixel
-        # Most image data is stored in row-major order (row, column) and will need to be transposed before calling setImage():
-        img.setImage(self.Sxx.T)
+
+        img.setImage(self.Sxx)
         # Scale the X and Y Axis to time and frequency (standard is pixels)
         img.scale(self.t[-1]/np.size(self.Sxx, axis=1),
                   self.f[-1]/np.size(self.Sxx, axis=0))
@@ -157,15 +238,13 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         viewer.setLabel('left', "Frequency", units='Hz')
 
         ################# Coloring Spectrogram ############
-
-        
         hist.gradient.restoreState({'mode': 'rgb',
                                     'ticks': color})
         hist.gradient.showTicks(False)
         hist.shape
         hist.layout.setContentsMargins(0, 0, 0, 0)
         hist.vb.setMouseEnabled(x=False, y=False)
-        
+
         ''' Another method to color the image by using *bipolar colormap* #just in case the 1st method failed
 
         pos = np.array([0., 1., 0.5, 0.25, 0.75])
@@ -179,139 +258,94 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         '''
 
+    def spectrogram_range(self):
+        # changing slider values will change intensity in the palettes
+        # intensity -> [0,1]
+        self.min_slider_intensity = (float(self.Slider_11.value())/100)
+        self.max_slider_intensity = (float(self.Slider_12.value())/100)
+
+        # Updating old color LUT with new one holding new intensity values
+        self.colors_list = [[(self.min_slider_intensity, (255, 0, 0, 255)),
+                             (self.max_slider_intensity, (0, 0, 255, 255)),
+                             (0.0, (0, 0, 0, 255))],
+
+                            [(self.min_slider_intensity, (0, 182, 188, 255)),
+                             (self.max_slider_intensity, (246, 111, 0, 255)),
+                             (0.0, (75, 0, 113, 255))],
+
+                            [(self.min_slider_intensity, (234, 214, 28, 255)),
+                             (self.max_slider_intensity, (215, 199, 151, 255)),
+                             (0.0, (0, 0, 0, 255))],
+
+                            [(self.min_slider_intensity, (102, 204, 255, 255)),
+                             (self.max_slider_intensity, (255, 102, 204, 255)),
+                             (0.0, (0, 0, 0, 255))],
+
+                            [(self.min_slider_intensity, (0, 149, 182, 255)),
+                             (self.max_slider_intensity, (198, 195, 134, 255)),
+                             (0.0, (0, 0, 0, 255))],
+
+                            [(self.min_slider_intensity, (242, 226, 205, 255)),
+                             (self.max_slider_intensity, (166, 158, 176, 255)),
+                             (0.0, (0, 0, 0, 255))]]
+        # Re-plotting the spectrogram with new color ranges
+        self.plot_spectrogram(self.inversed_data,
+                              self.OutputSpectro, self.colors_list[1])
+
     def color_palette(self, i):
         color = self.colors_list[i]
+
         if self.ISpectroCh.isChecked():
-            self.plot_spectrogram(
-                self.data, self.InputSpectro, color)
+            self.plot_spectrogram(self.data, self.InputSpectro, color)
+
         if self.OSpectroCh.isChecked():
-            self.plot_spectrogram(
-                self.inverse, self.OutputSpectro, color)
+            self.plot_spectrogram(self.inversed_data,
+                                  self.OutputSpectro, color)
 
-    def select_channel(self, signal):
-        if signal == 1:
-            if self.InputCh.isChecked():
-                self.InputCh.setChecked(True)
-            else:
-                self.InputCh.setChecked(False)
+    def select_channel(self, channel):
 
-        elif signal == 2:
-            if self.ISpectroCh.isChecked():
-                self.ISpectroCh.setChecked(True)
-            else:
-                self.ISpectroCh.setChecked(False)
-
-        elif signal == 3:
-            if self.OutputCh.isChecked():
-                self.OutputCh.setChecked(True)
-            else:
-                self.OutputCh.setChecked(False)
-
-        elif signal == 4:
-            if self.OSpectroCh.isChecked():
-                self.OSpectroCh.setChecked(True)
-            else:
-                self.OSpectroCh.setChecked(False)
-                
-    def hide(self ) :
-
-        if (self.show_ISpectroCh.isChecked()) :
-            self.InputSpectro.hide()
-        else :
-            self.InputSpectro.show()
-
-# Open (.wav ) file, read it using Scipy Lib, and plot it in inputSignal Viewer
-    def browse_file(self):
-        self.selected_file = QtGui.QFileDialog.getOpenFileName(
-            self, 'Select .wav file ', './', "Raw Data(*.wav)",  os.getenv('HOME'))
-
-        path = str(self.selected_file[0])
-        
-        #get file extension
-        self.file_ext = self.get_extention(path)
-        # check the file extension is (.Wav)
-        if self.file_ext == 'wav':
-            # Read selected wav file
-            self.samplerate, self.data = wavfile.read(path)
-            
-            self.length = self.data.shape[0]  # number of samples
-            # The duration is equal to the number of frames divided by the framerate (frames per second)
-            self.duration = (self.length / self.samplerate)
-
-            # Return evenly spaced numbers over a specified interval
-            self.time = np.linspace(0., self.duration, self.length)
-
-            #self.freq --> The Discrete Fourier Transform sample frequencies.
-            self.freq = fftfreq(self.length)
-
-            if np.ndim(self.data) == 1:
-                self.InputSignal.setYRange(10, -10)
-                self.OutputSignal.setYRange(10, -10)
-                
-                self.InputSignal.setLimits(
-                    xMin=0, xMax=500000, yMin=-200000, yMax=200000)
-
-                self.OutputSignal.setLimits(
-                    xMin=0, xMax=500000, yMin=-200000, yMax=200000)
-
-                self.plot_spectrogram(
-                    self.data, self.InputSpectro, self.default_color)
-
-                self.InputSignal.plot(self.time, self.data, pen=pg.mkPen('r'))
-                self.OutputSignal.plot(self.time, self.data, pen=pg.mkPen('y'))
-            # Our application does not support multi-channel wav files. only mono audio files (1channel)
-            elif np.ndim(self.data) != 1:
-                x = self.warning_msg.exec_()
-
-            
-            self.Slider_11.setMinimum(0)
-            self.Slider_11.setMaximum(100)
-            self.Slider_12.setMinimum(0)
-            self.Slider_12.setMaximum(100)
-
+        if channel.isChecked():
+            channel.setChecked(True)
         else:
-            QMessageBox.warning(self.centralWidget,
-                                'you must select .wav file')
+            channel.setChecked(False)
 
-    ##### Generating the PDF ####
+    def hide(self):
 
-    # this funcition for the button, when pressed 4 images exported, pdf generated, then the pictures get deleted
-
-    def create_my_pdf(self):
-
-        file_name, _ = QFileDialog.getSaveFileName(
-            self, 'Export PDF', None, 'PDF files (.pdf);;All Files()')
-        if file_name != '':
-
-            # add ".pdf" to the name
-            if QtCore.QFileInfo(file_name).suffix() == "":
-                file_name += '.pdf'
-
-        if self.InputSignal.scene():
-            # export all items in all viewers as images
-            exporter1 = pg.exporters.ImageExporter(self.InputSignal.scene())
-            exporter1.export('input_signal.png')
-
-            exporter3 = pg.exporters.ImageExporter(self.OutputSignal.scene())
-            exporter3.export('output_signal.png')
-
-            exporter2 = pg.exporters.ImageExporter(self.InputSpectro.scene())
-            exporter2.export('input_spectro.png')
-
-            exporter4 = pg.exporters.ImageExporter(self.OutputSpectro.scene())
-            exporter4.export('output_spectro.png')
-
-            my_pdf = GeneratePDF(file_name)
-            my_pdf.create_pdf()
-            my_pdf.save_pdf()
+        if (self.show_ISpectroCh.isChecked()):
+            self.InputSpectro.hide()
+        else:
+            self.InputSpectro.show()
 
     def get_extention(self, s):
         for i in range(1, len(s)):
             if s[-i] == '.':
                 return s[-(i - 1):]
 
-#*******************************************Fourrier**************************************#
 
+#*******************************************Generating PDF**************************************#
+
+    def create_my_pdf(self):
+        file_name, _ = QFileDialog.getSaveFileName(
+            self, 'Export PDF', None, 'PDF files (.pdf);;All Files()')
+
+        # add ".pdf" to the name    "suffix"
+        if file_name != '':
+
+            if QtCore.QFileInfo(file_name).suffix() == "":
+                file_name += '.pdf'
+
+        # export all items in all viewers as images
+        for i in range(len(self.plotWidgets_list)):
+            exporter = pg.exporters.ImageExporter(
+                self.plotWidgets_list[i].scene())
+            widget_name = self.plotWidgets_list[i].objectName()
+            exporter.export(f"{widget_name}.png")
+
+        my_pdf = GeneratePDF(file_name)
+        my_pdf.create_pdf()
+        my_pdf.save_pdf()
+
+#*******************************************Fourrier**************************************#
     def get_fft(self):
         # fft returns an array contains all +ve values then all -ve values
         # it has some real and some complex values
@@ -322,12 +356,9 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.fftPhase = np.angle(self.fftArray)
         # magnitude of +ve only
         self.fftMagnitude = self.fftArrayAbs[: self.length // 2]
-        
+
         # return the magnitude and phase
         return self.fftArrayAbs, self.fftPhase
-
-
-#*****************************************END OF Fourrier*************************************#
 
 
 #*********************************************Equalizer***************************************#
@@ -338,7 +369,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.OutputSpectro.clear()
 
         self.fMagnitude = self.get_fft()[0]
-        
+
         self.fPhase = self.get_fft()[1]
 
         self.mvaluePerBand = int(len(self.fMagnitude)/10)
@@ -356,7 +387,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                 self.freq[int(i * len(self.freq) / 10):int((i+1) * len(self.freq) / 10)])
 
         for i in range(10):
-            self.gain[i] = self.sliderList[i].value()
+            self.gain[i] = self.sliders_list[i].value()
 
         for index in range(10):
             # we changed it to np.array so we can multiply the value by value not multipling the list that will generate repetation of value not multplication
@@ -372,60 +403,30 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         # self.fPhase == fftPhase
         finalSignal = np.multiply(
             np.exp(1j * self.fPhase), self.outputSignal)
-        self.inverse = np.fft.irfft(finalSignal, len(self.fMagnitude))
+        self.inversed_data = np.fft.irfft(finalSignal, len(self.fMagnitude))
 
+        self.OutputSignal.plot(
+            self.time, self.inversed_data, pen=pg.mkPen('y'))
 
-        self.OutputSignal.plot(self.time, self.inverse, pen=pg.mkPen('y'))
         self.plot_spectrogram(
-            self.inverse, self.OutputSpectro, self.default_color)
+            self.inversed_data, self.OutputSpectro, self.colors_list[1])
         ######## To use Mag instead of phase: #######
-        
+
         # Replace self.fPhase with self.outputSignal, and remove finalSignal
-        
-        # self.inverse = np.fft.irfft(self.outputSignal, len(self.fMagnitude))
 
-#########################
-#*******************************************End of Equalizer**************************************#
+        # self.inversed_data = np.fft.irfft(self.outputSignal, len(self.fMagnitude))
 
-    def spectrogram_range_limiter(self, data_col):
-        self.OutputSpectro.clear()
-        
-        if self.Slider_12.value() > self.Slider_11.value():
-            fs = self.samplerate 
-            spectro_min = ( float(self.Slider_11.value())/100 )
-            spectro_max = ( float(self.Slider_12.value())/100 )
-            
-            #ReCompute the 1-D discrete Fourier Transform to limit the signal in the frequency domain
-            fft_array = rfft(data_col)
-            begin_index = int((len(fft_array)) * spectro_min) 
-            end_index = int((len(fft_array)) * spectro_max) 
-            fft_array[0:begin_index] = 0
-            fft_array[end_index:len(fft_array)] = 0
-            #Transform the data back into the time domain to plot it.
-            self.output_array = irfft(fft_array)
-            self.plot_spectrogram(self.output_array, self.OutputSpectro, self.default_color, fs=fs)
-
-        else:
-            #Show nothing if min_slider.value > max_slider.value
-            self.OutputSpectro.clear()
-
-            '''Another method to plot Min,Max using matplotlib lib
-            self.OutputSpectro.clear()
-            self.plot_spectrogram(
-                data_col, self.OutputSpectro, self.default_color, fs=fs) '''
 
 #**********************************************toolbar********************************************#
 
     def play(self):
-
         if self.InputCh.isChecked():
             sd.play(self.data, self.samplerate)
 
         elif self.OutputCh.isChecked():
-            sd.play(self.inverse)
+            sd.play(self.inversed_data)
 
     def stop(self):
-
         if self.InputCh.isChecked():
             sd.stop()
 
@@ -433,100 +434,49 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             sd.stop()
 
     def clear_all(self):
-        self.default()
-        self.InputSignal.clear()
-        self.InputSpectro.clear()
-        self.OutputSignal.clear()
-        self.OutputSpectro.clear()
-
-    def default(self):
+        # set all sliders' value to 1
         for i in range(10):
-            self.sliderList[i].setProperty("value", 1)
+            self.sliders_list[i].setProperty("value", 1)
+        # clear all widgets
+        for i in range(4):
+            self.plotWidgets_list[i].clear()
 
     def zoomin(self):
-
-        if self.InputCh.isChecked():
-            self.InputSignal.plotItem.getViewBox().scaleBy((0.5, 0.5))
-
-        if self.ISpectroCh.isChecked():
-            self.InputSpectro.plotItem.getViewBox().scaleBy((0.5, 0.5))
-
-        if self.OutputCh.isChecked():
-            self.OutputSignal.plotItem.getViewBox().scaleBy((0.5, 0.5))
-
-        if self.OSpectroCh.isChecked():
-            self.OutputSpectro.plotItem.getViewBox().scaleBy((0.5, 0.5))
+        for i in range(4):
+            if self.channels_list[i].isChecked():
+                self.plotWidgets_list[i].plotItem.getViewBox().scaleBy(
+                    (0.5, 0.5))
 
     def zoomout(self):
-        if self.InputCh.isChecked():
-            self.InputSignal.plotItem.getViewBox().scaleBy((1.5, 1.5))
+        for i in range(4):
+            if self.channels_list[i].isChecked():
+                self.plotWidgets_list[i].plotItem.getViewBox().scaleBy(
+                    (1.5, 1.5))
 
-        if self.ISpectroCh.isChecked():
-            self.InputSpectro.plotItem.getViewBox().scaleBy((1.5, 1.5))
-
-        if self.OutputCh.isChecked():
-            self.OutputSignal.plotItem.getViewBox().scaleBy((1.5, 1.5))
-
-        if self.OSpectroCh.isChecked():
-            self.OutputSpectro.plotItem.getViewBox().scaleBy((1.5, 1.5))
-
-    def Scroll_right(self):
-
-        if self.InputCh.isChecked():
-            self.range = self.InputSignal.getViewBox().viewRange()
+# scrolling only works with input-signal and output-signal widgets
+    def scroll_right(self):
+        for i in range(2):
+            self.range = self.plotWidgets_list[i].getViewBox().viewRange()
             if self.range[0][1] < max(self.time):
-                self.InputSignal.getViewBox().translateBy(x=+0.2, y=0)
+                self.plotWidgets_list[i].getViewBox().translateBy(x=+0.2, y=0)
 
-        if self.OutputCh.isChecked():
-            self.range = self.OutputSignal.getViewBox().viewRange()
-            if self.range[0][1] < max(self.time):
-                self.OutputSignal.getViewBox().translateBy(x=+0.2, y=0)
-
-    def Scroll_left(self):
-
-        if self.InputCh.isChecked():
-            self.range = self.InputSignal.getViewBox().viewRange()
+    def scroll_left(self):
+        for i in range(2):
+            self.range = self.plotWidgets_list[i].getViewBox().viewRange()
             if self.range[0][0] > min(self.time):
-                self.InputSignal.getViewBox().translateBy(x=-0.2, y=0)
+                self.plotWidgets_list[i].getViewBox().translateBy(x=-0.2, y=0)
 
-        if self.OutputCh.isChecked():
-            self.range = self.OutputSignal.getViewBox().viewRange()
-            if self.range[0][0] > min(self.time):
-                self.OutputSignal.getViewBox().translateBy(x=-0.2, y=0)
-
-    def Scroll_up(self):
-
-        if self.InputCh.isChecked():
-            self.range = self.InputSignal.getViewBox().viewRange()
+    def scroll_up(self):
+        for i in range(2):
+            self.range = self.plotWidgets_list[i].getViewBox().viewRange()
             if self.range[1][1] < max(self.data):
-                self.InputSignal.getViewBox().translateBy(x=0, y=+0.2)
+                self.plotWidgets_list[i].getViewBox().translateBy(x=0, y=+0.2)
 
-        if self.OutputCh.isChecked():
-            self.range = self.OutputSignal.getViewBox().viewRange()
-            if self.range[1][1] < max(self.data):
-                self.OutputSignal.getViewBox().translateBy(x=0, y=+0.2)
-
-    def Scroll_down(self):
-
-        if self.InputCh.isChecked():
-            self.range = self.InputSignal.getViewBox().viewRange()
+    def scroll_down(self):
+        for i in range(2):
+            self.range = self.plotWidgets_list[i].getViewBox().viewRange()
             if self.range[1][0] > min(self.data):
-                self.InputSignal.getViewBox().translateBy(x=0, y=-0.2)
-
-        if self.ISpectroCh.isChecked():
-            self.range = self.InputSpectro.getViewBox().viewRange()
-            if self.range[1][0] > min(self.inverse):
-                self.InputSpectro.getViewBox().translateBy(x=0, y=-0.2)
-
-        if self.OutputCh.isChecked():
-            self.range = self.OutputSignal.getViewBox().viewRange()
-            if self.range[1][0] > min(self.data):
-                self.OutputSignal.getViewBox().translateBy(x=0, y=-0.2)
-
-        if self.OSpectroCh.isChecked():
-            self.range = self.OutputSpectro.getViewBox().viewRange()
-            if self.range[1][0] > min(self.data):
-                self.OutputSpectro.getViewBox().translateBy(x=0, y=-0.2)
+                self.plotWidgets_list[i].getViewBox().translateBy(x=0, y=-0.2)
 
 
 def main():
