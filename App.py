@@ -121,7 +121,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         for i in range(10):
             self.sliders_list[i].valueChanged.connect(lambda: self.equalizer())
-        self.mbands = []
+        self.bands = []
         self.fbands = []
         self.gain = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
@@ -153,6 +153,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self.samplerate, self.data = wavfile.read(path)
 
             self.length = self.data.shape[0]  # number of samples
+            print(self.length)
+            self.range = [0, 2000]
             # The duration is equal to the number of frames divided by the framerate (frames per second)
             self.duration = (self.length / self.samplerate)
 
@@ -165,6 +167,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             if np.ndim(self.data) == 1:
                 self.InputSignal.setYRange(10, -10)
                 self.OutputSignal.setYRange(10, -10)
+                
 
                 self.InputSignal.setLimits(
                     xMin=0, xMax=500000, yMin=-200000, yMax=200000)
@@ -174,9 +177,22 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
                 self.plot_spectrogram(
                     self.data, self.InputSpectro, self.colors_list[1])
+                self.plot_spectrogram(
+                    self.data, self.OutputSpectro, self.colors_list[1])                
 
-                self.InputSignal.plot(self.time, self.data, pen=pg.mkPen('r'))
-                self.OutputSignal.plot(self.time, self.data, pen=pg.mkPen('y'))
+                self.InputSignal.plot( self.data, pen=pg.mkPen('r'))
+                self.OutputSignal.plot( self.data, pen=pg.mkPen('y'))
+################################ Fourier #################################################
+                # fft returns an array contains all +ve values then all -ve values
+                # it has some real and some complex values
+                self.fftArray = fft(self.data)
+                # get the magnitude of both +ve & -ve
+                self.fftArrayAbs = np.abs(self.fftArray)
+                # get the phase
+                self.fftPhase = np.angle(self.fftArray)
+                # magnitude of +ve only
+                self.fftMagnitude = self.fftArrayAbs[: self.length // 2]
+################################ End of Fourier #################################################                
             # Our application does not support multi-channel wav files. only mono audio files (1channel)
             elif np.ndim(self.data) != 1:
                 x = self.warning_msg.exec_()
@@ -346,67 +362,80 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         my_pdf.save_pdf()
 
 #*******************************************Fourrier**************************************#
-    def get_fft(self):
-        # fft returns an array contains all +ve values then all -ve values
-        # it has some real and some complex values
-        self.fftArray = fft(self.data)
-        # get the magnitude of both +ve & -ve
-        self.fftArrayAbs = np.abs(self.fftArray)
-        # get the phase
-        self.fftPhase = np.angle(self.fftArray)
-        # magnitude of +ve only
-        self.fftMagnitude = self.fftArrayAbs[: self.length // 2]
+    # def get_fft(self):
+    #     # fft returns an array contains all +ve values then all -ve values
+    #     # it has some real and some complex values
+    #     self.fftArray = fft(self.data)
+    #     # get the magnitude of both +ve & -ve
+    #     self.fftArrayAbs = np.abs(self.fftArray)
+    #     # get the phase
+    #     self.fftPhase = np.angle(self.fftArray)
+    #     # magnitude of +ve only
+    #     self.fftMagnitude = self.fftArrayAbs[: self.length // 2]
 
-        # return the magnitude and phase
-        return self.fftArrayAbs, self.fftPhase
+    #     # return the magnitude and phase
+    #     return self.fftArray, self.fftArrayAbs, self.fftPhase
 
 
 #*********************************************Equalizer***************************************#
 
+
+
     def equalizer(self):
+
+        # self.fMagnitude = self.get_fft()[0]
         self.OutputSignal.clear()
 
         self.OutputSpectro.clear()
 
-        self.fMagnitude = self.get_fft()[0]
+        bandWidth = int(self.samplerate / 10)
+        self.new_fftArray = self.fftArray.copy()
 
-        self.fPhase = self.get_fft()[1]
-
-        self.mvaluePerBand = int(len(self.fMagnitude)/10)
-
-        self.fvaluePerBand = int(len(self.freq)/10)
-
-        self.newMagnitude = []
-
+        self.newSignal = []
         self.outputSignal = []
-
-        for i in range(10):
-            self.mbands.append(
-                self.fMagnitude[int(i * len(self.fMagnitude) / 10):int((i+1) * len(self.fMagnitude) / 10)])
-            self.fbands.append(
-                self.freq[int(i * len(self.freq) / 10):int((i+1) * len(self.freq) / 10)])
 
         for i in range(10):
             self.gain[i] = self.sliders_list[i].value()
 
+        for i in range(10):
+            self.bands.append(self.new_fftArray[int(i * bandWidth):int((i+1) * bandWidth)])
+    
+
         for index in range(10):
-            # we changed it to np.array so we can multiply the value by value not multipling the list that will generate repetation of value not multplication
-
             Magnified_Magnitued = np.multiply(
-                self.gain[index], (self.mbands[index]))
-            self.newMagnitude.append(Magnified_Magnitued)
+                self.gain[index], (self.bands[index]))
+            self.newSignal.append(Magnified_Magnitued)
 
-        for band in self.newMagnitude:
+        for band in self.newSignal:
             for magnitude in band:
                 self.outputSignal.append(magnitude)
+        
+
+        self.newMagnitude = np.abs(self.outputSignal)
+
+        self.newPhase = np.angle(self.new_fftArray)
+
+        # for i in range(10):
+        #     self.mbands.append(
+        #         self.fMagnitude[int(i * len(self.fMagnitude) / 10):int((i+1) * len(self.fMagnitude) / 10)])
+        #     self.fbands.append(
+        #         self.freq[int(i * len(self.freq) / 10):int((i+1) * len(self.freq) / 10)])
+
+        # for index in range(10):
+        #     Magnified_Magnitued = np.multiply(
+        #         self.gain[index], (self.mbands[index]))
+        #     self.newMagnitude.append(Magnified_Magnitued)
+
+        # for band in self.newMagnitude:
+        #     for magnitude in band:
+        #         self.outputSignal.append(magnitude)
 
         # self.fPhase == fftPhase
         finalSignal = np.multiply(
-            np.exp(1j * self.fPhase), self.outputSignal)
-        self.inversed_data = np.fft.irfft(finalSignal, len(self.fMagnitude))
+            np.exp(1j * self.newPhase), self.newMagnitude)
+        self.inversed_data = np.fft.irfft(finalSignal)
 
-        self.OutputSignal.plot(
-            self.time, self.inversed_data, pen=pg.mkPen('y'))
+        self.OutputSignal.plot(self.inversed_data, pen=pg.mkPen('y'))
 
         self.plot_spectrogram(
             self.inversed_data, self.OutputSpectro, self.colors_list[1])
