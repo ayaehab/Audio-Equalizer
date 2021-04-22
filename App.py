@@ -489,6 +489,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                     (1.5, 1.5))
 
 # scrolling only works with input-signal and output-signal widgets
+# range = [[xmin,xmax],[ymin,ymax]] of the current view
+
     def scroll_right(self):
         for i in range(2):
             self.range = self.plotWidgets_list[i].getViewBox().viewRange()
