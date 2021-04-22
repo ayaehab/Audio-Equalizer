@@ -68,7 +68,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.left_button.clicked.connect(lambda: self.scroll_left())
         self.up_button.clicked.connect(lambda: self.scroll_up())
         self.down_button.clicked.connect(lambda: self.scroll_down())
-
+        
         self.zoom_in.clicked.connect(lambda: self.zoomin())
         self.zoom_out.clicked.connect(lambda: self.zoomout())
 
@@ -153,10 +153,11 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self.samplerate, self.data = wavfile.read(path)
 
             self.length = self.data.shape[0]  # number of samples
-            print(self.length)
+            #print(self.length)
             self.range = [0, 2000]
             # The duration is equal to the number of frames divided by the framerate (frames per second)
             self.duration = (self.length / self.samplerate)
+            
 
             # Return evenly spaced numbers over a specified interval
             self.time = np.linspace(0., self.duration, self.length)
@@ -179,9 +180,11 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                     self.data, self.InputSpectro, self.colors_list[1])
                 self.plot_spectrogram(
                     self.data, self.OutputSpectro, self.colors_list[1])                
-
-                self.InputSignal.plot( self.data, pen=pg.mkPen('r'))
-                self.OutputSignal.plot( self.data, pen=pg.mkPen('y'))
+                
+                self.InputSignal.plot(self.time, self.data, pen=pg.mkPen('r'))
+                self.OutputSignal.plot(self.time, self.data, pen=pg.mkPen('y'))
+                
+                
 ################################ Fourier #################################################
                 # fft returns an array contains all +ve values then all -ve values
                 # it has some real and some complex values
@@ -516,6 +519,12 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                 self.plotWidgets_list[i].getViewBox().translateBy(x=0, y=-0.2)
 
 
+
+    
+    
+    
+    
+    
 def main():
     app = QtWidgets.QApplication(sys.argv)
     app.setOrganizationName("CUFE")
