@@ -154,10 +154,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             # Read selected wav file
             self.samplerate, self.data = wavfile.read(path)
 
-            print(len(self.data))
-
             self.length = self.data.shape[0]  # number of samples
-            # print(self.length)
             self.range = [0, 2000]
             # The duration is equal to the number of frames divided by the framerate (frames per second)
             self.duration = (self.length / self.samplerate)
@@ -167,7 +164,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
             # self.freq --> The Discrete Fourier Transform sample frequencies.
             self.freq = rfftfreq(self.length)
-            print('freq', len(self.freq))
 
             #check audio file Dimension
             if np.ndim(self.data) == 1:
@@ -175,19 +171,17 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                 for i in range(2):
                     self.plotWidgets_list[i].setLimits(xMin=0, xMax=500000, yMin=-200000, yMax=200000)
                     self.plotWidgets_list[i].setYRange(min(self.data), max(self.data))
-                    self.plotWidgets_list[i].setxRange(min(self.time), max(self.time))
+                    self.plotWidgets_list[i].setXRange(min(self.time), max(self.time))
                     self.plotWidgets_list[i].plot(self.time, self.data, pen=self.pens[i])
-                    self.plot_spectrogram(self.data, self.plotWidgets_list[i], self.colors_list[1])
+                    self.plot_spectrogram(self.data, self.plotWidgets_list[i+2], self.colors_list[1])
 
 
 ################################ Fourier #################################################
                 # fft returns an array contains all +ve values then all -ve values
                 # it has some real and some complex values
                 self.fftArray = rfft(self.data)
-                print(len(self.fftArray))
                 # get the magnitude of both +ve & -ve
                 self.fftArrayAbs = np.abs(self.fftArray)
-                print(len(self.fftArrayAbs))
                 # get the phase
                 self.fftPhase = np.angle(self.fftArray)
                 # magnitude of +ve only
@@ -261,18 +255,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         hist.layout.setContentsMargins(0, 0, 0, 0)
         hist.vb.setMouseEnabled(x=False, y=False)
 
-        ''' Another method to color the image by using *bipolar colormap* #just in case the 1st method failed
-
-        pos = np.array([0., 1., 0.5, 0.25, 0.75])
-        color = np.array([[0,255,255,255], [255,255,0,255], [
-                         0,0,0,255], (0, 0, 255, 255), (255, 0, 0, 255)], dtype=np.ubyte)
-        cmap = pg.ColorMap(pos, color)
-        lut = cmap.getLookupTable(0.0, 1.0, 256)
-
-        img.setLookupTable(lut)
-        img.setLevels(np.min(Sxx), np.max(Sxx))
-
-        '''
 
     def spectrogram_range(self):
         # changing slider values will change intensity in the palettes
@@ -339,8 +321,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 
 #*******************************************Generating PDF**************************************#
-
-
     def create_my_pdf(self):
         file_name, _ = QFileDialog.getSaveFileName(
             self, 'Export PDF', None, 'PDF files (.pdf);;All Files()')
@@ -364,8 +344,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 
 #*********************************************Equalizer***************************************#
-
-
     def equalizer(self):
 
         # self.fMagnitude = self.get_fft()[0]
@@ -382,14 +360,10 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         for i in range(10):
             self.gain[i] = self.sliders_list[i].value()
         self.gain = np.array(self.gain)
-        print("self.gain[]: ", self.gain)
 
         for i in range(10):
             self.bands.append(
                 self.fftArray[int(i * bandWidth):int((i+1) * (bandWidth))])
-
-        for i in self.bands:
-            print(len(i))
 
         for index in range(10):
             Magnified_Magnitued = np.multiply(
@@ -401,17 +375,13 @@ class AudioEqualizer(QtWidgets.QMainWindow):
                 self.outputSignal.append(magnitude)
 
         self.newMagnitude = np.abs(self.outputSignal)
-        print(len(self.newMagnitude))
 
         self.newPhase = np.angle(self.outputSignal)
-        print(len(self.newPhase))
 
         finalSignal = np.multiply(
             self.newMagnitude, np.exp(1j * self.newPhase))
 
-        print(len(finalSignal))
         self.inversed_data = np.fft.irfft(finalSignal, len(self.time))
-        print(len(self.inversed_data))
 
         self.OutputSignal.plot(
             self.time, self.inversed_data, pen=pg.mkPen('y'))
@@ -425,7 +395,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         else:
             self.plot_spectrogram(
                 self.inversed_data, self.OutputSpectro, self.colors_list[1])
-
 
 
 #**********************************************toolbar********************************************#
