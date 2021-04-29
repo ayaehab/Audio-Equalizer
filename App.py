@@ -66,8 +66,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         self.right_button.clicked.connect(lambda: self.scroll(0.2, 0.0))
         self.left_button.clicked.connect(lambda: self.scroll(-0.2, 0.0))
-        self.up_button.clicked.connect(lambda: self.scroll(0.0, 500.0))
-        self.down_button.clicked.connect(lambda: self.scroll(0.0, -500.0))
+        self.up_button.clicked.connect(lambda: self.scroll(0.0, 1000.0))
+        self.down_button.clicked.connect(lambda: self.scroll(0.0, -1000.0))
         
 
         self.zoom_in.clicked.connect(lambda: self.zoom(0.5))
@@ -424,42 +424,42 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             self.plotWidgets_list[i].clear()
 
 
-    def zoom(self, a: 'float' ):
+    def zoom(self, scale: 'float' ):
         for i in range(4):
             if self.channels_list[i].isChecked():
-                self.plotWidgets_list[i].plotItem.getViewBox().scaleBy((a, a))
+                self.plotWidgets_list[i].plotItem.getViewBox().scaleBy((scale, scale))
 
 # scrolling only works with input-signal and output-signal widgets
 # range = [[xmin,xmax],[ymin,ymax]] of the current view
 
-    def scroll(self, a:'float' , b: 'float') :
+    def scroll(self, xstep:'float' , ystep: 'float') :
         for i in range(2):
             self.range = self.plotWidgets_list[i].getViewBox().viewRange()
             
             # To prevent the scrolling from exceeding the end terminal of the signal when scrolling over x-axis 
-            if max(self.time) - self.range[0][1] < 0.2 and a == 0.2:
-                a =  max(self.time) - self.range[0][1]  
+            if max(self.time) - self.range[0][1] < 0.2 and xstep == 0.2:
+                xstep =  max(self.time) - self.range[0][1]  
             
             # Scrolling over x-axis
-            if b == 0:
+            if ystep == 0:
                 if self.range[0][1] <= max(self.time)  :
-                    self.plotWidgets_list[i].getViewBox().translateBy(x=a , y=b)
+                    self.plotWidgets_list[i].getViewBox().translateBy(x=xstep , y=ystep)
             
            
            
             # To prevent the scrolling from exceeding the terminals of the signal when scrolling over y-axis
-            if b == 500 : #Scrolling up
-                if max(self.data) - self.range[1][1] < 500 :
-                    b =  max(self.data) - self.range[1][1]
+            if ystep == 1000.0 : #Scrolling up
+                if max(self.data) - self.range[1][1] < 1000.0 :
+                    ystep =  max(self.data) - self.range[1][1]
 
             else : #Scrolling down
-                if  self.range[1][0]- min(self.data)  < 500 :
-                    b =   self.range[1][0] - min(self.data) 
+                if  self.range[1][0]- min(self.data)  < 1000.0 :
+                    ystep =   self.range[1][0] - min(self.data) 
 
             # Scrolling over y-axis
-            if a == 0:
-                if self.range[1][1] <= max(self.data) and self.range[1][0] > min(self.data) :
-                    self.plotWidgets_list[i].getViewBox().translateBy(x=a , y=b)
+            if xstep == 0:
+                if self.range[1][1] <= max(self.data) and self.range[1][0] >= min(self.data) :
+                    self.plotWidgets_list[i].getViewBox().translateBy(x=xstep , y=ystep)
 
 
 def main():
