@@ -64,13 +64,14 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.OSpectroCh.triggered.connect(
             lambda: self.select_channel(self.OSpectroCh))
 
-        self.right_button.clicked.connect(lambda: self.scroll_right())
-        self.left_button.clicked.connect(lambda: self.scroll_left())
-        self.up_button.clicked.connect(lambda: self.scroll_up())
-        self.down_button.clicked.connect(lambda: self.scroll_down())
+        self.right_button.clicked.connect(lambda: self.scroll(0.2, 0.0))
+        self.left_button.clicked.connect(lambda: self.scroll(-0.2, 0.0))
+        self.up_button.clicked.connect(lambda: self.scroll(0.0, 500.0))
+        self.down_button.clicked.connect(lambda: self.scroll(0.0, -500.0))
+        
 
-        self.zoom_in.clicked.connect(lambda: self.zoomin())
-        self.zoom_out.clicked.connect(lambda: self.zoomout())
+        self.zoom_in.clicked.connect(lambda: self.zoom(0.5))
+        self.zoom_out.clicked.connect(lambda: self.zoom(1.5))
 
         self.Play_Button.clicked.connect(lambda: self.play())
         self.Stop_Button.clicked.connect(lambda: self.stop())
@@ -422,44 +423,43 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         for i in range(4):
             self.plotWidgets_list[i].clear()
 
-    def zoomin(self):
-        for i in range(4):
-            if self.channels_list[i].isChecked():
-                self.plotWidgets_list[i].plotItem.getViewBox().scaleBy(
-                    (0.5, 0.5))
 
-    def zoomout(self):
+    def zoom(self, a: 'float' ):
         for i in range(4):
             if self.channels_list[i].isChecked():
-                self.plotWidgets_list[i].plotItem.getViewBox().scaleBy(
-                    (1.5, 1.5))
+                self.plotWidgets_list[i].plotItem.getViewBox().scaleBy((a, a))
 
 # scrolling only works with input-signal and output-signal widgets
 # range = [[xmin,xmax],[ymin,ymax]] of the current view
 
-    def scroll_right(self):
+    def scroll(self, a:'float' , b: 'float') :
         for i in range(2):
             self.range = self.plotWidgets_list[i].getViewBox().viewRange()
-            if self.range[0][1] < max(self.time):
-                self.plotWidgets_list[i].getViewBox().translateBy(x=+0.2, y=0)
+            
+            # To prevent the scrolling from exceeding the end terminal of the signal when scrolling over x-axis 
+            if max(self.time) - self.range[0][1] < 0.2 and a == 0.2:
+                a =  max(self.time) - self.range[0][1]  
+            
+            # Scrolling over x-axis
+            if b == 0:
+                if self.range[0][1] <= max(self.time)  :
+                    self.plotWidgets_list[i].getViewBox().translateBy(x=a , y=b)
+            
+           
+           
+            # To prevent the scrolling from exceeding the terminals of the signal when scrolling over y-axis
+            if b == 500 : #Scrolling up
+                if max(self.data) - self.range[1][1] < 500 :
+                    b =  max(self.data) - self.range[1][1]
 
-    def scroll_left(self):
-        for i in range(2):
-            self.range = self.plotWidgets_list[i].getViewBox().viewRange()
-            if self.range[0][0] > min(self.time):
-                self.plotWidgets_list[i].getViewBox().translateBy(x=-0.2, y=0)
+            else : #Scrolling down
+                if  self.range[1][0]- min(self.data)  < 500 :
+                    b =   self.range[1][0] - min(self.data) 
 
-    def scroll_up(self):
-        for i in range(2):
-            self.range = self.plotWidgets_list[i].getViewBox().viewRange()
-            if self.range[1][1] < max(self.data):
-                self.plotWidgets_list[i].getViewBox().translateBy(x=0, y=+0.2)
-
-    def scroll_down(self):
-        for i in range(2):
-            self.range = self.plotWidgets_list[i].getViewBox().viewRange()
-            if self.range[1][0] > min(self.data):
-                self.plotWidgets_list[i].getViewBox().translateBy(x=0, y=-0.2)
+            # Scrolling over y-axis
+            if a == 0:
+                if self.range[1][1] <= max(self.data) and self.range[1][0] > min(self.data) :
+                    self.plotWidgets_list[i].getViewBox().translateBy(x=a , y=b)
 
 
 def main():
