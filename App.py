@@ -25,7 +25,7 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.ui = uic.loadUi('AudioEqualizer.ui', self)
+        self.ui = uic.loadUi('equGUINEW.ui', self)
 
         self.settings = QSettings("Audio Equalizer", 'App')
 
@@ -312,8 +312,10 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
         if (self.show_ISpectroCh.isChecked()):
             self.InputSpectro.hide()
+            self.InputspectroLabel.hide()
         else:
             self.InputSpectro.show()
+            self.InputspectroLabel.show()
 
     def get_extention(self, s):
         for i in range(1, len(s)):
