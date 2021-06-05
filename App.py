@@ -1,5 +1,4 @@
 import sounddevice as sd
-import scipy.io
 from scipy.io import wavfile
 import pyqtgraph.exporters
 from scipy import signal
@@ -68,7 +67,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         self.left_button.clicked.connect(lambda: self.scroll(-0.2, 0.0))
         self.up_button.clicked.connect(lambda: self.scroll(0.0, 1000.0))
         self.down_button.clicked.connect(lambda: self.scroll(0.0, -1000.0))
-        
 
         self.zoom_in.clicked.connect(lambda: self.zoom(0.5))
         self.zoom_out.clicked.connect(lambda: self.zoom(1.5))
@@ -166,15 +164,20 @@ class AudioEqualizer(QtWidgets.QMainWindow):
             # self.freq --> The Discrete Fourier Transform sample frequencies.
             self.freq = rfftfreq(self.length)
 
-            #check audio file Dimension
+            # check audio file Dimension
             if np.ndim(self.data) == 1:
 
                 for i in range(2):
-                    self.plotWidgets_list[i].setLimits(xMin=0, xMax=500000, yMin=-200000, yMax=200000)
-                    self.plotWidgets_list[i].setYRange(min(self.data), max(self.data))
-                    self.plotWidgets_list[i].setXRange(min(self.time), max(self.time))
-                    self.plotWidgets_list[i].plot(self.time, self.data, pen=self.pens[i])
-                    self.plot_spectrogram(self.data, self.plotWidgets_list[i+2], self.colors_list[1])
+                    self.plotWidgets_list[i].setLimits(
+                        xMin=0, xMax=500000, yMin=-200000, yMax=200000)
+                    self.plotWidgets_list[i].setYRange(
+                        min(self.data), max(self.data))
+                    self.plotWidgets_list[i].setXRange(
+                        min(self.time), max(self.time))
+                    self.plotWidgets_list[i].plot(
+                        self.time, self.data, pen=self.pens[i])
+                    self.plot_spectrogram(
+                        self.data, self.plotWidgets_list[i+2], self.colors_list[1])
 
 
 ################################ Fourier #################################################
@@ -256,7 +259,6 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         hist.layout.setContentsMargins(0, 0, 0, 0)
         hist.vb.setMouseEnabled(x=False, y=False)
 
-
     def spectrogram_range(self):
         # changing slider values will change intensity in the palettes
         # intensity -> [0,1]
@@ -324,6 +326,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 
 #*******************************************Generating PDF**************************************#
+
+
     def create_my_pdf(self):
         file_name, _ = QFileDialog.getSaveFileName(
             self, 'Export PDF', None, 'PDF files (.pdf);;All Files()')
@@ -347,6 +351,8 @@ class AudioEqualizer(QtWidgets.QMainWindow):
 
 
 #*********************************************Equalizer***************************************#
+
+
     def equalizer(self):
 
         # self.fMagnitude = self.get_fft()[0]
@@ -425,43 +431,43 @@ class AudioEqualizer(QtWidgets.QMainWindow):
         for i in range(4):
             self.plotWidgets_list[i].clear()
 
-
-    def zoom(self, scale: 'float' ):
+    def zoom(self, scale: 'float'):
         for i in range(4):
             if self.channels_list[i].isChecked():
-                self.plotWidgets_list[i].plotItem.getViewBox().scaleBy((scale, scale))
+                self.plotWidgets_list[i].plotItem.getViewBox().scaleBy(
+                    (scale, scale))
 
 # scrolling only works with input-signal and output-signal widgets
 # range = [[xmin,xmax],[ymin,ymax]] of the current view
 
-    def scroll(self, xstep:'float' , ystep: 'float') :
+    def scroll(self, xstep: 'float', ystep: 'float'):
         for i in range(2):
             self.range = self.plotWidgets_list[i].getViewBox().viewRange()
-            
-            # To prevent the scrolling from exceeding the end terminal of the signal when scrolling over x-axis 
+
+            # To prevent the scrolling from exceeding the end terminal of the signal when scrolling over x-axis
             if max(self.time) - self.range[0][1] < 0.2 and xstep == 0.2:
-                xstep =  max(self.time) - self.range[0][1]  
-            
+                xstep = max(self.time) - self.range[0][1]
+
             # Scrolling over x-axis
             if ystep == 0:
-                if self.range[0][1] <= max(self.time)  :
-                    self.plotWidgets_list[i].getViewBox().translateBy(x=xstep , y=ystep)
-            
-           
-           
-            # To prevent the scrolling from exceeding the terminals of the signal when scrolling over y-axis
-            if ystep == 1000.0 : #Scrolling up
-                if max(self.data) - self.range[1][1] < 1000.0 :
-                    ystep =  max(self.data) - self.range[1][1]
+                if self.range[0][1] <= max(self.time):
+                    self.plotWidgets_list[i].getViewBox(
+                    ).translateBy(x=xstep, y=ystep)
 
-            else : #Scrolling down
-                if  self.range[1][0]- min(self.data)  < 1000.0 :
-                    ystep =   self.range[1][0] - min(self.data) 
+            # To prevent the scrolling from exceeding the terminals of the signal when scrolling over y-axis
+            if ystep == 1000.0:  # Scrolling up
+                if max(self.data) - self.range[1][1] < 1000.0:
+                    ystep = max(self.data) - self.range[1][1]
+
+            else:  # Scrolling down
+                if self.range[1][0] - min(self.data) < 1000.0:
+                    ystep = self.range[1][0] - min(self.data)
 
             # Scrolling over y-axis
             if xstep == 0:
-                if self.range[1][1] <= max(self.data) and self.range[1][0] >= min(self.data) :
-                    self.plotWidgets_list[i].getViewBox().translateBy(x=xstep , y=ystep)
+                if self.range[1][1] <= max(self.data) and self.range[1][0] >= min(self.data):
+                    self.plotWidgets_list[i].getViewBox(
+                    ).translateBy(x=xstep, y=ystep)
 
 
 def main():
